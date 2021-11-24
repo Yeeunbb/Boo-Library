@@ -66,7 +66,9 @@ app.post('/Intro', async function(req, res) {
 });
 
 
-
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+server.listen(port, () => {
+  console.log("app is running on port " + port);
 });
+// server.listen(port, hostname, () => {
+//   console.log(`Server running at http://${hostname}:${port}/`);
+// });
