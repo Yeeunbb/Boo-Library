@@ -1,0 +1,251 @@
+html, body {
+	width: 100%;
+  height: 100%;
+  min-height: -webkit-fill-available;
+  overflow: hidden;
+}
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.wrapperTest{
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.intro{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.DoctorBoo{
+  margin-top: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.DoctorBooImg{
+  width: 100%;
+  object-fit: cover;
+}
+
+.TestStart{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.img_container{
+  width : 100%;
+  margin-top: 100px;
+}
+
+.intro_image{
+  width: 100%;
+  object-fit: cover;
+
+}
+
+.user_info{
+  margin-top: 100px;
+  width: 100%;
+}
+
+.infoBtnImg{
+  width: 70%;
+}
+
+.infoBtn{
+  width: 50%;
+  float: left;
+}
+
+.introInputBox{
+  width:23rem;
+  height:3rem;
+  font-size:25px;
+  background: #F9F9F9;
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.introInput{
+  width: 40%;
+  float: right;
+  margin-left: -5rem;
+}
+
+.nickname{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.major{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.email{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+
+}
+
+.submit{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.BtnSubmit{
+  background-color: white;
+  border: none;
+  width: 28rem;
+  /* height:60rem; */
+  cursor: pointer;
+}
+/* .QuestionBox{
+} */
+
+.test-container {
+  max-width: 800px;
+  height: auto;
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.question-slide {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.swiper-slide img {
+  width: 100%;
+}
+
+.swiper-pagination-progressbar-fill {
+  background-color: #BFBFBF;
+  border: 2px solid rgba(175, 240, 122, 0.719);
+  border-radius: 5px;
+}
+
+.CheckBtn{
+margin-top: 15rem;
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+}
+
+.BtnStartT{
+  /* margin-top: 5rem; */
+  background-color: white;
+  border: none;
+  width: 28rem;
+  cursor: pointer;
+}
+.Btns{
+  margin-top: 12rem;
+  margin-left:-5%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.BtnPrev{
+float: left;
+}
+
+.BtnSelectPrev{
+  opacity: 0.2;
+  background-color: white;
+  border: none;
+  width: 10rem;
+  /* height:60rem; */
+  cursor: pointer;
+}
+
+.BtnShow{
+ float: right;
+ margin-left: 58%;
+}
+
+.BtnShowRes{
+  display: none;
+  background-color: white;
+  border: none;
+  width: 16rem;
+  /* height:60rem; */
+  cursor: pointer;
+}
+
+.selectBar{
+  position: relative;
+  width: 100%;
+  height: 15px;
+  background-color: #BFBFBF;
+  border: none;
+}
+
+.selectBtn1{
+  margin-left:-3%;
+  position: absolute;
+}
+.selectBtn2{
+  position: absolute;
+  margin-left: 30%;
+}
+.selectBtn3{
+  position: absolute;
+  margin-left: 63%;
+}
+.selectBtn4{
+  position: absolute;
+  margin-left: 95%;
+}
+
+.BtnSelect{
+  margin-top: -24px;
+  width: 70px;
+  height: 70px;
+  background-color: #BFBFBF;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+}

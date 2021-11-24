@@ -1,0 +1,61 @@
+<div class="intro">
+    <div class="img_container">
+        <img class="intro_image" id="firstImage" src="images/intro.png" alt="intro 사진">
+    </div>
+    <div class="user_info">
+        <form name="userInfo">
+            <div class="nickname">
+                <div class="infoBtn">
+                    <img class="infoBtnImg" src="images/BtnNickname.png">
+                </div>
+                <div class="introInput">
+                    <input class="introInputBox" type="text" name="nick" placeholder="5글자 이내로 만들어 주세요">
+                </div>
+            </div>
+            <div class="major">
+                <div class="infoBtn">
+                    <img class="infoBtnImg" src="images/BtnMajor.png">
+                </div>
+                <div class="introInput">
+                    <input class="introInputBox" type="text" name="major" placeholder="예시) 철학과">
+                </div>
+            </div>
+            <div class="email">
+                <div class="infoBtn">
+                    <img class="infoBtnImg" src="images/BtnEmail.png">
+                </div>
+                <div class="introInput">
+                    <input class="introInputBox" type="text" name="email" placeholder="예시)********@naver.com">
+                </div>
+            </div>
+            <div class="submit">
+               <a href='/startTest'><button type="button" class="BtnSubmit" id="infoSubmit" onclick="submitInfo()">
+                <img src="images/BtnSubmit.png" width="100%" /></button></a>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    //userInfo form 제출 시, 호출되는 함수
+    function submitInfo() {
+        console.log("CLICK");
+        var queryString = $("form[name=userInfo]").serialize();
+        console.log(queryString);
+        $.ajax({
+            type: 'POST',
+            url: '/Intro',
+            data: queryString,
+            dataType: 'JSON',
+        })
+        .done(function (result){
+            if(result.msg == "success"){
+                alert("success");
+            }
+        })
+        .fail(function (xhr, status, error){
+            alert("error");
+        })
+    }
+</script>
