@@ -6,7 +6,7 @@ const app = express();
 const server = http.createServer(app);
 
 const hostname = '127.0.0.1';
-const port = 3000;
+const port = 8080;
 
 var serviceAccount = require("./boo-library-firebase-adminsdk-1girc-5b4078cab2.json");
 var admin = require("firebase-admin");
