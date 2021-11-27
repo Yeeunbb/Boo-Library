@@ -16,6 +16,7 @@ a {
 .wrapper {
   width: 100%;
   height: 100%;
+  display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -31,6 +32,8 @@ a {
 }
 
 .intro{
+  width: 100%;
+  /* height:auto; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,7 +41,7 @@ a {
 }
 
 .DoctorBoo{
-  margin-top: 10rem;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,22 +62,22 @@ a {
 
 .img_container{
   width : 100%;
-  margin-top: 100px;
 }
 
 .intro_image{
   width: 100%;
   object-fit: cover;
-
 }
 
 .user_info{
-  margin-top: 100px;
+  margin-top: 1rem;
   width: 100%;
 }
 
 .infoBtnImg{
-  width: 70%;
+  position:absolute;
+  width: 100%;
+  max-width: 300px;
 }
 
 .infoBtn{
@@ -83,9 +86,9 @@ a {
 }
 
 .introInputBox{
-  width:23rem;
-  height:3rem;
-  font-size:25px;
+  width:100%;
+  height:4rem;
+  font-size:27px;
   background: #F9F9F9;
   box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
@@ -95,6 +98,7 @@ a {
 .introInput{
   width: 40%;
   float: right;
+  margin-top: 7rem;
   margin-left: -5rem;
 }
 
@@ -102,22 +106,21 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: -3rem;
 }
 
 .major{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: -3rem;
 }
 
 .email{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
-
+  margin-bottom: 5rem;
 }
 
 .submit{
@@ -137,7 +140,7 @@ a {
 } */
 
 .test-container {
-  max-width: 800px;
+  max-width: 950px;
   height: auto;
   display: flex;
 
@@ -166,12 +169,12 @@ a {
 }
 
 .CheckBtn{
-margin-top: 15rem;
-width: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: column;
+  margin-top: 15rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .BtnStartT{
@@ -188,6 +191,7 @@ flex-direction: column;
   display: flex;
   align-items: center;
 }
+
 .BtnPrev{
 float: left;
 }
@@ -225,7 +229,7 @@ float: left;
 }
 
 .selectBtn1{
-  margin-left:-3%;
+  margin-left:-1px;
   position: absolute;
 }
 .selectBtn2{
@@ -238,7 +242,7 @@ float: left;
 }
 .selectBtn4{
   position: absolute;
-  margin-left: 95%;
+  margin-left: 93%;
 }
 
 .BtnSelect{
@@ -249,4 +253,91 @@ float: left;
   border: none;
   cursor: pointer;
   border-radius: 50%;
+}
+
+@media screen and (min-device-width: 768px){
+  .img_container{
+    width : 100%;
+    max-width: 400px;
+  }
+  .intro_image{
+    width: 100%;
+    object-fit: cover;
+
+  }
+  .infoBtnImg{
+    width: 30%;
+    max-width: 200px;
+  }
+  
+  .user_info{
+    margin-top: -2rem;
+  }
+
+  .BtnSubmit{
+    border: none;
+    width: 300px;
+    cursor: pointer;
+  }
+
+  .introInputBox{
+    width:100%;
+    height:auto;
+  }
+  
+  .introInput{
+    width: 40%;
+    margin-top: 5rem;
+    margin-left: -5rem;
+  }
+  .email{
+    margin-bottom: 1rem;
+  }
+
+  .DoctorBoo{
+    margin-top: -5rem;
+    width: 100%;
+    max-width: 400px;
+  }
+  .BtnStartT{
+    margin-top: 1rem;
+    width: 15rem;
+  }
+  .test-container {
+    max-width: 800px;
+  }
+  
+  .question-slide {
+    /* position: absolute; */
+    width: 100%;
+    height: 100%;
+  }
+  .Btns{
+    margin-top: 4rem;
+    margin-left:-5%;
+  }
+  .CheckBtn{
+    margin-top: 5rem;
+    width: 100%;
+    }
+
+}
+
+@media screen and (min-width: 1024px){
+  .img_container{
+    width : 100%;
+    max-width: 300px;
+  }
+  
+  .intro_image{
+    width: 100%;
+    object-fit: cover;
+
+  }
+  .infoBtnImg{
+    position:absolute;
+    width: 30%;
+    max-width: 200px;
+  }
+
 }

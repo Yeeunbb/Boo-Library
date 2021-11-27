@@ -1,6 +1,6 @@
 <div class="intro">
     <div class="img_container">
-        <img class="intro_image" id="firstImage" src="images/intro.png" alt="intro 사진">
+        <img class="intro_image" id="firstImage" src="images/introLogo.png" alt="intro 사진">
     </div>
     <div class="user_info">
         <form name="userInfo">
@@ -9,7 +9,7 @@
                     <img class="infoBtnImg" src="images/BtnNickname.png">
                 </div>
                 <div class="introInput">
-                    <input class="introInputBox" type="text" name="nick" placeholder="5글자 이내로 만들어 주세요">
+                    <input class="introInputBox" type="text" name="nick" placeholder="5글자 이내로 만들어 주세요" required>
                 </div>
             </div>
             <div class="major">
@@ -17,7 +17,7 @@
                     <img class="infoBtnImg" src="images/BtnMajor.png">
                 </div>
                 <div class="introInput">
-                    <input class="introInputBox" type="text" name="major" placeholder="예시) 철학과">
+                    <input class="introInputBox" type="text" name="major" placeholder="예시) 철학과" required>
                 </div>
             </div>
             <div class="email">
@@ -25,12 +25,12 @@
                     <img class="infoBtnImg" src="images/BtnEmail.png">
                 </div>
                 <div class="introInput">
-                    <input class="introInputBox" type="text" name="email" placeholder="예시)********@naver.com">
+                    <input class="introInputBox" type="email" name="email" placeholder="예시)********@naver.com" required>
                 </div>
             </div>
             <div class="submit">
-               <a href='/startTest'><button type="button" class="BtnSubmit" id="infoSubmit" onclick="submitInfo()">
-                <img src="images/BtnSubmit.png" width="100%" /></button></a>
+               <button type="button" class="BtnSubmit" id="infoSubmit" onclick="submitInfo()">
+                <img src="images/BtnSubmit.png" width="100%" /></button>
             </div>
         </form>
     </div>
@@ -39,23 +39,38 @@
 
 <script type="text/javascript">
     //userInfo form 제출 시, 호출되는 함수
+    function checkInput() {
+        var loginForm = document.userInfo;
+        var nick = loginForm.nick.value;
+        var major = loginForm.major.value;
+        var email = loginForm.email.value;
+
+        if(!nick || !major || !email) return false;
+        else return true;
+    }
+
     function submitInfo() {
         console.log("CLICK");
-        var queryString = $("form[name=userInfo]").serialize();
-        console.log(queryString);
-        $.ajax({
-            type: 'POST',
-            url: '/Intro',
-            data: queryString,
-            dataType: 'JSON',
-        })
-        .done(function (result){
-            if(result.msg == "success"){
-                alert("success");
-            }
-        })
-        .fail(function (xhr, status, error){
-            alert("error");
-        })
+        if(checkInput()){
+            var queryString = $("form[name=userInfo]").serialize();
+            $.ajax({
+                type: 'post',
+                url: '/Intro',
+                data: queryString,
+                dataType: 'JSON',
+            })
+            .done(function (result){
+                if(result.msg == "success"){
+                    console.log("SUCCESS!!!!!");
+                    //alert("success");
+                    location.href = "/startTest";
+                }
+            })
+            .fail(function (xhr, status, error){
+                alert("error");
+            })
+        }else{
+            alert("값을 입력해주세요");
+        }
     }
 </script>

@@ -110,14 +110,14 @@
             prevEl: '.BtnPrev',
         },
         on: {
-            slideChangeTransitionStart: function(){
-                if(this.activeIndex == 0){
+            slideChange: function(){
+                if(this.realIndex == 0){
                     $('.BtnSelectPrev').css("opacity", "0.2");
                 }else{
                     $('.BtnSelectPrev').css("opacity", "1");
                 }
 
-                if(this.activeIndex == 9){
+                if(this.realIndex == 9){
                     // $('.BtnShowRes').show();
                     $('.BtnShowRes').css ( "visibility", "visible") ;
                 }else{

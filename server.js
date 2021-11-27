@@ -33,18 +33,12 @@ app.get('/test', (req, res) => {
 //userInfo form 제출 (POST)
 app.post('/Intro', async function(req, res) {
   console.log(req.body);
-
+  var dbOk = false;
   var nick = req.body.nick;
   var major = req.body.major;
   var id = req.body.email;
   var pw = Math.random().toString(36).slice(2);
   console.log("pw: ", pw);
-  const toDB = await db.collection(major).add({
-    nickName : nick,
-    major : major,
-    email : id
-  });
-  console.log("toDB is: ", toDB);
 
   var check = 'true';
   if(check == 'true'){
@@ -57,13 +51,34 @@ app.post('/Intro', async function(req, res) {
       })
       .then((userRecord)=>{
         console.log('Success', userRecord);
+        updateData(nick, major, id);
+        dbOk = true;
       })
       .catch((error)=>{
         console.log('Error', error);
       });
       res.json({msg: "success"});
-    }
+  }
+  console.log('admin END!!!!!!');
+
+  // if(dbOk){
+  //   const toDB = await db.collection(major).doc(id).set({
+  //     nickName : nick,
+  //     major : major,
+  //     email : id
+  //   });
+  //   console.log("toDB is: ", toDB);
+  // }
 });
+
+async function updateData(nickname, major, email) {
+  const toDB = await db.collection(major).doc(email).set({
+    nickName : nickname,
+    major : major,
+    email : email
+  });
+  console.log("DB is:  ", toDB);
+}
 
 
 server.listen(port, () => {
