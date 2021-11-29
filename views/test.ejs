@@ -142,11 +142,13 @@
 
         const btn = document.querySelector("#btn1");
         btn.addEventListener('click', e => {
+            testArray[page-1] = 1;
             if(page == 10){
-                $('.BtnShowRes').css ( "visibility", "visible") ;
-                $('.CheckBtn').css("visibility", "hidden");
-                $('.BtnSelectPrev').css("visibility", "hidden");
+                $('.BtnShowRes').show();
+                $('.CheckBtn').hide();
+                $('.BtnSelectPrev').hide();
             }
+            console.log("page:", page-1, "arrayval:", testArray[page-1]);
         })
 
         // $(document).ready(function(){

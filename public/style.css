@@ -211,8 +211,8 @@ float: left;
 }
 
 .BtnShowRes{
-  /* display: none; */
-  visibility: hidden;
+  display: none;
+  /* visibility: hidden; */
   background-color: white;
   border: none;
   width: 16rem;
