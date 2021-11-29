@@ -5,9 +5,6 @@ const ejs = require('ejs');
 const app = express();
 const server = http.createServer(app);
 
-const hostname = '127.0.0.1';
-const port = 8080;
-
 var serviceAccount = require("./boo-library-firebase-adminsdk-1girc-5b4078cab2.json");
 var admin = require("firebase-admin");
 admin.initializeApp({
@@ -33,7 +30,6 @@ app.get('/test', (req, res) => {
 //userInfo form 제출 (POST)
 app.post('/Intro', async function(req, res) {
   console.log(req.body);
-  var dbOk = false;
   var nick = req.body.nick;
   var major = req.body.major;
   var id = req.body.email;
@@ -60,15 +56,6 @@ app.post('/Intro', async function(req, res) {
       res.json({msg: "success"});
   }
   console.log('admin END!!!!!!');
-
-  // if(dbOk){
-  //   const toDB = await db.collection(major).doc(id).set({
-  //     nickName : nick,
-  //     major : major,
-  //     email : id
-  //   });
-  //   console.log("toDB is: ", toDB);
-  // }
 });
 
 async function updateData(nickname, major, email) {
@@ -81,9 +68,8 @@ async function updateData(nickname, major, email) {
 }
 
 
+const hostname = '127.0.0.1';
+const port = 8080;
 server.listen(port, () => {
   console.log("app is running on port " + port);
 });
-// server.listen(port, hostname, () => {
-//   console.log(`Server running at http://${hostname}:${port}/`);
-// });

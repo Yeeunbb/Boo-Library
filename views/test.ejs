@@ -49,6 +49,9 @@
                 <div class="Q10 swiper-slide question-slide">
                     <img src="images/Q10.png" />
                 </div>
+                <div class="Q10 swiper-slide question-slide">
+                    <img src="images/BtnShowRes.png" />
+                </div>
 
             </div>
 
@@ -58,19 +61,19 @@
     <div class = "CheckBtn">
         <div class = "selectBar">
             <div class = "selectBtn1">
-                <button type="button" class="BtnSelect">
+                <button type="button" id="btn1" class="BtnSelect">
              </button>
             </div>
             <div class = "selectBtn2">
-                <button type="button" class="BtnSelect">
+                <button type="button" id="btn2" class="BtnSelect">
              </button>
             </div>
             <div class = "selectBtn3">
-                <button type="button" class="BtnSelect">
+                <button type="button" id="btn3" class="BtnSelect">
              </button>
             </div>
             <div class = "selectBtn4">
-                <button type="button" class="BtnSelect">
+                <button type="button" id="btn4" class="BtnSelect">
              </button>
             </div>
         </div>
@@ -78,11 +81,11 @@
 
     <div class= "Btns">
     <div class="BtnPrev">
-        <button type="button" class="BtnSelectPrev">
+        <button type="button" id="btnPrev" class="BtnSelectPrev">
             <img src="images/BtnPrev.png" width="100%" /></button>
     </div>
     <div class="BtnShow">
-        <button type="button" class="BtnShowRes">
+        <button type="button" class="BtnShowRes" onclick="btnClicked()">
             <img src="images/BtnShowRes.png" width="100%" /></button>
     </div>
 </div>
@@ -96,6 +99,9 @@
 </body>
 
 <script>
+    var testArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    var page;
+    var finish = false;
     const testSwiper = new Swiper('#question', {
         direction: 'horizontal',
         slidesPerView: 1,
@@ -111,22 +117,50 @@
         },
         on: {
             slideChange: function(){
+                page = this.realIndex;
                 if(this.realIndex == 0){
                     $('.BtnSelectPrev').css("opacity", "0.2");
                 }else{
                     $('.BtnSelectPrev').css("opacity", "1");
                 }
 
-                if(this.realIndex == 9){
+                if(this.realIndex == 10){
                     // $('.BtnShowRes').show();
-                    $('.BtnShowRes').css ( "visibility", "visible") ;
+                    // $('.BtnShowRes').css ( "visibility", "visible") ;
+                    // $('.CheckBtn').css("visibility", "hidden");
+                    // $('.BtnSelectPrev').css("visibility", "hidden");
+                    
                 }else{
                     // $('.BtnShowRes').hide();
-                    $('.BtnShowRes').css ( "visibility", "hidden") ;
+                    // $('.BtnShowRes').css ( "visibility", "hidden") ;
                 }
-            }
+            },
         }
     });
+
+    $("#btn1").click(function() {
+        testArray[page-1] = 1;
+        if(page == 10){
+            $('.BtnShowRes').css ( "visibility", "visible") ;
+            $('.CheckBtn').css("visibility", "hidden");
+            $('.BtnSelectPrev').css("visibility", "hidden");
+        }
+        console.log("page:", page-1, "arrayval:", testArray[page-1]);
+    });
+    $("#btn2").click(function() {
+        testArray[page-1] = 2;
+    });
+    $("#btn3").click(function() {
+        testArray[page-1] = 3;
+    });
+    $("#btn4").click(function() {
+        testArray[page-1] = 4;
+    });
+
+    function btnClicked(){
+        alert(testArray);
+
+    }
 
     
 </script>
