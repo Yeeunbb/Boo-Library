@@ -138,15 +138,27 @@
         }
     });
 
-    $("#btn1").click(function() {
-        testArray[page-1] = 1;
-        if(page == 10){
-            $('.BtnShowRes').css ( "visibility", "visible") ;
-            $('.CheckBtn').css("visibility", "hidden");
-            $('.BtnSelectPrev').css("visibility", "hidden");
-        }
-        console.log("page:", page-1, "arrayval:", testArray[page-1]);
+    $(document).ready(function(){
+        $("#btn1").on("click", function(){
+            testArray[page-1] = 1;
+            if(page == 10){
+                $('.BtnShowRes').css ( "visibility", "visible") ;
+                $('.CheckBtn').css("visibility", "hidden");
+                $('.BtnSelectPrev').css("visibility", "hidden");
+            }
+            console.log("page:", page-1, "arrayval:", testArray[page-1]);
+            });
     });
+
+    // $("#btn1").click(function() {
+    //     testArray[page-1] = 1;
+    //     if(page == 10){
+    //         $('.BtnShowRes').css ( "visibility", "visible") ;
+    //         $('.CheckBtn').css("visibility", "hidden");
+    //         $('.BtnSelectPrev').css("visibility", "hidden");
+    //     }
+    //     console.log("page:", page-1, "arrayval:", testArray[page-1]);
+    // });
     $("#btn2").click(function() {
         testArray[page-1] = 2;
     });
