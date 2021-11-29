@@ -140,7 +140,7 @@ a {
 } */
 
 .test-container {
-  max-width: 950px;
+  max-width: 250px;
   height: auto;
   display: flex;
 
@@ -181,7 +181,7 @@ a {
   /* margin-top: 5rem; */
   background-color: white;
   border: none;
-  width: 28rem;
+  width: 18rem;
   cursor: pointer;
 }
 .Btns{
