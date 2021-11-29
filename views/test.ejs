@@ -141,7 +141,7 @@
         });
 
         const btn = document.querySelector("#btn1");
-        btn.addEventListener('click', e => {
+        btn.addEventListener('touchstart', e => {
             testArray[page-1] = 1;
             if(page == 10){
                 $('.BtnShowRes').show();
