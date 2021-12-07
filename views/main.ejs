@@ -60,7 +60,13 @@
                 dataType: 'JSON',
             })
             .done(function (result){
-                if(result.msg == "success"){
+                if(result.msg == "email-error"){
+                    alert("이미 가입된 이메일입니다.");
+                }else if(result.msg == 'nick-error'){
+                    alert("이미 존재하는 닉네임입니다.");
+                }else if(result.msg == 'error'){
+                    alert("Error!");
+                }else if(result.msg == "success"){
                     console.log("SUCCESS!!!!!");
                     location.href = "/startTest";
                 }

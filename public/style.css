@@ -1,11 +1,9 @@
 html, body {
-	width: 100%;
   height: 100%;
   min-height: -webkit-fill-available;
   overflow: hidden;
 }
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -24,16 +22,38 @@ a {
 .wrapperTest{
   width: 100%;
   height: 100%;
-  margin: 0 auto;
-  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+.boo-wrapper{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.spring{
+  background-color: #FFEAF7;
+}
+
+.summer{
+  background-color: #EAFFFB;
+}
+
+.autumn{
+  background-color: #FFF5EA;
+}
+
+.winter{
+  background-color: #EAEDFF;
+}
+
 
 .intro{
   width: 100%;
-  /* height:auto; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,11 +65,11 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 }
 
 .DoctorBooImg{
   width: 100%;
+  height: auto;
   object-fit: cover;
 }
 
@@ -57,10 +77,17 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  width: 50%;
+}
+
+.BtnStartT{
+  background-color: white;
+  border: none;
 }
 
 .img_container{
+  justify-content: center;
+  align-items: center;
   width : 100%;
 }
 
@@ -75,52 +102,47 @@ a {
 }
 
 .infoBtnImg{
-  position:absolute;
+  /* position:absolute; */
   width: 100%;
   max-width: 300px;
 }
 
 .infoBtn{
-  width: 50%;
+  width: 40%;
   float: left;
 }
 
 .introInputBox{
-  width:100%;
-  height:4rem;
-  font-size:27px;
+  width: 90%;
+  height:1rem;
+  font-size:7px;
   background: #F9F9F9;
   box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 5px;
+  padding: 1em;
 }
 
 .introInput{
-  width: 40%;
-  float: right;
-  margin-top: 7rem;
-  margin-left: -5rem;
+  width:60%;
+  float: left;
 }
 
 .nickname{
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-bottom: -3rem;
+  margin-bottom: 1rem;
 }
 
 .major{
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-bottom: -3rem;
+  margin-bottom: 1rem;
 }
 
 .email{
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-bottom: 5rem;
+  margin-bottom: 1rem;
 }
 
 .submit{
@@ -132,12 +154,9 @@ a {
 .BtnSubmit{
   background-color: white;
   border: none;
-  width: 28rem;
-  /* height:60rem; */
+  width: 10rem;
   cursor: pointer;
 }
-/* .QuestionBox{
-} */
 
 .test-container {
   max-width: 250px;
@@ -169,7 +188,7 @@ a {
 }
 
 .CheckBtn{
-  margin-top: 15rem;
+  margin-top: 5rem;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -177,45 +196,36 @@ a {
   flex-direction: column;
 }
 
-.BtnStartT{
-  /* margin-top: 5rem; */
-  background-color: white;
-  border: none;
-  width: 18rem;
-  cursor: pointer;
-}
 .Btns{
-  margin-top: 12rem;
-  margin-left:-5%;
+  margin-top: 5rem;
   width: 100%;
-  display: flex;
-  align-items: center;
 }
 
 .BtnPrev{
-float: left;
+  width: 30%;
+  float: left;
+  margin-left: -10%;
 }
 
 .BtnSelectPrev{
   opacity: 0.2;
   background-color: white;
   border: none;
-  width: 10rem;
+  width: 100%;
   /* height:60rem; */
   cursor: pointer;
 }
 
 .BtnShow{
- float: right;
- margin-left: 58%;
+  width: 40%;;
+  margin-left: 68%;
 }
 
 .BtnShowRes{
-  display: none;
   /* visibility: hidden; */
   background-color: white;
   border: none;
-  width: 16rem;
+  width: 100%;
   /* height:60rem; */
   cursor: pointer;
 }
@@ -223,18 +233,18 @@ float: left;
 .selectBar{
   position: relative;
   width: 100%;
-  height: 15px;
+  height: 5px;
   background-color: #BFBFBF;
   border: none;
 }
 
 .selectBtn1{
-  margin-left:-1px;
+  margin-left:-5%;
   position: absolute;
 }
 .selectBtn2{
   position: absolute;
-  margin-left: 30%;
+  margin-left: 29%;
 }
 .selectBtn3{
   position: absolute;
@@ -242,23 +252,96 @@ float: left;
 }
 .selectBtn4{
   position: absolute;
-  margin-left: 93%;
+  margin-left: 95%;
 }
+
+#leftBtnTxt{
+  margin-left: -5%;
+  margin-top: 1rem;
+  float: left;
+  font-weight: bold;
+}
+
+#rightBtnTxt{
+  margin-right: -5%;
+  margin-top: 1rem;
+  float: right;
+}
+
+
 
 .BtnSelect{
   margin-top: -24px;
-  width: 70px;
-  height: 70px;
+  width: 25px;
+  height: 25px;
   background-color: #BFBFBF;
   border: none;
   cursor: pointer;
   border-radius: 50%;
 }
 
+.navbar{
+  width: 100%;
+  height: 100px;
+  padding: 0 !important;
+  background: #F5F5F5;
+}
+
+.navbar-item{
+  width: 20%;
+}
+.nav-img{
+  width: 100%;
+}
+.container-fluid{
+  width: 100%;
+  display: block;
+}
+.footer{
+  width:100%;
+  position:absolute;
+  bottom:0;
+}
+
+.logo-img{
+  position: fixed;
+  width: 100%;
+  top:0;
+  left:0;
+}
+
+.myboo-contents{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+.boo-icon{
+  margin-top: 45%;
+  margin-bottom: 5%;
+  width: 45%;
+}
+.boo-img{
+  width: 100%;
+}
+.boo-contents{
+  width: 90%;
+  height: 30%;
+  margin-top: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
+  background-color: white;
+  border-radius: 10px;
+}
+
+
+
 @media screen and (min-device-width: 768px){
   .img_container{
     width : 100%;
-    max-width: 400px;
+    max-width: 300px;
   }
   .intro_image{
     width: 100%;
@@ -266,12 +349,23 @@ float: left;
 
   }
   .infoBtnImg{
-    width: 30%;
+    width: 100%;
     max-width: 200px;
   }
+
+  .infoBtn{
+    width: 40%;
+  }
   
-  .user_info{
-    margin-top: -2rem;
+  .introInputBox{
+    height:1rem;
+    font-size:17px;
+    padding: 10px;
+  }
+  
+  .introInput{
+    width:50%;
+    float: left;
   }
 
   .BtnSubmit{
@@ -287,10 +381,17 @@ float: left;
   
   .introInput{
     width: 40%;
-    margin-top: 5rem;
     margin-left: -5rem;
   }
+  .nickname{
+    justify-content: center;
+  }
+  
+  .major{
+    justify-content: center;
+  }
   .email{
+    justify-content: center;
     margin-bottom: 1rem;
   }
 
@@ -304,13 +405,25 @@ float: left;
     width: 15rem;
   }
   .test-container {
-    max-width: 800px;
+    max-width: 600px;
   }
   
   .question-slide {
     /* position: absolute; */
     width: 100%;
     height: 100%;
+  }
+  .BtnSelect{
+    margin-top: -15px;
+    width: 38px;
+    height: 38px;
+  }
+  .selectBtn4{
+    margin-left: 98%;
+  }
+  .selectBar{
+    margin-top: -2px;
+    height: 10px;
   }
   .Btns{
     margin-top: 4rem;
@@ -320,6 +433,36 @@ float: left;
     margin-top: 5rem;
     width: 100%;
     }
+
+  .navbar-item{
+    width: 100px;
+  }
+
+  .mainLogo{
+    width: 100%;
+    height: 56px;
+    background-color: white;
+    border-bottom: 2px solid black;  
+  }
+
+  .logo-img{
+  position: fixed;
+  background-color: white;
+  width: 20%;
+  top:0;
+  left:0;
+}
+
+.boo-icon{
+  margin-top: 1rem;
+  width: 45%;
+}
+
+.boo-contents{
+  width: 100%;
+  height: 30%;
+  margin-top: 5%;
+}
 
 }
 

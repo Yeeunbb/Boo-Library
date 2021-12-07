@@ -77,16 +77,23 @@
             </div>
         </div>
     </div>
+    <div id = "leftBtnTxt">
+        <div id ="initTxt">
+            술자리에<br>간다
+        </div>
+    </div>
+    <div id = "rightBtnTxt">
+        <div id ="initTxt">
+            집에서<br>호흡연습
+        </div>
+    </div>
 
     <div class= "Btns">
     <div class="BtnPrev">
         <button type="button" id="btnPrev" class="BtnSelectPrev">
             <img src="images/BtnPrev.png" width="100%" /></button>
     </div>
-    <div class="BtnShow">
-        <button type="button" class="BtnShowRes" onclick="btnClicked()">
-            <img src="images/BtnShowRes.png" width="100%" /></button>
-    </div>
+
 </div>
 
 </div>
@@ -98,94 +105,140 @@
 </body>
 
 <script>
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    if(isMobile){
-        var testArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        var page;
-        var finish = false;
-        const testSwiper = new Swiper('#question', {
-            direction: 'horizontal',
-            slidesPerView: 1,
-            spaceBetween: 700,
-            touchRatio: 0,
-            pagination:{
-                el: '.swiper-pagination',
-                type: 'progressbar'
-            },
-            navigation: {
-                nextEl: '.BtnSelect',
-                prevEl: '.BtnPrev',
-            },
-            on: {
-                slideChange: function(){
-                    page = this.realIndex;
-                    if(this.realIndex == 0){
-                        $('.BtnSelectPrev').css("opacity", "0.2");
-                    }else{
-                        $('.BtnSelectPrev').css("opacity", "1");
-                    }
-
-                    if(this.realIndex == 10){
-                        // $('.BtnShowRes').show();
-                        // $('.BtnShowRes').css ( "visibility", "visible") ;
-                        // $('.CheckBtn').css("visibility", "hidden");
-                        // $('.BtnSelectPrev').css("visibility", "hidden");
-                        
-                    }else{
-                        // $('.BtnShowRes').hide();
-                        // $('.BtnShowRes').css ( "visibility", "hidden") ;
-                    }
-                },
+var testArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var page;
+var finish = false;
+var left = document.createElement("div");
+var right = document.createElement("div");
+var lp = document.getElementById("leftBtnTxt");
+var rp = document.getElementById("rightBtnTxt");
+var check = true;
+left.setAttribute("id", "left");
+right.setAttribute("id", "right");
+const testSwiper = new Swiper('#question', {
+    direction: 'horizontal',
+    slidesPerView: 1,
+    spaceBetween: 700,
+    touchRatio: 0,
+    pagination:{
+        el: '.swiper-pagination',
+        type: 'progressbar'
+    },
+    navigation: {
+        nextEl: '.BtnSelect',
+        prevEl: '.BtnPrev',
+    },
+    on: {
+        slideChange: function(){
+            page = this.realIndex;
+            if(check){
+                lp.removeChild(document.getElementById("initTxt"));
+                rp.removeChild(document.getElementById("initTxt"));
+                lp.appendChild(left);
+                rp.appendChild(right);
+                check = false;
             }
-        });
-
-        const btn = document.querySelector("#btn1");
-        btn.addEventListener('touchstart', e => {
-            testArray[page-1] = 1;
-            if(page == 10){
-                $('.BtnShowRes').show();
-                $('.CheckBtn').hide();
-                $('.BtnSelectPrev').hide();
+        
+            if(this.realIndex == 0){
+                $('.BtnSelectPrev').css("opacity", "0.2");
+                left.innerHTML = "술자리에<br>간다";
+                right.innerHTML = "집에서<br>호흡하기";
+            }else if(this.realIndex == 1){
+                left.innerHTML = "천천히<br>하자";
+                right.innerHTML = "개요부터<br>바로짜기";
+            }else if(this.realIndex == 2){
+                left.innerHTML = "사골 모임";
+                right.innerHTML = "사교 모임";
+            }else if(this.realIndex == 3){
+                left.innerHTML = "넓고 얕은";
+                right.innerHTML = "깊고 좁은";
+            }else if(this.realIndex == 4){
+                left.innerHTML = "트렌디";
+                right.innerHTML = "매니악";
+            }else if(this.realIndex == 5){
+                left.innerHTML = "카페로<br>GO";
+                right.innerHTML = "열람실로<br>GO";
+            }else if(this.realIndex == 6){
+                left.innerHTML = "메모장";
+                right.innerHTML = "성물";
+            }else if(this.realIndex == 7){
+                left.innerHTML = "따뜻한<br>감성파";
+                right.innerHTML = "냉철한<br>추리파";
+            }else if(this.realIndex == 8){
+                left.innerHTML = "교양서적<br>여러 권";
+                right.innerHTML = "전공서적<br>한두 권";
+            }else{
+                $('.BtnSelectPrev').css("opacity", "1");
+                left.innerHTML = "도서관에서<br>빌려읽기";
+                right.innerHTML = "책 구매 후<br>읽기";
             }
-            console.log("page:", page-1, "arrayval:", testArray[page-1]);
-        })
-
-        // $(document).ready(function(){
-        //     $("#btn1").on("click", function(){
-        //         testArray[page-1] = 1;
-        //         if(page == 10){
-        //             $('.BtnShowRes').css ( "visibility", "visible") ;
-        //             $('.CheckBtn').css("visibility", "hidden");
-        //             $('.BtnSelectPrev').css("visibility", "hidden");
-        //         }
-        //         console.log("page:", page-1, "arrayval:", testArray[page-1]);
-        //         });
-        // });
-
-        // $("#btn1").click(function() {
-        //     testArray[page-1] = 1;
-        //     if(page == 10){
-        //         $('.BtnShowRes').css ( "visibility", "visible") ;
-        //         $('.CheckBtn').css("visibility", "hidden");
-        //         $('.BtnSelectPrev').css("visibility", "hidden");
-        //     }
-        //     console.log("page:", page-1, "arrayval:", testArray[page-1]);
-        // });
-        $("#btn2").click(function() {
-            testArray[page-1] = 2;
-        });
-        $("#btn3").click(function() {
-            testArray[page-1] = 3;
-        });
-        $("#btn4").click(function() {
-            testArray[page-1] = 4;
-        });
-
-        function btnClicked(){
-            alert(testArray);
-
         }
     }
+});
+
+const btn1 = document.querySelector("#btn1");
+const btn2 = document.querySelector("#btn2");
+const btn3 = document.querySelector("#btn3");
+const btn4 = document.querySelector("#btn4");
+btn1.addEventListener('click', e => {
+    testArray[page-1] = 1;
+    if(page == 10){
+        $('.BtnShowRes').show();
+        $('.CheckBtn').hide();
+        $('.BtnSelectPrev').hide();
+        testResult();    
+    }
+    console.log("page:", page-1, "arrayval:", testArray[page-1]);
+});
+btn2.addEventListener('click', e => {
+    testArray[page-1] = 2;
+    if(page == 10){
+        $('.BtnShowRes').show();
+        $('.CheckBtn').hide();
+        $('.BtnSelectPrev').hide();
+        testResult();
+    }
+    console.log("page:", page-1, "arrayval:", testArray[page-1]);
+});
+btn3.addEventListener('click', e => {
+    testArray[page-1] = 3;
+    if(page == 10){
+        $('.BtnShowRes').show();
+        $('.CheckBtn').hide();
+        $('.BtnSelectPrev').hide();
+        testResult();
+    }
+    console.log("page:", page-1, "arrayval:", testArray[page-1]);
+});
+btn4.addEventListener('click', e => {
+    testArray[page-1] = 4;
+    if(page == 10){
+        $('.BtnShowRes').show();
+        $('.CheckBtn').hide();
+        $('.BtnSelectPrev').hide();
+        testResult();
+    }
+    console.log("page:", page-1, "arrayval:", testArray[page-1]);
+});
+
+function testResult() {
+    $.ajax({
+        type: 'post',
+        url: '/testRes',
+        data: {
+            testRes:testArray
+        },
+    })
+    .done(function (result){
+        localStorage.setItem('boo', result.msg);
+        console.log("SUCCESS!!!!!");
+        location.href = "/afterTest";
+    })
+    .fail(function (xhr, status, error){
+        alert("error");
+    });
+}
+
 
     
 </script>

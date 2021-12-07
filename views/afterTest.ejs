@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>test</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+</head>
+
+<body>
+  <div class="wrapperTest">
+    <div class = "QuestionBox">
+        <div class="swiper-container test-container" id = "question">
+            <div class= "swiper-wrapper">
+                <div class="Q10 swiper-slide question-slide">
+                    <img src="images/BtnShowRes.png" />
+                </div>
+
+            </div>
+
+            <div class="swiper-pagination"></div>
+        </div>
+
+    <div class= "Btns">
+    <div class="BtnShow">
+        <button type="button" class="BtnShowRes" onclick="btnClicked()">
+            <img src="images/BtnShowRes.png" width="100%" /></button>
+    </div>
+</div>
+
+</div>
+
+
+
+</div>
+
+</body>
+
+<script>
+var testArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var page;
+var finish = false;
+const testSwiper = new Swiper('#question', {
+    direction: 'horizontal',
+    slidesPerView: 1,
+    spaceBetween: 700,
+    touchRatio: 0,
+});
+
+const btn = document.querySelector(".BtnShowRes");
+btn.addEventListener('click', e => {
+    if(localStorage.getItem('boo')){
+        var booType = localStorage.getItem('boo');
+        location.replace('/myBoo');
+        location.href = "/myBoo";
+    }
+});
+
+</script>
+
+</html>
+
