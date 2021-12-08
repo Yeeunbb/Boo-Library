@@ -33,20 +33,20 @@ app.use(session({
 }));
 
 app.get('/', (req, res) => {
-  request.get({
-    uri: 'https://openapi.naver.com/v1/search/book.json',
-    qs : option,
-    headers: {
-      'X-Naver-Client-Id' : NAVER_CLIENT_ID,
-      'X-Naver-Client-Secret' : NAVER_CLIENT_SECRET
-    }
-  }, function(err, res, body){
-    let json = JSON.parse(body);
-    for(var book in json.items){
-      console.log(json.items[book].title);
-    }
-    // console.log(json.items[0].title);
-  });
+  // request.get({
+  //   uri: 'https://openapi.naver.com/v1/search/book.json',
+  //   qs : option,
+  //   headers: {
+  //     'X-Naver-Client-Id' : NAVER_CLIENT_ID,
+  //     'X-Naver-Client-Secret' : NAVER_CLIENT_SECRET
+  //   }
+  // }, function(err, res, body){
+  //   let json = JSON.parse(body);
+  //   for(var book in json.items){
+  //     console.log(json.items[book].title);
+  //   }
+  //   // console.log(json.items[0].title);
+  // });
     
   if(req.session.isLogined == true)
     return res.render('myBoo', {
