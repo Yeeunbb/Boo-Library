@@ -12,6 +12,15 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 const db = admin.firestore();
+const NAVER_CLIENT_ID = '1NocLRDOeeZo5fptyb4n';
+const NAVER_CLIENT_SECRET = 'QSZvjQ6x12';
+const option = {
+  query : '소크라테스의 변명', //검색어
+  display : 5, //가져올 검색 결과 수
+  start : 1,
+
+}
+const request = require('request');
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
@@ -24,6 +33,21 @@ app.use(session({
 }));
 
 app.get('/', (req, res) => {
+  request.get({
+    uri: 'https://openapi.naver.com/v1/search/book.json',
+    qs : option,
+    headers: {
+      'X-Naver-Client-Id' : NAVER_CLIENT_ID,
+      'X-Naver-Client-Secret' : NAVER_CLIENT_SECRET
+    }
+  }, function(err, res, body){
+    let json = JSON.parse(body);
+    for(var book in json.items){
+      console.log(json.items[book].title);
+    }
+    // console.log(json.items[0].title);
+  });
+    
   if(req.session.isLogined == true)
     return res.render('myBoo', {
       boo : req.session.booType
