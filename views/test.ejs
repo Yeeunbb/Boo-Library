@@ -62,8 +62,8 @@
             <div class="swiper-pagination"></div>
         </div>
 
-    <div class = "CheckBtn">
-        <div class = "selectBar">
+    <div class = "CheckBtn" id = "checkBtns">
+        <div class = "selectBar" id = "selectBtns">
             <div class = "selectBtn1">
                 <button type="button" id="btn1" class="BtnSelect">
              </button>
@@ -94,12 +94,11 @@
     </div>
 
     <div class= "Btns">
-    <div class="BtnPrev">
-        <button type="button" id="btnPrev" class="BtnSelectPrev">
-            <img id = "btnPrevimg" width="100%" /></button>
+        <div class="BtnPrev">
+            <button type="button" id="btnPrev" class="BtnSelectPrev">
+                <img id = "btnPrevimg" width="100%" /></button>
+        </div>
     </div>
-
-</div>
 
 </div>
 
@@ -183,16 +182,16 @@ const testSwiper = new Swiper('#question', {
     }
 });
 
-const btn1 = document.querySelector("#btn1");
-const btn2 = document.querySelector("#btn2");
-const btn3 = document.querySelector("#btn3");
-const btn4 = document.querySelector("#btn4");
+const btn1 = document.getElementById("btn1");
+const btn2 = document.getElementById("btn2");
+const btn3 = document.getElementById("btn3");
+const btn4 = document.getElementById("btn4");
+const checkBtns = document.getElementById("checkBtns");
 btn1.addEventListener('click', e => {
     testArray[page-1] = 1;
     if(page == 10){
-        $('.BtnShowRes').show();
-        $('.CheckBtn').hide();
-        $('.BtnSelectPrev').hide();
+        checkBtns.removeChild(document.getElementById("selectBtns"));
+        prevBtn.setAttribute('src', "");
         testResult();    
     }
     console.log("page:", page-1, "arrayval:", testArray[page-1]);
