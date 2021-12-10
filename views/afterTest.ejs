@@ -13,32 +13,16 @@
 </head>
 
 <body>
-  <div class="wrapperTest">
-    <div class = "QuestionBox">
-        <div class="swiper-container test-container" id = "question">
-            <div class= "swiper-wrapper">
-                <div class="Q10 swiper-slide question-slide">
-                    <img src="images/BtnShowRes.png" />
-                </div>
-
-            </div>
-
-            <div class="swiper-pagination"></div>
+    <div class="wrapper">
+        <div class = "DoctorBoo">
+          <img class="DoctorBooImg ResComent" src="images/ResultComment.png">
         </div>
-
-    <div class= "Btns">
-    <div class="BtnShow">
-        <button type="button" class="BtnShowRes" onclick="btnClicked()">
-            <img src="images/BtnShowRes.png" width="100%" /></button>
+        <div class="TestStart">
+            <button type="button" id="resBtn" class="BtnStartT">
+              <img src="images/BtnShowRes.png" width="100%" /></button>
+        </div>
+  
     </div>
-</div>
-
-</div>
-
-
-
-</div>
-
 </body>
 
 <script>
@@ -52,13 +36,10 @@ const testSwiper = new Swiper('#question', {
     touchRatio: 0,
 });
 
-const btn = document.querySelector(".BtnShowRes");
+const btn = document.querySelector("#resBtn");
 btn.addEventListener('click', e => {
-    if(localStorage.getItem('boo')){
-        var booType = localStorage.getItem('boo');
-        location.replace('/myBoo');
-        location.href = "/myBoo";
-    }
+        // location.replace('/Main');
+        location.href = "/Main";
 });
 
 </script>

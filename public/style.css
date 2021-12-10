@@ -1,7 +1,7 @@
 html, body {
   height: 100%;
   min-height: -webkit-fill-available;
-  overflow: hidden;
+  overflow: auto;
 }
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -208,7 +208,6 @@ a {
 }
 
 .BtnSelectPrev{
-  opacity: 0.2;
   background-color: white;
   border: none;
   width: 100%;
@@ -260,12 +259,15 @@ a {
   margin-top: 1rem;
   float: left;
   font-weight: bold;
+  text-align: center;
 }
 
 #rightBtnTxt{
   margin-right: -5%;
   margin-top: 1rem;
   float: right;
+  font-weight: bold;
+  text-align: center;
 }
 
 
@@ -280,9 +282,15 @@ a {
   border-radius: 50%;
 }
 
+.ResComent{
+  width: 80%;
+  margin-bottom: 3rem;
+}
+
+
 .navbar{
   width: 100%;
-  height: 100px;
+  height: 80px;
   padding: 0 !important;
   background: #F5F5F5;
 }
@@ -299,8 +307,10 @@ a {
 }
 .footer{
   width:100%;
-  position:absolute;
+  position:fixed;
   bottom:0;
+  z-index: 2;
+
 }
 
 .logo-img{
@@ -316,8 +326,6 @@ a {
   align-items: center;
   flex-direction: column;
 }
-
-
 .boo-icon{
   margin-top: 45%;
   margin-bottom: 5%;
@@ -336,6 +344,112 @@ a {
   border-radius: 10px;
 }
 
+/*MainPage*/
+.mainPagetop{
+  position: fixed;
+  background-color: #727272;
+  width: 100%;
+  height: 37px;
+  top:0;
+  left:0;
+}
+.popularBook{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 50px;
+}
+.trophyDiv{
+  margin-bottom: 5px;
+  width: 18%;
+}
+.tropyIcon{
+  width: 100%;
+}
+.comment{
+  width: 55%;
+}
+.commentImg{
+  width: 100%;
+}
+
+/* SearchPage */
+.searchTop{
+  width: 100%;
+  height:110px;
+  position: fixed;
+  margin-top: 42px;
+  padding-top: 10px;
+  background-color: white;
+  z-index: 2;
+}
+.comment{
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.searchBox{
+  position: fixed;
+  width: 100%;
+}
+.searchInput{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.searchInputBox{
+  position: relative;
+  width: 90%;
+  left: 5%;
+  height:2rem;
+  font-size:7px;
+  background: white;
+  border: 0.5px solid #727272;
+  border-radius: 5px;
+  padding: 1em;
+  padding-right: 3rem;
+}
+
+.BtnSearch{
+  position:absolute;
+  float: right;
+  border: none;
+  width: 8%;
+  cursor: pointer;
+  background-color: white;
+  right: 7%;
+}
+.searchBtnImg{
+  width: 100%;
+}
+.searchResult{
+  width:100%;
+  position:absolute;
+  flex-direction: column;
+  overflow: auto;
+  top: 150px;
+  z-index: 1;
+}
+.books{
+  width: 90%;
+  margin-left: 5%;
+  display: flex;
+  justify-content: space-between;
+}
+.bookInfo{
+  margin-top: 1rem;
+  font-weight: bold;
+  text-align: center;
+  font-size:13px;
+}
+.bookCover{
+  margin-top: 1rem;
+  width:74px;
+  height:87px;
+  background: black;
+}
 
 
 @media screen and (min-device-width: 768px){
