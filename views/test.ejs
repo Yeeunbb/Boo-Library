@@ -48,14 +48,7 @@
                     <img src="images/Q10.png" />
                 </div>
                 <div class="Q10 swiper-slide question-slide">
-
-                    <div class = "DoctorBoo">
-                        <img class="DoctorBooImg ResComent" src="images/ResultComment.png">
-                      </div>
-                      <div class="TestStart">
-                          <button type="button" id="resBtn" class="BtnStartT">
-                            <img src="images/BtnShowRes.png" width="100%" /></button>
-                      </div>
+                    결과 로 딩 중 . . .
                 </div>
 
             </div>
@@ -203,8 +196,10 @@ btn2.addEventListener('click', e => {
     testArray[page-1] = 2;
     if(page == 10){
         checkBtns.removeChild(document.getElementById("selectBtns"));
+        lp.removeChild(left);
+        rp.removeChild(right);
         prevBtn.setAttribute('src', "");
-        testResult();  
+        testResult();   
     }
     console.log("page:", page-1, "arrayval:", testArray[page-1]);
 });
@@ -212,6 +207,8 @@ btn3.addEventListener('click', e => {
     testArray[page-1] = 3;
     if(page == 10){
         checkBtns.removeChild(document.getElementById("selectBtns"));
+        lp.removeChild(left);
+        rp.removeChild(right);
         prevBtn.setAttribute('src', "");
         testResult();  
     }
@@ -221,6 +218,8 @@ btn4.addEventListener('click', e => {
     testArray[page-1] = 4;
     if(page == 10){
         checkBtns.removeChild(document.getElementById("selectBtns"));
+        lp.removeChild(left);
+        rp.removeChild(right);
         prevBtn.setAttribute('src', "");
         testResult();  
     }
