@@ -60,6 +60,9 @@ app.get('/Main', (req, res) => {
 app.get('/Search', (req, res) => {
   res.render('bookSearch');
 });
+app.get('/writeDetail', (req, res) => {
+  res.render('writeBookDetail');
+})
 
 //userInfo form 제출 (POST)
 app.post('/Intro', async function(req, res) {
@@ -169,42 +172,57 @@ app.post('/testRes', async function(req, res) {
 //책 이름으로 검색하기
 app.post('/searchBook', async function(req, res) {
   var bookName = req.body.book;
+  var dataList = new Array();
   console.log("book Title: ", bookName);
 
-  const option = {
-    query : bookName, //검색어
-    display : 10, //가져올 검색 결과 수
-    start : 1,
-  }
-
-  request.get({
-    uri: 'https://openapi.naver.com/v1/search/book.json',
-    qs : option,
-    headers: {
-      'X-Naver-Client-Id' : NAVER_CLIENT_ID,
-      'X-Naver-Client-Secret' : NAVER_CLIENT_SECRET
+  getBookData(bookName).then(function(bookData){
+    for(var book in bookData.items){
+      //console.log(json.items[book].title);
+      var data = new Object();
+      //제목
+      var title = bookData.items[book].title;
+      title = title.replace(/<b>/g, '');
+      data.title = title.replace(/<\/b>/g, '');
+      //작가
+      var author = bookData.items[book].author; 
+      author = author.replace(/<b>/g, '');
+      data.author = author.replace(/<\/b>/g, '');
+      //출판사
+      var publisher = bookData.items[book].publisher; 
+      publisher = publisher.replace(/<b>/g, '');
+      data.publisher = publisher.replace(/<\/b>/g, '');
+      //출간일
+      data.pubdate = bookData.items[book].pubdate; 
+      //책 커버
+      data.image = bookData.items[book].image; 
+      //데이터 푸시
+      dataList.push(data);
     }
-      }, function(err, res, body){
-          let bookInfos = JSON.parse(body);
-          var dataList = new Array();
-          //console.log(json);
-
-          for(var book in bookInfos.items){
-            //console.log(json.items[book].title);
-            var data = new Object();
-            data.title = bookInfos.items[book].title;
-            data.image = bookInfos.items[book].image; 
-            data.author = bookInfos.items[book].author; 
-            data.publisher = bookInfos.items[book].publisher; 
-            data.pubdate = bookInfos.items[book].pubdate; 
-            
-            dataList.push(data);
-       }
-       var jsonData = JSON.stringify(dataList); 
-       console.log(jsonData);
-    // console.log(json.items[0].title);
+    //console.log(dataList);
+    res.json(dataList);
   });
 });
+
+async function getBookData(bookName){
+  return new Promise(function(resolve, reject) {
+    const option = {
+      query : bookName, //검색어
+      display : 10, //가져올 검색 결과 수
+      start : 1,
+    }
+    request.get({
+      uri: 'https://openapi.naver.com/v1/search/book.json',
+      qs : option,
+      headers: {
+        'X-Naver-Client-Id' : NAVER_CLIENT_ID,
+        'X-Naver-Client-Secret' : NAVER_CLIENT_SECRET
+      }
+        }, function(err, res, body){  
+            let bookInfos = JSON.parse(body);
+            resolve(bookInfos);
+     });
+  });
+}
 
 
 
