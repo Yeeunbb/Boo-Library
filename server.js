@@ -63,6 +63,9 @@ app.get('/Search', (req, res) => {
 app.get('/writeDetail', (req, res) => {
   res.render('writeBookDetail');
 })
+app.get('/MyPage', (req, res) =>{
+  res.render('myLibrary');
+})
 
 //userInfo form 제출 (POST)
 app.post('/Intro', async function(req, res) {
@@ -203,6 +206,37 @@ app.post('/searchBook', async function(req, res) {
   });
 });
 
+app.post('/review', async function(req, res) {
+  console.log(req.body);
+  var nickname = req.session.nickName;
+  var title = req.body.title;
+  var author = req.body.author;
+  var publish = req.body.publish;
+  var date = req.body.date;
+  var cover = req.body.cover;
+  var motiv = req.body.motiv;
+  var funNum = req.body.funPoint;
+  var funCom = req.body.funComment;
+  var readNum = req.body.readPoint;
+  var readCom = req.body.readComment;
+  var usefNum = req.body.usefPoint;
+  var usefCom = req.body.usefComment;
+  var literNum = req.body.literacyPoint;
+  var literCom = req.body.literacyComment;
+  var msgNum = req.body.msgPoint;
+  var msgCom = req.body.msgComment;
+  var intro = req.body.introComment;
+  var like = req.body.like;
+
+  updateReview(nickname, title, author, publish, date, cover,
+    motiv, funNum, funCom, readNum, readCom, usefNum, usefCom,
+    literNum, literCom, msgNum, msgCom, intro, like);
+  
+  res.json({msg: "success"});
+
+});
+
+
 async function getBookData(bookName){
   return new Promise(function(resolve, reject) {
     const option = {
@@ -225,7 +259,6 @@ async function getBookData(bookName){
 }
 
 
-
 async function updateData(nickname, major, email) {
   const userRef = await db.collection('userInfo').doc(nickname).set({
     nickName : nickname,
@@ -234,6 +267,38 @@ async function updateData(nickname, major, email) {
     booType : 'none'
   });
   // console.log("DB is:  ", userUD);
+}
+
+async function updateReview(
+  nickname, title, author, publish, date, cover, motiv,
+  funNum, funCom, readNum, readCom, usefNum, usefCom, literNum, literCom,
+  msgNum, msgCom, intro, like
+){
+  const reviewRef = await db
+    .collection('userBookData')
+    .doc(nickname)
+    .collection('bookDB')
+    .doc(title)
+    .set({
+      title : title,
+      author : author,
+      publish : publish,
+      date : date,
+      cover : cover,
+      motiv : motiv,
+      funPoint : funNum,
+      funComment : funCom,
+      readPoint : readNum,
+      readComment : readCom,
+      usefPoint : usefNum,
+      usefComment : usefCom,
+      literacyPoint : literNum,
+      literacyComment : literCom,
+      msgPoint : msgNum,
+      msgComment : msgCom,
+      introComment : intro,
+      like : like
+    });
 }
 
 async function setBooType(nickname, btype){

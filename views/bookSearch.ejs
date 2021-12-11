@@ -82,7 +82,7 @@
             data = true;
             var bookContainer = document.createElement("div");
             var bookInfos = document.createElement("div");
-            var bookCover = document.createElement("button");
+            var bookCover = document.createElement("div");
             var bookCoverImg = document.createElement("img");
             var title = document.createElement("div");
             var author = document.createElement("div");
@@ -119,14 +119,15 @@
             date.innerHTML = bookList[book].pubdate;
             bookCoverImg.setAttribute('src', bookList[book].image);
             bookCover.setAttribute('type', "button");
-            bookCover.setAttribute('onclick', "writeDetail()");
+            bookCover.setAttribute('onclick', "writeDetail('" + bookList[book].title + "', '" 
+            + bookList[book].author + "', '" + bookList[book].publisher + "', '" 
+            + bookList[book].pubdate + "', '" + bookList[book].image + "')");
         }
     }
     //console.log(bookList);
-    function writeDetail(){
-        location.href = "/writeDetail";
+    function writeDetail(title, author, publisher, date, img){
+        location.href = "/writeDetail?title=" + title + "&author=" + author 
+        + "&publisher=" + publisher + "&date=" + date + "&img=" + img;
     }
-    // bookContainer.addEventListener('click', e=> {
-    //     location.href = "/writeDetail";
-    // });
+
 </script>
