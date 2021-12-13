@@ -113,6 +113,10 @@
                         //child
                 var bookTitle = document.createElement("div");
                 var bookLike = document.createElement("div");
+                var likeButton = document.createElement("div");
+                var likeIconImg = document.createElement("img");  
+                var likeNum = document.createElement("div");
+  
 
                 var funContainer = document.createElement("div");
                 var funpointContainer = document.createElement("div");
@@ -222,6 +226,11 @@
                 bookNameNlikeContainer.setAttribute("class", "bookNameNlikeContainer");
                 bookTitle.setAttribute("class", "bookTitle");
                 bookLike.setAttribute("class", "bookLike");
+                likeButton.setAttribute("class", "likeButton");
+                likeButton.setAttribute("id", book + "likeButton");
+                likeIconImg.setAttribute("class", book + "likeButtonImg");
+                likeNum.setAttribute("class", "likeNum");
+                likeNum.setAttribute("id", book + "likeNum");
 
                 //fun
                 funContainer.setAttribute("class", "funContainer");
@@ -376,8 +385,10 @@
                 bookDIV.appendChild(bookInfomationContainer);
 
                 bookCoverContainer.appendChild(bookCover);
+                bookCoverContainer.appendChild(bookNameNlikeContainer);
                 bookCover.appendChild(bookCoverImg);
-                bookInfomationContainer.appendChild(bookNameNlikeContainer);
+                //bookInfomationContainer.appendChild(bookNameNlikeContainer);
+                bookInfomationContainer.appendChild(bookTitle);
                 bookInfomationContainer.appendChild(funContainer);
                 bookInfomationContainer.appendChild(readContainer);
                 bookInfomationContainer.appendChild(usefContainer);
@@ -385,8 +396,11 @@
                 bookInfomationContainer.appendChild(msgContainer);
                 bookInfomationContainer.appendChild(moveToLibraryContainer);
 
-                bookNameNlikeContainer.appendChild(bookTitle);
+                //bookNameNlikeContainer.appendChild(bookTitle);
                 bookNameNlikeContainer.appendChild(bookLike);
+                bookLike.appendChild(likeButton);
+                likeButton.appendChild(likeIconImg);
+                bookLike.appendChild(likeNum);
 
                 //fun
                 funContainer.appendChild(funpointContainer);
@@ -477,8 +491,8 @@
                 moveToLibraryContainer.appendChild(moveLibrary);
 
 
-    
-                bookLike.innerHTML = bookList[book].like + "명이 읽어보고 싶어요.";
+                likeIconImg.setAttribute('src', "images/LikeIconFull.png");
+                likeNum.innerHTML = bookList[book].like;
                 bookTitle.innerHTML = bookList[book].title;
     
                 funEval.innerHTML = "재미";

@@ -82,6 +82,46 @@ var url = location.href;
         }
     }
 
+    //좋아요 기능
+    function fillHeart(div, nick, title, cover, likeNum){
+        //var ButtoncontainerIdx = div + "likeButtonImg";
+        var LikeNumIdx = div + "likeNum";
+        //var ButtonContainer = document.getElementById(ButtoncontainerIdx);
+        var LikeContainer = document.getElementById(LikeNumIdx);
+
+        console.log("FILLING HEART: ", div, "By: ", nick, "Title: ", title,
+        "coverLink: ", cover);
+        let Likedata = {
+            "pageOw" : nick,
+            "bookTitle" : title,
+            "bookCover" : cover
+        }
+        $.ajax({
+                type: 'post',
+                url: '/updateLike',
+                data: Likedata,
+                dataType: 'json'
+            })
+            .success(function (result){
+                if(result.msg == "like"){
+                    console.log("like!");
+                    LikeContainer.innerHTML = ++likeNum + "명이 읽어보고 싶어요.";
+                }else if(result.msg == "unlike"){
+                    console.log("dislike");
+                    if(likeNum>0){
+                        LikeContainer.innerHTML = --likeNum + "명이 읽어보고 싶어요.";
+                    }else{
+                        LikeContainer.innerHTML = 0 + "명이 읽어보고 싶어요.";
+
+                    }
+                }
+                //Container.setAttribute('src', "images/LikeIconNFull.png");
+            })
+            .fail(function (xhr, status, error){
+                alert("error");
+            })
+    }
+
 
     function loadReviews() {
         // var bookName = document.getElementById('bookName').value;
@@ -119,9 +159,12 @@ var url = location.href;
 
             //like랑 책제목 div 생성
             var bookNameNlike = document.createElement("div");
-            var bookLike = document.createElement("div");
             var bookName = document.createElement("div");
-            var editReview = document.createElement("div");
+            var bookLikeContainer = document.createElement("div");
+            var likeButton = document.createElement("div");
+            var likeIconImg = document.createElement("img");
+            var likeNum = document.createElement("div");
+            
 
             //book 리뷰 디테일 div 생성
             var bookDetailInfo = document.createElement("div");
@@ -238,9 +281,13 @@ var url = location.href;
 
             //likeNtitle div class 지정
             bookNameNlike.setAttribute("class", "bookNameNLikeNEdit");
-            bookLike.setAttribute("class", "likeContainer" );
             bookName.setAttribute("class", "bookName");
-            editReview.setAttribute("class", "editContainer");
+            bookLikeContainer.setAttribute("class", "likeContainer");
+            likeButton.setAttribute("class", "likeButton");
+            likeButton.setAttribute("id", book + "likeButton");
+            likeIconImg.setAttribute("class", book + "likeButtonImg");
+            likeNum.setAttribute("class", "likeNum");
+            likeNum.setAttribute("id", book + "likeNum");
 
             //book 리뷰 디테일 div class 지정
             bookDetailInfo.setAttribute("class", "detailContainer");
@@ -415,9 +462,11 @@ var url = location.href;
             bookDetailContainer.appendChild(bookNameNlike);
             bookDetailContainer.appendChild(bookDetailInfo);
 
-            bookNameNlike.appendChild(bookLike);
             bookNameNlike.appendChild(bookName);
-            bookNameNlike.appendChild(editReview);
+            bookNameNlike.appendChild(bookLikeContainer);
+            bookLikeContainer.appendChild(likeButton);
+            likeButton.appendChild(likeIconImg);
+            bookLikeContainer.appendChild(likeNum);
 
             bookDetailInfo.appendChild(motivate);
             bookDetailInfo.appendChild(evaluation);
@@ -521,7 +570,13 @@ var url = location.href;
             introduce.appendChild(introEx);
             introduce.appendChild(introContent);
 
-            bookLike.innerHTML = bookList[book].like + "명이 읽어보고 싶어요.";
+            likeButton.setAttribute('onclick', "fillHeart('" + book + "', '" 
+            + nick + "', '" + bookList[book].title + "', '" + bookList[book].cover 
+            + "', '" + bookList[book].like + "')");
+
+            likeIconImg.setAttribute('src', "images/LikeIconFull.png");
+
+            likeNum.innerHTML = bookList[book].like + "명이 읽어보고 싶어요.";
             bookName.innerHTML = bookList[book].title;
 
             motiveEx.innerHTML = "#이 책을 읽게 된 계기를 알려주세요.";

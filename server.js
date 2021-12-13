@@ -13,6 +13,7 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 const db = admin.firestore();
+var FieldValue = admin.firestore.FieldValue;
 
 //Naver 검색 api
 const NAVER_CLIENT_ID = '1NocLRDOeeZo5fptyb4n';
@@ -299,6 +300,54 @@ app.post('/loadAllReview', async function(req, res) {
   res.json(dataList);
 });
 
+//좋아요 기능
+app.post('/updateLike', async function(req, res) {
+  var flag = true;
+  var check = true;
+  var user = req.session.nickName;
+  var pageOw = req.body.pageOw;
+  var bookTitle = req.body.bookTitle;
+  var bookCover = req.body.bookCover;
+  var date = new Date().getTime().toString();
+  console.log("UpdateLike Function", pageOw, bookTitle);
+
+  //likeBookDB가 있는지 확인
+  const bookRef = db.collection('userBookData').doc(user).collection('likeBookDB');
+  const snapshot = await bookRef.get().then(query => query.size);
+  console.log("snpashot 갯수: ", snapshot);
+  if(snapshot == 0){ //한 개도 없을 때
+    console.log("snapshot == 0 TEST");
+    updateLikeBook(true, user, pageOw, bookTitle, bookCover, date, 'none');
+    updateLikeNum(true, pageOw, bookTitle);
+    check = false;
+    return res.json({msg: "like"});
+  }else{
+    const snapshot2 = await bookRef.get();
+    snapshot2.forEach(doc => {
+      console.log(doc.data());
+      //이미 좋아요 한 경우이다. ->좋아요 취소시킴.
+      if(doc.data().pageOw == pageOw && doc.data().title == bookTitle){
+        console.log("Find LIKE DATA");
+        //user의 likeBookDB에서 데이터 삭제
+        console.log("삭제할 doc id: ", doc.id);
+        updateLikeBook(false, user, pageOw, bookTitle, bookCover, date, doc.id);
+        updateLikeNum(false, pageOw, bookTitle);
+        check = false;
+        return res.json({msg: "unlike"});
+      }
+      //좋아요 누른건지, 안누른건지 flag res로 send하기
+    });
+    //좋아요 안 한 경우. -> 좋아요 누름
+    if(check){
+      console.log("PUSH LIke BUTTON");
+      updateLikeBook(true, user, pageOw, bookTitle, bookCover, date, 'none');
+      updateLikeNum(true, pageOw, bookTitle);
+      return res.json({msg: "like"});
+    }
+  }
+});
+
+
 
 async function getBookData(bookName){
   return new Promise(function(resolve, reject) {
@@ -381,6 +430,58 @@ async function updateReview(
       msgPoint : msgNum,
       like : like
     });
+}
+
+async function updateLikeBook(plus, user, nickname, title, cover, time, docs){
+  if(plus){ // 데이터 추가 (좋아요 누름)
+    const likeRef = await db
+    .collection('userBookData')
+    .doc(user)
+    .collection('likeBookDB')
+    .doc(time)
+    .set({
+      pageOw : nickname,
+      title : title,
+      cover : cover
+    });
+  }else{ //데이터 삭제 (좋아요 취소)
+    const likeRef = await db
+    .collection('userBookData')
+    .doc(user)
+    .collection('likeBookDB')
+    .doc(docs)
+    .delete();
+  }
+}
+
+async function updateLikeNum(plus, nick, title){
+  var allreviewdocs;
+  const likeRef = db.collection('userBookData').doc(nick).collection('bookDB').doc(title);
+  const reviewRef = db.collection('allReviewData');
+  const snpashot = await reviewRef.get();
+  snpashot.forEach(doc => {
+    if(doc.data().nick == nick && doc.data().title == title){
+      allreviewdocs = doc.id;
+      console.log("doc.id:" , allreviewdocs);
+    }
+  });
+  const ownerReview = db.collection('allReviewData').doc(allreviewdocs);
+  if(plus){ //like 증가 (좋아요 누름)
+    const res = await likeRef.update({
+      like: FieldValue.increment(1)
+    });
+    const res2 = await ownerReview.update({
+      like: FieldValue.increment(1)
+    });    
+  }else{ //like 감소 (좋아요 취소)
+    const res = await likeRef.update({
+      like: FieldValue.increment(-1)
+    });
+    const res2 = await ownerReview.update({
+      like: FieldValue.increment(-1)
+    });    
+  }
+
 }
 
 async function setBooType(nickname, btype){

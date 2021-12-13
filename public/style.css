@@ -424,9 +424,11 @@ a {
 .bookTitle{
   float: left;
   margin-right: 5px;
+  font-size: 12px;
 }
 .bookLike{
   float: left;
+  display: flex;
 }
 .boxNnumberContainer{
   float: left;
@@ -434,6 +436,12 @@ a {
   margin-left: 10px;
   font-size: 10px;
   font-weight: bold;
+}
+.likeButton{
+  float:left;
+}
+.likeNum{
+  margin-left: 3px;
 }
 .pointNum{
   float:left;
