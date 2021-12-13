@@ -384,7 +384,7 @@ a {
 }
 .trophyDiv{
   margin-bottom: 5px;
-  width: 18%;
+  width: 13%;
 }
 .tropyIcon{
   width: 100%;
@@ -393,15 +393,25 @@ a {
   width: 55%;
 }
 .commentImg{
-  width: 100%;
+  width: 50%;
 }
+
+.bestBookContainer{
+  width: 85%;
+  margin-top: 20px;
+  background-color: white;
+  z-index: 2;
+
+}
+
+
 
 .recommendBook{
   width:100%;
   position:absolute;
   flex-direction: column;
   overflow: auto;
-  top: 180px;
+  top: 280px;
   bottom: 100px;
   z-index: 1;
 }
@@ -409,9 +419,8 @@ a {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px;
   padding: 5%;
-  border: 0.5px solid #727272;
+  border-bottom: 0.5px solid #727272;
 }
 .bookCoverContainer{
   width: 30%;
@@ -722,6 +731,13 @@ a {
   margin-left: 5%;
 }
 
+.test{
+  background-color: black;
+  
+}
+.test1{
+  background-color: blue;
+}
 
 @media screen and (min-device-width: 768px){
   .img_container{

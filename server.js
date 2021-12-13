@@ -245,7 +245,7 @@ app.post('/review', async function(req, res) {
   var msgNum = req.body.msgPoint;
   var msgCom = req.body.msgComment;
   var intro = req.body.introComment;
-  var like = req.body.like;
+  var like = Number(req.body.like);
   var date = new Date().getTime().toString();
 
   updateReview(nickname, boo, title, author, publish, date, cover,
@@ -281,6 +281,19 @@ app.post('/loadPersonalReview', async function(req, res) {
   snapshot.forEach(doc => {
     dataList.push(doc.data());
     console.log(doc.id, '=>', doc.data().title);
+  });
+  res.json(dataList);
+});
+
+//모든 리뷰 불러오기
+app.post('/loadBestBooks', async function(req, res) {
+  var dataList = new Array();
+
+  console.log("ROADING REVIEWS");
+  const bookRef = db.collection('allReviewData').orderBy("like", "desc");
+  const snapshot = await bookRef.get();
+  snapshot.forEach(doc => {
+    dataList.push(doc.data());
   });
   res.json(dataList);
 });
