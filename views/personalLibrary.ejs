@@ -23,15 +23,14 @@
     <div class="myInfoContainer">
         <div class="myBooImgContainer">
         </div>
-        <div class="myinfo">
-            <div class="libraryComment">
-                나의 서재
+        <div class="libraryinfo">
+            <div class="libraryOwner" id = "libraryOf">
             </div>
-            <div class="myNameContainer" id="nickContainer">
+            <div class="booType" id="booOf">
                 
             </div>
         </div>
-        <div class="goFriendBook">
+        <div class="goFriendBook" onclick="location.href='/Main'">
             다른 친구 추천 책 구경가기
         </div>
     </div>
@@ -44,234 +43,6 @@
 
     </div>
 
-    <!-- <div class= "bookDetailContainer">
-        <div class="bookNameNLikeNEdit">
-            <div class="likeContainer">
-                13명이 읽어보고 싶어요.
-            </div>
-            <div class="bookName">
-                책 이름
-            </div>
-            <div class="editContainer">
-                수정 버튼
-            </div>
-        </div>
-
-        <div class="detailContainer">
-            <div class="motivate">
-                <div class="motivEx">
-                ＃이 책을 읽게 된 계기를 알려주세요.
-                </div>
-                <div class="motiveDB">
-                    친구들 추천
-                </div>
-            </div>
-            <div class="evaluation" id="evalCommentInput" >
-                <div class="evalComment">
-                    # 이 책에 대한 간단한 평가를 해주세요.
-                </div>
-                <div class="funContainer parentContainer">
-                    <div class="evalWord">
-                        재미
-                    </div>
-                    <div class="BoxNComment">
-                        <div class="PointContainer">
-                            <div class="PointNum" id="funPoint">
-                                0/10
-                            </div>
-                            <div class="PointBox">
-                                <div class="Nfill" id="funbox1" onclick="boxClick('fun', 1)">
-                                </div>
-                                <div class="Nfill" id="funbox2" onclick="boxClick('fun', 2)">
-                                </div>
-                                <div class="Nfill" id="funbox3" onclick="boxClick('fun', 3)">
-                                </div>
-                                <div class="Nfill" id="funbox4" onclick="boxClick('fun', 4)">
-                                </div>
-                                <div class="Nfill" id="funbox5" onclick="boxClick('fun', 5)">
-                                </div>
-                                <div class="Nfill" id="funbox6" onclick="boxClick('fun', 6)">
-                                </div>
-                                <div class="Nfill" id="funbox7" onclick="boxClick('fun', 7)">
-                                </div>
-                                <div class="Nfill" id="funbox8" onclick="boxClick('fun', 8)">
-                                </div>
-                                <div class="Nfill" id="funbox9" onclick="boxClick('fun', 9)">
-                                </div>
-                                <div class="Nfill" id="funbox10" onclick="boxClick('fun', 10)">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="funComment">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="readContainer parentContainer">
-                    <div class="evalWord">
-                        가독성
-                    </div>
-                    <div class="BoxNComment">
-                        <div class="PointContainer">
-                            <div class="PointNum" id = "readPoint">
-                                0/10
-                            </div>
-                            <div class="PointBox">
-                                <div class="Nfill" id="readbox1" onclick="boxClick('read', 1)">
-                                </div>
-                                <div class="Nfill" id="readbox2" onclick="boxClick('read', 2)">
-                                </div>
-                                <div class="Nfill" id="readbox3" onclick="boxClick('read', 3)">
-                                </div>
-                                <div class="Nfill" id="readbox4" onclick="boxClick('read', 4)">
-                                </div>
-                                <div class="Nfill" id="readbox5" onclick="boxClick('read', 5)">
-                                </div>
-                                <div class="Nfill" id="readbox6" onclick="boxClick('read', 6)">
-                                </div>
-                                <div class="Nfill" id="readbox7" onclick="boxClick('read', 7)">
-                                </div>
-                                <div class="Nfill" id="readbox8" onclick="boxClick('read', 8)">
-                                </div>
-                                <div class="Nfill" id="readbox9" onclick="boxClick('read', 9)">
-                                </div>
-                                <div class="Nfill" id="readbox10" onclick="boxClick('read', 10)">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="readComment">
-                            <input class="CommentInput" type="text" id="readCommentInput" 
-                            placeholder="ex) 십분 만에 한 챕터를 읽었음." maxlength="25">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="usefulContainer parentContainer">
-                  <div class="evalWord">
-                        유용성
-                    </div>
-                    <div class="BoxNComment">
-                        <div class="PointContainer">
-                            <div class="PointNum" id="usefPoint">
-                                0/10
-                            </div>
-                            <div class="PointBox">
-                                <div class="Nfill" id="usefbox1" onclick="boxClick('usef', 1)">
-                                </div>
-                                <div class="Nfill" id="usefbox2" onclick="boxClick('usef', 2)">
-                                </div>
-                                <div class="Nfill" id="usefbox3" onclick="boxClick('usef', 3)">
-                                </div>
-                                <div class="Nfill" id="usefbox4" onclick="boxClick('usef', 4)">
-                                </div>
-                                <div class="Nfill" id="usefbox5" onclick="boxClick('usef', 5)">
-                                </div>
-                                <div class="Nfill" id="usefbox6" onclick="boxClick('usef', 6)">
-                                </div>
-                                <div class="Nfill" id="usefbox7" onclick="boxClick('usef', 7)">
-                                </div>
-                                <div class="Nfill" id="usefbox8" onclick="boxClick('usef', 8)">
-                                </div>
-                                <div class="Nfill" id="usefbox9" onclick="boxClick('usef', 9)">
-                                </div>
-                                <div class="Nfill" id="usefbox10" onclick="boxClick('usef', 10)">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="usefComment">
-                            <input class="CommentInput" type="text" id="usefCommentInput" 
-                            placeholder="ex) 무료한 일상에 신선한 재미를 주었음." maxlength="25">
-                        </div>
-                    </div>
-                </div>
-                <div class="literacyContainer parentContainer">
-                    <div class="evalWord">
-                        문장력
-                    </div>
-                    <div class="BoxNComment">
-                        <div class="PointContainer">
-                            <div class="PointNum" id="literPoint">
-                                0/10
-                            </div>
-                            <div class="PointBox">
-                                <div class="Nfill" id="literbox1" onclick="boxClick('liter', 1)">
-                                </div>
-                                <div class="Nfill" id="literbox2" onclick="boxClick('liter', 2)">
-                                </div>
-                                <div class="Nfill" id="literbox3" onclick="boxClick('liter', 3)">
-                                </div>
-                                <div class="Nfill" id="literbox4" onclick="boxClick('liter', 4)">
-                                </div>
-                                <div class="Nfill" id="literbox5" onclick="boxClick('liter', 5)">
-                                </div>
-                                <div class="Nfill" id="literbox6" onclick="boxClick('liter', 6)">
-                                </div>
-                                <div class="Nfill" id="literbox7" onclick="boxClick('liter', 7)">
-                                </div>
-                                <div class="Nfill" id="literbox8" onclick="boxClick('liter', 8)">
-                                </div>
-                                <div class="Nfill" id="literbox9" onclick="boxClick('liter', 9)">
-                                </div>
-                                <div class="Nfill" id="literbox10" onclick="boxClick('liter', 10)">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="literComment">
-                            <input class="CommentInput" type="text" id="literCommentInput" 
-                            placeholder="ex) 사느냐 죽느냐, 그것이 문제로다." maxlength="25">
-                        </div>
-                    </div>
-                </div>
-                <div class="messageContainer parentContainer">
-                    <div class="evalWord">
-                        메시지
-                    </div>
-                    <div class="BoxNComment">
-                        <div class="PointContainer">
-                            <div class="PointNum" id="msgPoint">
-                                0/10
-                            </div>
-                            <div class="PointBox">
-                                <div class="Nfill" id="msgbox1" onclick="boxClick('msg', 1)">
-                                </div>
-                                <div class="Nfill" id="msgbox2" onclick="boxClick('msg', 2)">
-                                </div>
-                                <div class="Nfill" id="msgbox3" onclick="boxClick('msg', 3)">
-                                </div>
-                                <div class="Nfill" id="msgbox4" onclick="boxClick('msg', 4)">
-                                </div>
-                                <div class="Nfill" id="msgbox5" onclick="boxClick('msg', 5)">
-                                </div>
-                                <div class="Nfill" id="msgbox6" onclick="boxClick('msg', 6)">
-                                </div>
-                                <div class="Nfill" id="msgbox7" onclick="boxClick('msg', 7)">
-                                </div>
-                                <div class="Nfill" id="msgbox8" onclick="boxClick('msg', 8)">
-                                </div>
-                                <div class="Nfill" id="msgbox9" onclick="boxClick('msg', 9)">
-                                </div>
-                                <div class="Nfill" id="msgbox10" onclick="boxClick('msg', 10)">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="msgComment">
-                            <input class="CommentInput" type="text" id="msgCommentInput" 
-                            placeholder="ex) 환경 문제에 대해서 내가 생각하지 못한 시각을 제시해 주었다." maxlength="25">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="introduce">
-                <div class="introEx">
-                # 당신의 책을 한 줄로 소개해 주세요.
-                </div>
-                <div class="introDB">
-                    재밋엇다
-                </div>
-            </div>
-        </div>
-    </div> -->
-
 
 </body>
 <footer class="footer">
@@ -283,53 +54,24 @@
 var bookList = new Array();
 var reviewSwiper = document.getElementById("reviewSwiper");
 var reviewArea = document.getElementById("reviewArea");
-var nickArea = document.getElementById("nickContainer");
+var nickArea = document.getElementById("libraryOf");
+var booArea = document.getElementById("booOf");
 
 var data = false;
 var user;
-myReviews();
+var url = location.href;
 
   //url 파싱
-//   https://bookthumb-phinf.pstatic.net/cover/156/206/15620654.jpg?type=m1&udate=20191018
   var parameter = (url.slice(url.indexOf('?') + 1, url.length)).split('&');
   console.log('parameter :', parameter);
-  for(var i=0; i< 5; i++){
-      if(i<4){
-        returnValue = parameter[i].split('=')[1];
-        console.log('val:', decodeURIComponent(returnValue));
-      }else{
-        returnValue = parameter[i].split('=')[1] + '=' + parameter[i].split('=')[2]
-        + '&' + parameter[i+1];
-        console.log('val:', decodeURIComponent(returnValue));
-      }
-
-      if(i==0){
-        var titleContainer = document.getElementById('titleContainer');
-        titleContainer.innerHTML = decodeURIComponent(returnValue);
-        bookTitle = decodeURIComponent(returnValue);
-      }else if(i==1){
-          var authorContainer = document.getElementById('authorContainer');
-          authorContainer.innerHTML = decodeURIComponent(returnValue);
-          bookAuthor = decodeURIComponent(returnValue);
-      }else if(i==2){
-          var publishContainer = document.getElementById('publishContainer');
-          publishContainer.innerHTML = decodeURIComponent(returnValue);
-          bookPublish = decodeURIComponent(returnValue);
-      }else if(i==3){
-          var dateContainer = document.getElementById('dateContainer');
-          dateContainer.innerHTML = decodeURIComponent(returnValue);
-          bookPubdate = decodeURIComponent(returnValue);
-      }else{
-        var bookImgContainer = document.getElementById('bookImgContainer');
-        var bookCoverImg = document.createElement("img");
-        bookImgContainer.appendChild(bookCoverImg);
-
-        bookCoverImg.setAttribute("class", "bookCoverimg");
-        bookCoverImg.setAttribute('src', decodeURIComponent(returnValue));
-        bookCover = decodeURIComponent(returnValue);
-      }
-  }
-
+  var nick = decodeURIComponent(parameter[0].split('=')[1]);
+  var boo = decodeURIComponent(parameter[1].split('=')[1]);
+  nickArea.innerHTML = "["+nick+"]의 서재";
+  if(boo == "spring") booArea.innerHTML = "봄의 부";
+  if(boo == "summer") booArea.innerHTML = "여름의 부";
+  if(boo == "autumn") booArea.innerHTML = "가을의 부";
+  if(boo == "winter") booArea.innerHTML = "겨울의 부";
+  loadReviews();
 
   //별점 박스 채우는 함수
     function fillBox(div, kind, num){
@@ -341,18 +83,20 @@ myReviews();
     }
 
 
-    function myReviews() {
+    function loadReviews() {
         // var bookName = document.getElementById('bookName').value;
         console.log('loading my reveiws');
         $.ajax({
                 type: 'post',
-                url: '/loadReview',
+                url: '/loadPersonalReview',
+                data: {
+                    "pageOwner" : nick
+                },
+                dataType: 'json'
             })
             .success(function (result){
                var jsonData = JSON.stringify(result); 
                 bookList = result;
-                user = bookList.shift();
-                nickArea.innerHTML = "닉네임: " + user;
                 makeReviewDiv()
             })
             .fail(function (xhr, status, error){

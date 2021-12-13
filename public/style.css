@@ -310,25 +310,33 @@ a {
   position:fixed;
   bottom:0;
   z-index: 2;
-
 }
+
+/*My Boo Page*/
 
 .logo-img{
   position: fixed;
   width: 100%;
-  top:0;
+  top:-20px;
   left:0;
+  z-index: 2;
 }
 
 .myboo-contents{
-  height: 100%;
+  height: auto;
   display: flex;
   align-items: center;
   flex-direction: column;
+  position:absolute;
+  overflow: auto;
+  text-align: center;
+  top: 1px;
+  bottom: 100px;
+  z-index: 1;
 }
+
 .boo-icon{
   margin-top: 45%;
-  margin-bottom: 5%;
   width: 45%;
 }
 .boo-img{
@@ -336,12 +344,27 @@ a {
 }
 .boo-contents{
   width: 90%;
-  height: 30%;
+  height: auto;
   margin-top: 5%;
   margin-left: 5%;
   margin-right: 5%;
+  padding: 5%;
   background-color: white;
   border-radius: 10px;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.keywords-box{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+.recomBtn{
+  width: 50%;
+  border: none;
 }
 
 /*MainPage*/
@@ -353,7 +376,7 @@ a {
   top:0;
   left:0;
 }
-.popularBook{
+.popularBookContainer{
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -372,6 +395,56 @@ a {
 .commentImg{
   width: 100%;
 }
+
+.recommendBook{
+  width:100%;
+  position:absolute;
+  flex-direction: column;
+  overflow: auto;
+  top: 180px;
+  bottom: 100px;
+  z-index: 1;
+}
+.bookDIV{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  padding: 5%;
+  border: 0.5px solid #727272;
+}
+.bookCoverContainer{
+  width: 30%;
+}
+.bookInfomationContainer{
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+.bookTitle{
+  float: left;
+  margin-right: 5px;
+}
+.bookLike{
+  float: left;
+}
+.boxNnumberContainer{
+  float: left;
+  width: 65%;
+  margin-left: 10px;
+  font-size: 10px;
+  font-weight: bold;
+}
+.pointNum{
+  float:left;
+}
+.moveToLibraryContainer{
+  float:right;
+  text-align: right;
+}
+
+
+
 
 /* SearchPage */
 .searchTop{
@@ -601,6 +674,46 @@ a {
   font-size: 15px;
   font-weight: bold;
 }
+
+/* My Library Page */
+.myInfoContainer{
+  width: 90%;
+  height: auto;
+  position: fixed;
+  margin-left: 5%;
+  margin-top: 42px;
+  padding-top: 10px;
+  background-color: white;
+  border: 0.5px solid #727272;
+  border-radius: 5px;
+  z-index: 2;
+    display: flex;
+  justify-content: space-between;
+}
+
+.myAllReviewContainer{
+  width:100%;
+  position:absolute;
+  flex-direction: column;
+  overflow: auto;
+  top: 120px;
+  bottom: 100px;
+  z-index: 1;
+}
+
+.mybookDetailContainer{
+  position: relative;
+  width: 90%;
+  margin-left: 5%;
+  justify-content: space-between;
+  margin-bottom: 75%;
+}
+.bookNameNLikeNEdit{
+  position: relative;
+  width: 90%;
+  margin-left: 5%;
+}
+
 
 @media screen and (min-device-width: 768px){
   .img_container{

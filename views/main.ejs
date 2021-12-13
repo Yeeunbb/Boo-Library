@@ -69,6 +69,8 @@
                 }else if(result.msg == "success"){
                     console.log("SUCCESS!!!!!");
                     location.href = "/startTest";
+                }else if(result.msg == "login"){
+                    location.href = "/Main";
                 }
             })
             .fail(function (xhr, status, error){

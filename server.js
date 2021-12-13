@@ -62,10 +62,16 @@ app.get('/Search', (req, res) => {
 });
 app.get('/writeDetail', (req, res) => {
   res.render('writeBookDetail');
-})
+});
 app.get('/MyPage', (req, res) =>{
-  res.render('myLibrary');
-})
+  res.render('myLibrary', {
+    boo : req.session.booType,
+    nick : req.session.nickName
+  });
+});
+app.get('/personalLibrary', (req, res) => {
+  res.render('personalLibrary');
+});
 
 //userInfo form 제출 (POST)
 app.post('/Intro', async function(req, res) {
@@ -77,19 +83,8 @@ app.post('/Intro', async function(req, res) {
   console.log("pw: ", pw);
 
   var check = false;
-
-  //가입 확인 및 닉네임 중복검사
-  admin
-    .auth() 
-    .getUserByEmail(id)
-    .then((userRecord)=>{
-      //이미 가입된 이메일
-      res.json({msg: "email-error"});
-    })
-    .catch((error)=>{
-      //미가입자. 가입 진행
-      check = true;
-    });
+  var nickCheck = false;
+  var emailCheck = false;
 
   const nickRef = db.collection('userInfo').doc(nick);
   const doc = await nickRef.get();
@@ -97,10 +92,31 @@ app.post('/Intro', async function(req, res) {
     //없는 닉네임. 가입 진행
     check = true;
   } else{
-    //이미 존재하는 닉네임.
-    res.json({msg: "nick-error"});
-    check = false;
+    //가입자
+    console.log("email: ", doc.data().email, "major: ", doc.data().major);
+    if(doc.data().email == id && doc.data().major == major){
+      req.session.isLogined = true;
+      req.session.nickName = nick;
+      req.session.booType = doc.data().booType;
+      res.json({msg: "login"});
+    }else{ //이미 존재하는 닉네임
+      res.json({msg: "nick-error"});
+    }
   }
+
+  //가입 확인 및 닉네임 중복검사
+  admin
+    .auth() 
+    .getUserByEmail(id)
+    .then((userRecord)=>{
+      //이미 가입된 이메일
+      check = false;
+      res.json({msg: "email-error"});
+    })
+    .catch((error)=>{
+      //미가입자. 가입 진행
+      check = true;
+    });
 
   //db에 회원 정보 저장
   if(check){
@@ -206,9 +222,11 @@ app.post('/searchBook', async function(req, res) {
   });
 });
 
+//review 데이터 저장하기
 app.post('/review', async function(req, res) {
   console.log(req.body);
   var nickname = req.session.nickName;
+  var boo = req.session.booType;
   var title = req.body.title;
   var author = req.body.author;
   var publish = req.body.publish;
@@ -227,13 +245,58 @@ app.post('/review', async function(req, res) {
   var msgCom = req.body.msgComment;
   var intro = req.body.introComment;
   var like = req.body.like;
+  var date = new Date().getTime().toString();
 
-  updateReview(nickname, title, author, publish, date, cover,
+  updateReview(nickname, boo, title, author, publish, date, cover,
     motiv, funNum, funCom, readNum, readCom, usefNum, usefCom,
-    literNum, literCom, msgNum, msgCom, intro, like);
+    literNum, literCom, msgNum, msgCom, intro, like, date);
   
   res.json({msg: "success"});
 
+});
+
+//review한 책 목록 불러오기(MY)
+app.post('/loadReview', async function(req, res) {
+  var dataList = new Array();
+  var user = req.session.nickName;
+  dataList.push(user);
+  console.log("ROADING REVIEWS");
+  const bookRef = db.collection('userBookData').doc(user).collection('bookDB');
+  const snapshot = await bookRef.get();
+  snapshot.forEach(doc => {
+    dataList.push(doc.data());
+    console.log(doc.id, '=>', doc.data().title);
+  });
+  res.json(dataList);
+});
+
+//review한 책 목록 불러오기(Other)
+app.post('/loadPersonalReview', async function(req, res) {
+  var dataList = new Array();
+  var user = req.body.pageOwner;
+  console.log("pageow: ", user);
+  const bookRef = db.collection('userBookData').doc(user).collection('bookDB');
+  const snapshot = await bookRef.get();
+  snapshot.forEach(doc => {
+    dataList.push(doc.data());
+    console.log(doc.id, '=>', doc.data().title);
+  });
+  res.json(dataList);
+});
+
+
+//모든 리뷰 불러오기
+app.post('/loadAllReview', async function(req, res) {
+  var dataList = new Array();
+
+  console.log("ROADING REVIEWS");
+  const bookRef = db.collection('allReviewData').orderBy("date", "desc");
+  const snapshot = await bookRef.get();
+  snapshot.forEach(doc => {
+    dataList.push(doc.data());
+    console.log(doc.id, '=>', doc.data().title);
+  });
+  res.json(dataList);
 });
 
 
@@ -270,9 +333,9 @@ async function updateData(nickname, major, email) {
 }
 
 async function updateReview(
-  nickname, title, author, publish, date, cover, motiv,
+  nickname, boo, title, author, publish, date, cover, motiv,
   funNum, funCom, readNum, readCom, usefNum, usefCom, literNum, literCom,
-  msgNum, msgCom, intro, like
+  msgNum, msgCom, intro, like, date
 ){
   const reviewRef = await db
     .collection('userBookData')
@@ -297,6 +360,25 @@ async function updateReview(
       msgPoint : msgNum,
       msgComment : msgCom,
       introComment : intro,
+      like : like
+    });
+
+    console.log("date:", date);
+
+    const allReviewRef = await db
+    .collection('allReviewData')
+    .doc(date)
+    .set({
+      nick : nickname,
+      booType : boo,
+      title : title,
+      cover : cover,
+      date : date,
+      funPoint : funNum,
+      readPoint : readNum,
+      usefPoint : usefNum,
+      literacyPoint : literNum,
+      msgPoint : msgNum,
       like : like
     });
 }
