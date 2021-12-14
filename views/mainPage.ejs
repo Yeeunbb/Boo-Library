@@ -27,7 +27,7 @@
             <img src="images/mainTrophy.png" class="tropyIcon" /></button></a>
         </div>
         <div class="comment">
-            <img src="images/popularityMent.png" class="commentImg"  /></button></a>
+            <img src="images/popularityMent.png" class="commentImg" /></button></a>
         </div>
 
         <div class="bestBookContainer">
@@ -36,7 +36,7 @@
                 <div class= "swiper-wrapper" id ="bestBook">
                     <div class="swiper-slide book-slide">
                         <div class="bookCover test" id="bookCover0">
-                            <img src="" id="bookCoverImg0" />
+                            <img src="" id="bookCoverImg0" class="Parenttest"/>
                         </div>
                     </div>
                     <div class="swiper-slide book-slide">
@@ -89,13 +89,28 @@
                 <div class="swiper-pagination"></div>
             </div>
         </div>
-
+        <div class="middleNavigationContainer">
+            <div class="navName" id="seasonNav">
+                친구들의 추천 도서
+            </div>
+            <div class="booBtns">
+                <div class="springBtn stringBtn" onclick="loadSeasonReviews('spring')">
+                    봄
+                </div>
+                <div class="summerBtn stringBtn" onclick="loadSeasonReviews('summer')">
+                    여름
+                </div>
+                <div class="autumnBtn stringBtn" onclick="loadSeasonReviews('autumn')">
+                    가을
+                </div>
+                <div class="winterBtn stringBtn" onclick="loadSeasonReviews('winter')">
+                    겨울
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="recommendBook">
-        <div class="containerTitle">
-            친구들의 추천 도서
-        </div>
         <div class="recommendBookContainer" id="bookArea">
         </div>
     </div>
@@ -170,7 +185,7 @@
     }
 
     function makeBestBookDiv(){
-        for(book in bestBooks){
+        for(var book=0; book<10; book++){
             var div = "bookCover" + book;
 
             var imgNum = "bookCoverImg" + book;
@@ -178,6 +193,8 @@
             var bookCoverArea = document.getElementById(div);
             var bookCoverImgArea = document.getElementById(imgNum);
             bookCoverImgArea.setAttribute("src", bestBooks[book].cover);
+            bookCoverImgArea.setAttribute('onclick', "moveLibrary('" + bestBooks[book].nick + "', '" 
+            + bestBooks[book].booType + "')");
         }
 
     }
@@ -199,6 +216,33 @@
             })
             .fail(function (xhr, status, error){
                 alert("error");
+            })
+    }
+
+    function loadSeasonReviews(season){
+        $.ajax({
+                type: 'post',
+                url: '/loadSeasonsReview',
+                data: {
+                    "booType" : season
+                },
+                dataType: 'json'
+            })
+            .success(function (result){
+                var jsonData = JSON.stringify(result); 
+                bookList = result;
+                console.log(bookList);
+                var nav = document.getElementById("seasonNav");
+                if(season == "spring"){
+                    nav.innerHTML = "봄 부의 추천도서";
+                }else if(season == "summer"){
+                    nav.innerHTML = "여름 부의 추천도서";
+                }else if(season == "autumn"){
+                    nav.innerHTML = "가을 부의 추천도서";
+                }else if(season == "winter"){
+                    nav.innerHTML = "겨울 부의 추천도서";
+                }
+                makeReviewDiv()
             })
     }
     

@@ -21,25 +21,18 @@
     </div>
 
     <div class="myInfoContainer">
-        <div class="myBooImgContainer">
-        </div>
         <div class="libraryinfo">
             <div class="libraryOwner" id = "libraryOf">
             </div>
             <div class="booType" id="booOf">
-                
             </div>
         </div>
         <div class="goFriendBook" onclick="location.href='/Main'">
-            다른 친구 추천 책 구경가기
+            <img src="images/BtnGoMain.png" width="100%" />
         </div>
     </div>
 
-    <div class="wishReadBookContainer" id="reviewSwiper">
-        읽고 싶은 책 swiper 부분
-    </div>
-
-    <div class ="myAllReviewContainer" id="reviewArea">
+    <div class ="myAllReviewContainer personalArea" id="reviewArea">
 
     </div>
 
@@ -52,6 +45,9 @@
 
 <script type="text/javascript">
 var bookList = new Array();
+var bookLikeList = new Array();
+var likeList = new Array();
+var likeCheck = new Array();
 var reviewSwiper = document.getElementById("reviewSwiper");
 var reviewArea = document.getElementById("reviewArea");
 var nickArea = document.getElementById("libraryOf");
@@ -71,6 +67,7 @@ var url = location.href;
   if(boo == "summer") booArea.innerHTML = "여름의 부";
   if(boo == "autumn") booArea.innerHTML = "가을의 부";
   if(boo == "winter") booArea.innerHTML = "겨울의 부";
+
   loadReviews();
 
   //별점 박스 채우는 함수
@@ -84,17 +81,24 @@ var url = location.href;
 
     //좋아요 기능
     function fillHeart(div, nick, title, cover, likeNum){
-        //var ButtoncontainerIdx = div + "likeButtonImg";
+        var ButtoncontainerIdx = div + "likeButtonImg";
         var LikeNumIdx = div + "likeNum";
-        //var ButtonContainer = document.getElementById(ButtoncontainerIdx);
+        var ButtonContainer = document.getElementById(ButtoncontainerIdx);
         var LikeContainer = document.getElementById(LikeNumIdx);
+        //ButtonContainer.setAttribute('src', "");
+
+
+        var likeOrNot = likeCheck[div]; //true면 이미 좋아요 된 것.
+        likeCheck[div] = !likeCheck[div]; 
 
         console.log("FILLING HEART: ", div, "By: ", nick, "Title: ", title,
         "coverLink: ", cover);
         let Likedata = {
             "pageOw" : nick,
+            "booType" : boo,
             "bookTitle" : title,
-            "bookCover" : cover
+            "bookCover" : cover,
+            "like" : likeOrNot
         }
         $.ajax({
                 type: 'post',
@@ -103,23 +107,9 @@ var url = location.href;
                 dataType: 'json'
             })
             .success(function (result){
-                if(result.msg == "like"){
-                    console.log("like!");
-                    LikeContainer.innerHTML = ++likeNum + "명이 읽어보고 싶어요.";
-                }else if(result.msg == "unlike"){
-                    console.log("dislike");
-                    if(likeNum>0){
-                        LikeContainer.innerHTML = --likeNum + "명이 읽어보고 싶어요.";
-                    }else{
-                        LikeContainer.innerHTML = 0 + "명이 읽어보고 싶어요.";
-
-                    }
-                }
-                //Container.setAttribute('src', "images/LikeIconNFull.png");
-            })
-            .fail(function (xhr, status, error){
-                alert("error");
-            })
+                console.log("success fill heart", result.msg);
+                readLikeInfo();
+            });
     }
 
 
@@ -137,7 +127,9 @@ var url = location.href;
             .success(function (result){
                var jsonData = JSON.stringify(result); 
                 bookList = result;
-                makeReviewDiv()
+                console.log("BookList" , bookList);
+                makeReviewDiv();
+                readLikeInfo();
             })
             .fail(function (xhr, status, error){
                 alert("error");
@@ -285,7 +277,8 @@ var url = location.href;
             bookLikeContainer.setAttribute("class", "likeContainer");
             likeButton.setAttribute("class", "likeButton");
             likeButton.setAttribute("id", book + "likeButton");
-            likeIconImg.setAttribute("class", book + "likeButtonImg");
+            likeIconImg.setAttribute("class", "likeButtonImg");
+            likeIconImg.setAttribute("id", book + "likeButtonImg");
             likeNum.setAttribute("class", "likeNum");
             likeNum.setAttribute("id", book + "likeNum");
 
@@ -455,9 +448,6 @@ var url = location.href;
             introContent.setAttribute("class", "introDB");
 
 
-
-            console.log(bookList);
-            console.log("book: ", bookList[book].title);
             reviewArea.appendChild(bookDetailContainer);
             bookDetailContainer.appendChild(bookNameNlike);
             bookDetailContainer.appendChild(bookDetailInfo);
@@ -574,8 +564,7 @@ var url = location.href;
             + nick + "', '" + bookList[book].title + "', '" + bookList[book].cover 
             + "', '" + bookList[book].like + "')");
 
-            likeIconImg.setAttribute('src', "images/LikeIconFull.png");
-
+            likeIconImg.setAttribute('src', "images/LikeIconNfull.png");
             likeNum.innerHTML = bookList[book].like + "명이 읽어보고 싶어요.";
             bookName.innerHTML = bookList[book].title;
 
@@ -607,6 +596,60 @@ var url = location.href;
 
         }
     }
+    
+
+    function readLikeInfo() {
+        $.ajax({
+                type: 'post',
+                url: '/loadlikeInfo',
+                data: {
+                    "pageOwner" : nick,
+                },
+                dataType: 'json'
+            })
+            .success(function (result){
+                likeList = [];
+                console.log("result.msg: ", result.msg);
+                if(result.msg == "Nlike"){
+                    makeHeartFill();
+                    //좋아요한 리뷰 없음.
+                }else{
+                    var jsonData = JSON.stringify(result); 
+                    likeList = jsonData;
+                    console.log("LikeList" , likeList);
+                    makeHeartFill();
+                    
+                }
+            });
+    }
+
+    //좋아요 한 리뷰 하트 칠하는 함수
+    function makeHeartFill(){
+        likeCheck = [];
+        console.log(bookList);
+        for(book in bookList){
+            var ButtoncontainerIdx = book + "likeButtonImg";
+            var LikeNumIdx = book + "likeNum";
+            var ButtonContainer = document.getElementById(ButtoncontainerIdx);
+            var LikeContainer = document.getElementById(LikeNumIdx);
+            if(likeList.includes(bookList[book].title)){
+                console.log("FIND!!", book);
+                console.log(ButtoncontainerIdx);
+                console.log(ButtonContainer);
+                ButtonContainer.setAttribute('src', "images/LikeIconFull.png");
+                LikeContainer.innerHTML = bookList[book].like + "명이 읽어보고 싶어요.";
+                likeCheck.push(true);
+                continue;
+            }else{
+                ButtonContainer.setAttribute('src', "images/LikeIconNfull.png");
+                LikeContainer.innerHTML = bookList[book].like + "명이 읽어보고 싶어요.";
+            }
+            likeCheck.push(false);
+        }
+        console.log("likecheci list: ", likeCheck);
+    }
+    
+
 
 
 </script>

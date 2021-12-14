@@ -5,13 +5,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MyPage</title>
-  <link rel="stylesheet" href="style.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <link rel="stylesheet" href="style.css">
 
 
 </head>
@@ -24,24 +26,41 @@
         <div class="myBooImgContainer">
         </div>
         <div class="myinfo">
-            <div class="libraryComment">
-                나의 서재
+            <div class="bootypeIcon">
+                <% if(boo == 'spring') { %>
+                    <img src="images/SpringBooBtn.png" width="100%" />
+                    <% } else if(boo == 'summer') { %>
+                        <img src="images/SummerBooBtn.png" width="100%" />
+                        <% } else if(boo == 'autumn') { %>
+                            <img src="images/AutumnBooBtn.png" width="100%" />
+                            <% } else { %>
+                                <img src="images/WinterBooBtn.png" width="100%" />
+                                <% } %>
             </div>
-            <div class="myNameContainer" id="nickContainer">
-                
+            <div class="divbox">
+                <div class="libraryComment">
+                    나의 서재
+                </div>
+                <div class="myNameContainer" id="nickContainer">
+                </div>
             </div>
         </div>
-        <div class="goFriendBook">
-            다른 친구 추천 책 구경가기
+        <div class="goFriendBook" onclick="location.href='/Main'">
+            <img src="images/BtnGoMain.png" width="100%" />
         </div>
     </div>
 
     <div class="wishReadBookContainer" id="reviewSwiper">
-        읽고 싶은 책 swiper 부분
+        <div class="swiper-container" id="wishBookArea">
+            <div class= "swiper-wrapper" id ="bestBook">
+
+            </div>
+
+            <div class="swiper-pagination"></div>
+        </div>    
     </div>
 
-    <div class ="myAllReviewContainer" id="reviewArea">
-
+    <div class ="myAllReviewContainer myreview" id="reviewArea">
     </div>
 
     <!-- <div class= "bookDetailContainer">
@@ -281,7 +300,9 @@
 
 <script type="text/javascript">
 var bookList = new Array();
-var reviewSwiper = document.getElementById("reviewSwiper");
+var wishBooks = new Array();
+var booklen;
+var reviewSwiper = document.getElementById("wishBookArea");
 var reviewArea = document.getElementById("reviewArea");
 var nickArea = document.getElementById("nickContainer");
 
@@ -289,525 +310,571 @@ var data = false;
 var user;
 myReviews();
 
-  //url 파싱
-//   https://bookthumb-phinf.pstatic.net/cover/156/206/15620654.jpg?type=m1&udate=20191018
-  var parameter = (url.slice(url.indexOf('?') + 1, url.length)).split('&');
-  console.log('parameter :', parameter);
-  for(var i=0; i< 5; i++){
-      if(i<4){
-        returnValue = parameter[i].split('=')[1];
-        console.log('val:', decodeURIComponent(returnValue));
-      }else{
-        returnValue = parameter[i].split('=')[1] + '=' + parameter[i].split('=')[2]
-        + '&' + parameter[i+1];
-        console.log('val:', decodeURIComponent(returnValue));
-      }
-
-      if(i==0){
-        var titleContainer = document.getElementById('titleContainer');
-        titleContainer.innerHTML = decodeURIComponent(returnValue);
-        bookTitle = decodeURIComponent(returnValue);
-      }else if(i==1){
-          var authorContainer = document.getElementById('authorContainer');
-          authorContainer.innerHTML = decodeURIComponent(returnValue);
-          bookAuthor = decodeURIComponent(returnValue);
-      }else if(i==2){
-          var publishContainer = document.getElementById('publishContainer');
-          publishContainer.innerHTML = decodeURIComponent(returnValue);
-          bookPublish = decodeURIComponent(returnValue);
-      }else if(i==3){
-          var dateContainer = document.getElementById('dateContainer');
-          dateContainer.innerHTML = decodeURIComponent(returnValue);
-          bookPubdate = decodeURIComponent(returnValue);
-      }else{
-        var bookImgContainer = document.getElementById('bookImgContainer');
-        var bookCoverImg = document.createElement("img");
-        bookImgContainer.appendChild(bookCoverImg);
-
-        bookCoverImg.setAttribute("class", "bookCoverimg");
-        bookCoverImg.setAttribute('src', decodeURIComponent(returnValue));
-        bookCover = decodeURIComponent(returnValue);
-      }
-  }
-
-
-  //별점 박스 채우는 함수
-    function fillBox(div, kind, num){
-        for(i=1; i<=num; i++){
-            var box = div + kind + 'box' + i;
-            var PointBox = document.getElementById(box);
-            PointBox.setAttribute("class", "fill");
+//best book Swiper
+const swiper1 = new Swiper('#wishBookArea', {
+    direction: 'horizontal',
+    slidesPerView: 4,
+    centeredSlides : true,
+    spaceBetween: 100,
+    touchRatio: 0,
+    autoplay: {
+        disableOnInteraction: false,
+        delay: 3000,
+    },
+    on: {
+    slideChange: function(){
+        page = this.realIndex;
+        if(page == booklen) scrollUP();
         }
     }
+});
 
+function scrollUP(){
+    testSwiper.slideTo(0, 0, flase);
+}
 
-    function myReviews() {
-        // var bookName = document.getElementById('bookName').value;
-        console.log('loading my reveiws');
+function loadWishBooks(){
         $.ajax({
                 type: 'post',
-                url: '/loadReview',
+                url: '/loadWishBooks',
             })
             .success(function (result){
-               var jsonData = JSON.stringify(result); 
-                bookList = result;
-                user = bookList.shift();
-                nickArea.innerHTML = "닉네임: " + user;
-                makeReviewDiv()
-            })
-            .fail(function (xhr, status, error){
-                alert("error");
-            })
-    }
+                var jsonData = JSON.stringify(result); 
+                wishBooks = result;
+                console.log('wishBooks:' ,wishBooks);
+                makeWishBookDiv();
+            });
+}
 
-    function makeReviewDiv() {
-        if(data){
-            while(reviewArea.firstChild){
-                reviewArea.removeChild(reviewArea.firstChild);
-            }
+function makeWishBookDiv(){
+        var totalDIV = document.getElementById("bestBook");
+        for(var book=0; book<wishBooks.length; book++){
+            var div = "bookCover" + book;
+            var imgNum = "bookCoverImg" + book;
+            console.log("div: " ,div);
+
+            var parentContainer = document.createElement("div");
+            parentContainer.setAttribute("class", "swiper-slide book-slide");
+            totalDIV.appendChild(parentContainer);
+        
+            var childContainer = document.createElement("div");
+            childContainer.setAttribute("class", "bookCover test");
+            childContainer.setAttribute("id", div);
+            parentContainer.appendChild(childContainer);
+
+            var imgContainer = document.createElement("img");
+            imgContainer.setAttribute("id", imgNum);
+            imgContainer.setAttribute("src", wishBooks[book].cover);
+            imgContainer.setAttribute('onclick', "moveLibrary('" + wishBooks[book].pageOw + "', '" 
+            + wishBooks[book].booType + "')");
+            childContainer.appendChild(imgContainer);
+
+
+            //var bookCoverArea = document.getElementById(div);
+            //var bookCoverImgArea = document.getElementById(imgNum);
+            //bookCoverImgArea.setAttribute("src", wishBooks[book].cover);
         }
 
-        for(book in bookList){
-            console.log("book num: " + book);
-            data = true;
-            //전체 div 생성
-            var bookDetailContainer = document.createElement("div");
-
-            //like랑 책제목 div 생성
-            var bookNameNlike = document.createElement("div");
-            var bookLike = document.createElement("div");
-            var bookName = document.createElement("div");
-            var editReview = document.createElement("div");
-
-            //book 리뷰 디테일 div 생성
-            var bookDetailInfo = document.createElement("div");
-                //motive
-            var motivate = document.createElement("div");
-            var motiveEx = document.createElement("div");
-            var motiveContent = document.createElement("div");
-                //evaluation
-            var evaluation = document.createElement("div");
-            var evalComment = document.createElement("div");
-                    //fun
-            var funContainer = document.createElement("div");
-            var funEval = document.createElement("div");
-                        //funBoxPoint
-            var funboxNcomment = document.createElement("div");
-            var funpointContainer = document.createElement("div");
-            var funpointNum = document.createElement("div");
-            var funpointBox = document.createElement("div");
-            var funboxDiv1 = document.createElement("div");
-            var funboxDiv2 = document.createElement("div");
-            var funboxDiv3 = document.createElement("div");
-            var funboxDiv4 = document.createElement("div");
-            var funboxDiv5 = document.createElement("div");
-            var funboxDiv6 = document.createElement("div");
-            var funboxDiv7 = document.createElement("div");
-            var funboxDiv8 = document.createElement("div");
-            var funboxDiv9 = document.createElement("div");
-            var funboxDiv10 = document.createElement("div");
-            var funComment = document.createElement("div");
-                    //read
-            var readContainer = document.createElement("div");
-            var readEval = document.createElement("div");
-                        //readBoxPoint
-            var readboxNcomment = document.createElement("div");
-            var readpointContainer = document.createElement("div");
-            var readpointNum = document.createElement("div");
-            var readpointBox = document.createElement("div");
-            var readboxDiv1 = document.createElement("div");
-            var readboxDiv2 = document.createElement("div");
-            var readboxDiv3 = document.createElement("div");
-            var readboxDiv4 = document.createElement("div");
-            var readboxDiv5 = document.createElement("div");
-            var readboxDiv6 = document.createElement("div");
-            var readboxDiv7 = document.createElement("div");
-            var readboxDiv8 = document.createElement("div");
-            var readboxDiv9 = document.createElement("div");
-            var readboxDiv10 = document.createElement("div");
-            var readComment = document.createElement("div");
-                    //useful
-            var usefContainer = document.createElement("div");
-            var usefEval = document.createElement("div");
-                        //usefBoxPoint
-            var usefboxNcomment = document.createElement("div");
-            var usefpointContainer = document.createElement("div");
-            var usefpointNum = document.createElement("div");
-            var usefpointBox = document.createElement("div");
-            var usefboxDiv1 = document.createElement("div");
-            var usefboxDiv2 = document.createElement("div");
-            var usefboxDiv3 = document.createElement("div");
-            var usefboxDiv4 = document.createElement("div");
-            var usefboxDiv5 = document.createElement("div");
-            var usefboxDiv6 = document.createElement("div");
-            var usefboxDiv7 = document.createElement("div");
-            var usefboxDiv8 = document.createElement("div");
-            var usefboxDiv9 = document.createElement("div");
-            var usefboxDiv10 = document.createElement("div");
-            var usefComment = document.createElement("div");
-                    //literacy
-            var literContainer = document.createElement("div");
-            var literEval = document.createElement("div");
-                        //literBoxPoint
-            var literboxNcomment = document.createElement("div");
-            var literpointContainer = document.createElement("div");
-            var literpointNum = document.createElement("div");
-            var literpointBox = document.createElement("div");
-            var literboxDiv1 = document.createElement("div");
-            var literboxDiv2 = document.createElement("div");
-            var literboxDiv3 = document.createElement("div");
-            var literboxDiv4 = document.createElement("div");
-            var literboxDiv5 = document.createElement("div");
-            var literboxDiv6 = document.createElement("div");
-            var literboxDiv7 = document.createElement("div");
-            var literboxDiv8 = document.createElement("div");
-            var literboxDiv9 = document.createElement("div");
-            var literboxDiv10 = document.createElement("div");
-            var literComment = document.createElement("div");
-                    //message
-            var msgContainer = document.createElement("div");
-            var msgEval = document.createElement("div");
-                        //msgBoxPoint
-            var msgboxNcomment = document.createElement("div");
-            var msgpointContainer = document.createElement("div");
-            var msgpointNum = document.createElement("div");
-            var msgpointBox = document.createElement("div");
-            var msgboxDiv1 = document.createElement("div");
-            var msgboxDiv2 = document.createElement("div");
-            var msgboxDiv3 = document.createElement("div");
-            var msgboxDiv4 = document.createElement("div");
-            var msgboxDiv5 = document.createElement("div");
-            var msgboxDiv6 = document.createElement("div");
-            var msgboxDiv7 = document.createElement("div");
-            var msgboxDiv8 = document.createElement("div");
-            var msgboxDiv9 = document.createElement("div");
-            var msgboxDiv10 = document.createElement("div");
-            var msgComment = document.createElement("div");
-                //introduce
-            var introduce = document.createElement("div");
-            var introEx = document.createElement("div");
-            var introContent = document.createElement("div");
+    }
 
 
-            //전체 div class 지정
-            bookDetailContainer.setAttribute("class", "mybookDetailContainer");
-
-            //likeNtitle div class 지정
-            bookNameNlike.setAttribute("class", "bookNameNLikeNEdit");
-            bookLike.setAttribute("class", "likeContainer" );
-            bookName.setAttribute("class", "bookName");
-            editReview.setAttribute("class", "editContainer");
-
-            //book 리뷰 디테일 div class 지정
-            bookDetailInfo.setAttribute("class", "detailContainer");
-                //motivate
-            motivate.setAttribute("class", "motivate");
-            motiveEx.setAttribute("class", "motivEx");
-            motiveContent.setAttribute("class", "motiveDB");
-                //evaluation
-            evaluation.setAttribute("class", "evaluation");
-            evalComment.setAttribute("class", "evalComment");
-                    //fun
-            funContainer.setAttribute("class", "parentContainer")
-            funEval.setAttribute("class", "evalWord");
-                        //funBoxPoint
-            funboxNcomment.setAttribute("class", "BoxNComment");
-            funpointContainer.setAttribute("class", "PointContainer");
-            funpointNum.setAttribute("class", "PointNum");
-            funpointNum.setAttribute("id", "funPoint");
-            funpointBox.setAttribute("class", "PointBox");
-            funboxDiv1.setAttribute("class", "Nfill");
-            funboxDiv1.setAttribute("id", book + "funbox1");
-            funboxDiv2.setAttribute("class", "Nfill");
-            funboxDiv2.setAttribute("id", book + "funbox2");
-            funboxDiv3.setAttribute("class", "Nfill");
-            funboxDiv3.setAttribute("id", book + "funbox3");
-            funboxDiv4.setAttribute("class", "Nfill");
-            funboxDiv4.setAttribute("id", book + "funbox4");
-            funboxDiv5.setAttribute("class", "Nfill");
-            funboxDiv5.setAttribute("id", book + "funbox5");
-            funboxDiv6.setAttribute("class", "Nfill");
-            funboxDiv6.setAttribute("id", book + "funbox6");
-            funboxDiv7.setAttribute("class", "Nfill");
-            funboxDiv7.setAttribute("id", book + "funbox7");
-            funboxDiv8.setAttribute("class", "Nfill");
-            funboxDiv8.setAttribute("id", book + "funbox8");
-            funboxDiv9.setAttribute("class", "Nfill");
-            funboxDiv9.setAttribute("id", book + "funbox9");
-            funboxDiv10.setAttribute("class", "Nfill");
-            funboxDiv10.setAttribute("id", book + "funbox10");
-            funComment.setAttribute("class", "funComment");
-                    //read
-            readContainer.setAttribute("class", "parentContainer")
-            readEval.setAttribute("class", "evalWord");
-                        //readBoxPoint
-            readboxNcomment.setAttribute("class", "BoxNComment");
-            readpointContainer.setAttribute("class", "PointContainer");
-            readpointNum.setAttribute("class", "PointNum");
-            readpointNum.setAttribute("id", "readPoint");
-            readpointBox.setAttribute("class", "PointBox");
-            readboxDiv1.setAttribute("class", "Nfill");
-            readboxDiv1.setAttribute("id", book + "readbox1");
-            readboxDiv2.setAttribute("class", "Nfill");
-            readboxDiv2.setAttribute("id", book + "readbox2");
-            readboxDiv3.setAttribute("class", "Nfill");
-            readboxDiv3.setAttribute("id", book + "readbox3");
-            readboxDiv4.setAttribute("class", "Nfill");
-            readboxDiv4.setAttribute("id", book + "readbox4");
-            readboxDiv5.setAttribute("class", "Nfill");
-            readboxDiv5.setAttribute("id", book + "readbox5");
-            readboxDiv6.setAttribute("class", "Nfill");
-            readboxDiv6.setAttribute("id", book + "readbox6");
-            readboxDiv7.setAttribute("class", "Nfill");
-            readboxDiv7.setAttribute("id", book + "readbox7");
-            readboxDiv8.setAttribute("class", "Nfill");
-            readboxDiv8.setAttribute("id", book + "readbox8");
-            readboxDiv9.setAttribute("class", "Nfill");
-            readboxDiv9.setAttribute("id", book + "readbox9");
-            readboxDiv10.setAttribute("class", "Nfill");
-            readboxDiv10.setAttribute("id", book + "readbox10");
-            readComment.setAttribute("class", "readComment");
-                    //useful
-            usefContainer.setAttribute("class", "parentContainer")
-            usefEval.setAttribute("class", "evalWord");
-                        //usefBoxPoint
-            usefboxNcomment.setAttribute("class", "BoxNComment");
-            usefpointContainer.setAttribute("class", "PointContainer");
-            usefpointNum.setAttribute("class", "PointNum");
-            usefpointNum.setAttribute("id", "usefPoint");
-            usefpointBox.setAttribute("class", "PointBox");
-            usefboxDiv1.setAttribute("class", "Nfill");
-            usefboxDiv1.setAttribute("id", book + "usefbox1");
-            usefboxDiv2.setAttribute("class", "Nfill");
-            usefboxDiv2.setAttribute("id", book + "usefbox2");
-            usefboxDiv3.setAttribute("class", "Nfill");
-            usefboxDiv3.setAttribute("id", book + "usefbox3");
-            usefboxDiv4.setAttribute("class", "Nfill");
-            usefboxDiv4.setAttribute("id", book + "usefbox4");
-            usefboxDiv5.setAttribute("class", "Nfill");
-            usefboxDiv5.setAttribute("id", book + "usefbox5");
-            usefboxDiv6.setAttribute("class", "Nfill");
-            usefboxDiv6.setAttribute("id", book + "usefbox6");
-            usefboxDiv7.setAttribute("class", "Nfill");
-            usefboxDiv7.setAttribute("id", book + "usefbox7");
-            usefboxDiv8.setAttribute("class", "Nfill");
-            usefboxDiv8.setAttribute("id", book + "usefbox8");
-            usefboxDiv9.setAttribute("class", "Nfill");
-            usefboxDiv9.setAttribute("id", book + "usefbox9");
-            usefboxDiv10.setAttribute("class", "Nfill");
-            usefboxDiv10.setAttribute("id", book + "usefbox10");
-            usefComment.setAttribute("class", "usefComment");
-                    //literacy
-            literContainer.setAttribute("class", "parentContainer")
-            literEval.setAttribute("class", "evalWord");
-                        //literBoxPoint
-            literboxNcomment.setAttribute("class", "BoxNComment");
-            literpointContainer.setAttribute("class", "PointContainer");
-            literpointNum.setAttribute("class", "PointNum");
-            literpointNum.setAttribute("id", "literPoint");
-            literpointBox.setAttribute("class", "PointBox");
-            literboxDiv1.setAttribute("class", "Nfill");
-            literboxDiv1.setAttribute("id", book + "literbox1");
-            literboxDiv2.setAttribute("class", "Nfill");
-            literboxDiv2.setAttribute("id", book + "literbox2");
-            literboxDiv3.setAttribute("class", "Nfill");
-            literboxDiv3.setAttribute("id", book + "literbox3");
-            literboxDiv4.setAttribute("class", "Nfill");
-            literboxDiv4.setAttribute("id", book + "literbox4");
-            literboxDiv5.setAttribute("class", "Nfill");
-            literboxDiv5.setAttribute("id", book + "literbox5");
-            literboxDiv6.setAttribute("class", "Nfill");
-            literboxDiv6.setAttribute("id", book + "literbox6");
-            literboxDiv7.setAttribute("class", "Nfill");
-            literboxDiv7.setAttribute("id", book + "literbox7");
-            literboxDiv8.setAttribute("class", "Nfill");
-            literboxDiv8.setAttribute("id", book + "literbox8");
-            literboxDiv9.setAttribute("class", "Nfill");
-            literboxDiv9.setAttribute("id", book + "literbox9");
-            literboxDiv10.setAttribute("class", "Nfill");
-            literboxDiv10.setAttribute("id", book + "literbox10");
-            literComment.setAttribute("class", "literComment");
-                    //message
-            msgContainer.setAttribute("class", "parentContainer")
-            msgEval.setAttribute("class", "evalWord");
-                        //msgBoxPoint
-            msgboxNcomment.setAttribute("class", "BoxNComment");
-            msgpointContainer.setAttribute("class", "PointContainer");
-            msgpointNum.setAttribute("class", "PointNum");
-            msgpointNum.setAttribute("id", "msgPoint");
-            msgpointBox.setAttribute("class", "PointBox");
-            msgboxDiv1.setAttribute("class", "Nfill");
-            msgboxDiv1.setAttribute("id", book + "msgbox1");
-            msgboxDiv2.setAttribute("class", "Nfill");
-            msgboxDiv2.setAttribute("id", book + "msgbox2");
-            msgboxDiv3.setAttribute("class", "Nfill");
-            msgboxDiv3.setAttribute("id", book + "msgbox3");
-            msgboxDiv4.setAttribute("class", "Nfill");
-            msgboxDiv4.setAttribute("id", book + "msgbox4");
-            msgboxDiv5.setAttribute("class", "Nfill");
-            msgboxDiv5.setAttribute("id", book + "msgbox5");
-            msgboxDiv6.setAttribute("class", "Nfill");
-            msgboxDiv6.setAttribute("id", book + "msgbox6");
-            msgboxDiv7.setAttribute("class", "Nfill");
-            msgboxDiv7.setAttribute("id", book + "msgbox7");
-            msgboxDiv8.setAttribute("class", "Nfill");
-            msgboxDiv8.setAttribute("id", book + "msgbox8");
-            msgboxDiv9.setAttribute("class", "Nfill");
-            msgboxDiv9.setAttribute("id", book + "msgbox9");
-            msgboxDiv10.setAttribute("class", "Nfill");
-            msgboxDiv10.setAttribute("id", book + "msgbox10");
-            msgComment.setAttribute("class", "msgComment");
-
-                //introduce
-            introduce.setAttribute("class", "introduce");
-            introEx.setAttribute("class", "introEx");
-            introContent.setAttribute("class", "introDB");
+//별점 박스 채우는 함수
+function fillBox(div, kind, num){
+    for(i=1; i<=num; i++){
+        var box = div + kind + 'box' + i;
+        var PointBox = document.getElementById(box);
+        PointBox.setAttribute("class", "fill");
+    }
+}
 
 
+function myReviews() {
+    // var bookName = document.getElementById('bookName').value;
+    console.log('loading my reveiws');
+    $.ajax({
+            type: 'post',
+            url: '/loadReview',
+        })
+        .success(function (result){
+            var jsonData = JSON.stringify(result); 
+            bookList = result;
+            user = bookList.shift();
+            nickArea.innerHTML = "닉네임: " + user;
+            loadWishBooks();
+            makeReviewDiv();
+        })
+        .fail(function (xhr, status, error){
+            alert("error");
+        })
+}
 
-            console.log(bookList);
-            console.log("book: ", bookList[book].title);
-            reviewArea.appendChild(bookDetailContainer);
-            bookDetailContainer.appendChild(bookNameNlike);
-            bookDetailContainer.appendChild(bookDetailInfo);
-
-            bookNameNlike.appendChild(bookLike);
-            bookNameNlike.appendChild(bookName);
-            bookNameNlike.appendChild(editReview);
-
-            bookDetailInfo.appendChild(motivate);
-            bookDetailInfo.appendChild(evaluation);
-            bookDetailInfo.appendChild(introduce);
-
-            motivate.appendChild(motiveEx);
-            motivate.appendChild(motiveContent);
-            
-            evaluation.appendChild(evalComment);
-            evaluation.appendChild(funContainer);
-            evaluation.appendChild(readContainer);
-            evaluation.appendChild(usefContainer);
-            evaluation.appendChild(literContainer);
-            evaluation.appendChild(msgContainer);
-
-            funContainer.appendChild(funEval);
-            funContainer.appendChild(funboxNcomment);
-            funboxNcomment.appendChild(funpointContainer);
-            funboxNcomment.appendChild(funComment);
-            funpointContainer.appendChild(funpointNum);
-            funpointContainer.appendChild(funpointBox);
-            funpointBox.appendChild(funboxDiv1);
-            funpointBox.appendChild(funboxDiv2);
-            funpointBox.appendChild(funboxDiv3);
-            funpointBox.appendChild(funboxDiv4);
-            funpointBox.appendChild(funboxDiv5);
-            funpointBox.appendChild(funboxDiv6);
-            funpointBox.appendChild(funboxDiv7);
-            funpointBox.appendChild(funboxDiv8);
-            funpointBox.appendChild(funboxDiv9);
-            funpointBox.appendChild(funboxDiv10);
-
-            readContainer.appendChild(readEval);
-            readContainer.appendChild(readboxNcomment);
-            readboxNcomment.appendChild(readpointContainer);
-            readboxNcomment.appendChild(readComment);
-            readpointContainer.appendChild(readpointNum);
-            readpointContainer.appendChild(readpointBox);
-            readpointBox.appendChild(readboxDiv1);
-            readpointBox.appendChild(readboxDiv2);
-            readpointBox.appendChild(readboxDiv3);
-            readpointBox.appendChild(readboxDiv4);
-            readpointBox.appendChild(readboxDiv5);
-            readpointBox.appendChild(readboxDiv6);
-            readpointBox.appendChild(readboxDiv7);
-            readpointBox.appendChild(readboxDiv8);
-            readpointBox.appendChild(readboxDiv9);
-            readpointBox.appendChild(readboxDiv10);
-
-            usefContainer.appendChild(usefEval);
-            usefContainer.appendChild(usefboxNcomment);
-            usefboxNcomment.appendChild(usefpointContainer);
-            usefboxNcomment.appendChild(usefComment);
-            usefpointContainer.appendChild(usefpointNum);
-            usefpointContainer.appendChild(usefpointBox);
-            usefpointBox.appendChild(usefboxDiv1);
-            usefpointBox.appendChild(usefboxDiv2);
-            usefpointBox.appendChild(usefboxDiv3);
-            usefpointBox.appendChild(usefboxDiv4);
-            usefpointBox.appendChild(usefboxDiv5);
-            usefpointBox.appendChild(usefboxDiv6);
-            usefpointBox.appendChild(usefboxDiv7);
-            usefpointBox.appendChild(usefboxDiv8);
-            usefpointBox.appendChild(usefboxDiv9);
-            usefpointBox.appendChild(usefboxDiv10);
-
-            literContainer.appendChild(literEval);
-            literContainer.appendChild(literboxNcomment);
-            literboxNcomment.appendChild(literpointContainer);
-            literboxNcomment.appendChild(literComment);
-            literpointContainer.appendChild(literpointNum);
-            literpointContainer.appendChild(literpointBox);
-            literpointBox.appendChild(literboxDiv1);
-            literpointBox.appendChild(literboxDiv2);
-            literpointBox.appendChild(literboxDiv3);
-            literpointBox.appendChild(literboxDiv4);
-            literpointBox.appendChild(literboxDiv5);
-            literpointBox.appendChild(literboxDiv6);
-            literpointBox.appendChild(literboxDiv7);
-            literpointBox.appendChild(literboxDiv8);
-            literpointBox.appendChild(literboxDiv9);
-            literpointBox.appendChild(literboxDiv10);
-
-            msgContainer.appendChild(msgEval);
-            msgContainer.appendChild(msgboxNcomment);
-            msgboxNcomment.appendChild(msgpointContainer);
-            msgboxNcomment.appendChild(msgComment);
-            msgpointContainer.appendChild(msgpointNum);
-            msgpointContainer.appendChild(msgpointBox);
-            msgpointBox.appendChild(msgboxDiv1);
-            msgpointBox.appendChild(msgboxDiv2);
-            msgpointBox.appendChild(msgboxDiv3);
-            msgpointBox.appendChild(msgboxDiv4);
-            msgpointBox.appendChild(msgboxDiv5);
-            msgpointBox.appendChild(msgboxDiv6);
-            msgpointBox.appendChild(msgboxDiv7);
-            msgpointBox.appendChild(msgboxDiv8);
-            msgpointBox.appendChild(msgboxDiv9);
-            msgpointBox.appendChild(msgboxDiv10);
-
-            introduce.appendChild(introEx);
-            introduce.appendChild(introContent);
-
-            bookLike.innerHTML = bookList[book].like + "명이 읽어보고 싶어요.";
-            bookName.innerHTML = bookList[book].title;
-
-            motiveEx.innerHTML = "#이 책을 읽게 된 계기를 알려주세요.";
-            motiveContent.innerHTML = bookList[book].motiv;
-            evalComment.innerHTML = "#이 책에 대한 간단한 평가를 해주세요.";
-            funEval.innerHTML = "재미";
-            funpointNum.innerHTML = bookList[book].funPoint + '/10';
-            fillBox(book, 'fun', bookList[book].funPoint);
-            funComment.innerHTML = bookList[book].funComment;
-            readEval.innerHTML = "가독성";
-            readpointNum.innerHTML = bookList[book].readPoint + '/10';
-            fillBox(book, 'read', bookList[book].readPoint);
-            readComment.innerHTML = bookList[book].readComment;
-            usefEval.innerHTML = "유용성";
-            usefpointNum.innerHTML = bookList[book].usefPoint + '/10';
-            fillBox(book, 'usef', bookList[book].usefPoint);
-            usefComment.innerHTML = bookList[book].usefComment;
-            literEval.innerHTML = "문장력";
-            literpointNum.innerHTML = bookList[book].literacyPoint + '/10';
-            fillBox(book, 'liter', bookList[book].literacyPoint);
-            literComment.innerHTML = bookList[book].literacyComment;
-            msgEval.innerHTML = "메시지";
-            msgpointNum.innerHTML = bookList[book].msgPoint + '/10';
-            fillBox(book, 'msg', bookList[book].msgPoint);
-            msgComment.innerHTML = bookList[book].msgComment;
-            introEx.innerHTML = "# 당신의 책을 한 줄로 소개해 주세요.";
-            introContent.innerHTML = bookList[book].introComment;
-
+function makeReviewDiv() {
+    if(data){
+        while(reviewArea.firstChild){
+            reviewArea.removeChild(reviewArea.firstChild);
         }
     }
 
+    for(book in bookList){
+        console.log("book num: " + book);
+        data = true;
+        //전체 div 생성
+        var bookDetailContainer = document.createElement("div");
+
+        //like랑 책제목 div 생성
+        var bookNameNlikeNEdit = document.createElement("div");
+        var bookLikeContainer = document.createElement("div");
+        var bookLikeBtnContainer = document.createElement("div");
+        var likeButton = document.createElement("div");
+        var likeIconImg = document.createElement("img");
+        var likeNum = document.createElement("div");
+        var bookName = document.createElement("div");
+        var editReview = document.createElement("div");
+
+        //book 리뷰 디테일 div 생성
+        var bookDetailInfo = document.createElement("div");
+            //motive
+        var motivate = document.createElement("div");
+        var motiveEx = document.createElement("div");
+        var motiveContent = document.createElement("div");
+            //evaluation
+        var evaluation = document.createElement("div");
+        var evalComment = document.createElement("div");
+                //fun
+        var funContainer = document.createElement("div");
+        var funEval = document.createElement("div");
+                    //funBoxPoint
+        var funboxNcomment = document.createElement("div");
+        var funpointContainer = document.createElement("div");
+        var funpointNum = document.createElement("div");
+        var funpointBox = document.createElement("div");
+        var funboxDiv1 = document.createElement("div");
+        var funboxDiv2 = document.createElement("div");
+        var funboxDiv3 = document.createElement("div");
+        var funboxDiv4 = document.createElement("div");
+        var funboxDiv5 = document.createElement("div");
+        var funboxDiv6 = document.createElement("div");
+        var funboxDiv7 = document.createElement("div");
+        var funboxDiv8 = document.createElement("div");
+        var funboxDiv9 = document.createElement("div");
+        var funboxDiv10 = document.createElement("div");
+        var funComment = document.createElement("div");
+                //read
+        var readContainer = document.createElement("div");
+        var readEval = document.createElement("div");
+                    //readBoxPoint
+        var readboxNcomment = document.createElement("div");
+        var readpointContainer = document.createElement("div");
+        var readpointNum = document.createElement("div");
+        var readpointBox = document.createElement("div");
+        var readboxDiv1 = document.createElement("div");
+        var readboxDiv2 = document.createElement("div");
+        var readboxDiv3 = document.createElement("div");
+        var readboxDiv4 = document.createElement("div");
+        var readboxDiv5 = document.createElement("div");
+        var readboxDiv6 = document.createElement("div");
+        var readboxDiv7 = document.createElement("div");
+        var readboxDiv8 = document.createElement("div");
+        var readboxDiv9 = document.createElement("div");
+        var readboxDiv10 = document.createElement("div");
+        var readComment = document.createElement("div");
+                //useful
+        var usefContainer = document.createElement("div");
+        var usefEval = document.createElement("div");
+                    //usefBoxPoint
+        var usefboxNcomment = document.createElement("div");
+        var usefpointContainer = document.createElement("div");
+        var usefpointNum = document.createElement("div");
+        var usefpointBox = document.createElement("div");
+        var usefboxDiv1 = document.createElement("div");
+        var usefboxDiv2 = document.createElement("div");
+        var usefboxDiv3 = document.createElement("div");
+        var usefboxDiv4 = document.createElement("div");
+        var usefboxDiv5 = document.createElement("div");
+        var usefboxDiv6 = document.createElement("div");
+        var usefboxDiv7 = document.createElement("div");
+        var usefboxDiv8 = document.createElement("div");
+        var usefboxDiv9 = document.createElement("div");
+        var usefboxDiv10 = document.createElement("div");
+        var usefComment = document.createElement("div");
+                //literacy
+        var literContainer = document.createElement("div");
+        var literEval = document.createElement("div");
+                    //literBoxPoint
+        var literboxNcomment = document.createElement("div");
+        var literpointContainer = document.createElement("div");
+        var literpointNum = document.createElement("div");
+        var literpointBox = document.createElement("div");
+        var literboxDiv1 = document.createElement("div");
+        var literboxDiv2 = document.createElement("div");
+        var literboxDiv3 = document.createElement("div");
+        var literboxDiv4 = document.createElement("div");
+        var literboxDiv5 = document.createElement("div");
+        var literboxDiv6 = document.createElement("div");
+        var literboxDiv7 = document.createElement("div");
+        var literboxDiv8 = document.createElement("div");
+        var literboxDiv9 = document.createElement("div");
+        var literboxDiv10 = document.createElement("div");
+        var literComment = document.createElement("div");
+                //message
+        var msgContainer = document.createElement("div");
+        var msgEval = document.createElement("div");
+                    //msgBoxPoint
+        var msgboxNcomment = document.createElement("div");
+        var msgpointContainer = document.createElement("div");
+        var msgpointNum = document.createElement("div");
+        var msgpointBox = document.createElement("div");
+        var msgboxDiv1 = document.createElement("div");
+        var msgboxDiv2 = document.createElement("div");
+        var msgboxDiv3 = document.createElement("div");
+        var msgboxDiv4 = document.createElement("div");
+        var msgboxDiv5 = document.createElement("div");
+        var msgboxDiv6 = document.createElement("div");
+        var msgboxDiv7 = document.createElement("div");
+        var msgboxDiv8 = document.createElement("div");
+        var msgboxDiv9 = document.createElement("div");
+        var msgboxDiv10 = document.createElement("div");
+        var msgComment = document.createElement("div");
+            //introduce
+        var introduce = document.createElement("div");
+        var introEx = document.createElement("div");
+        var introContent = document.createElement("div");
+
+
+        //전체 div class 지정
+        bookDetailContainer.setAttribute("class", "mybookDetailContainer");
+
+        //likeNtitle div class 지정
+        bookNameNlikeNEdit.setAttribute("class", "bookNameNLikeNEdit");
+        bookLikeContainer.setAttribute("class", "likeContainer");
+        bookLikeBtnContainer.setAttribute("class", "btnContainer");
+        likeButton.setAttribute("class", "likeButton");
+        likeButton.setAttribute("id", book + "likeButton");
+        likeIconImg.setAttribute("class", "likeButtonImg");
+        likeIconImg.setAttribute("id", book + "likeButtonImg");
+        likeNum.setAttribute("class", "likeNum");
+        likeNum.setAttribute("id", book + "likeNum");
+        bookName.setAttribute("class", "bookName");
+        editReview.setAttribute("class", "editContainer");
+
+
+        //book 리뷰 디테일 div class 지정
+        bookDetailInfo.setAttribute("class", "detailContainer");
+            //motivate
+        motivate.setAttribute("class", "motivate");
+        motiveEx.setAttribute("class", "motivEx");
+        motiveContent.setAttribute("class", "motiveDB");
+            //evaluation
+        evaluation.setAttribute("class", "evaluation");
+        evalComment.setAttribute("class", "evalComment");
+                //fun
+        funContainer.setAttribute("class", "parentContainer")
+        funEval.setAttribute("class", "evalWord");
+                    //funBoxPoint
+        funboxNcomment.setAttribute("class", "BoxNComment");
+        funpointContainer.setAttribute("class", "PointContainer");
+        funpointNum.setAttribute("class", "PointNum");
+        funpointNum.setAttribute("id", "funPoint");
+        funpointBox.setAttribute("class", "PointBox");
+        funboxDiv1.setAttribute("class", "Nfill");
+        funboxDiv1.setAttribute("id", book + "funbox1");
+        funboxDiv2.setAttribute("class", "Nfill");
+        funboxDiv2.setAttribute("id", book + "funbox2");
+        funboxDiv3.setAttribute("class", "Nfill");
+        funboxDiv3.setAttribute("id", book + "funbox3");
+        funboxDiv4.setAttribute("class", "Nfill");
+        funboxDiv4.setAttribute("id", book + "funbox4");
+        funboxDiv5.setAttribute("class", "Nfill");
+        funboxDiv5.setAttribute("id", book + "funbox5");
+        funboxDiv6.setAttribute("class", "Nfill");
+        funboxDiv6.setAttribute("id", book + "funbox6");
+        funboxDiv7.setAttribute("class", "Nfill");
+        funboxDiv7.setAttribute("id", book + "funbox7");
+        funboxDiv8.setAttribute("class", "Nfill");
+        funboxDiv8.setAttribute("id", book + "funbox8");
+        funboxDiv9.setAttribute("class", "Nfill");
+        funboxDiv9.setAttribute("id", book + "funbox9");
+        funboxDiv10.setAttribute("class", "Nfill");
+        funboxDiv10.setAttribute("id", book + "funbox10");
+        funComment.setAttribute("class", "funComment");
+                //read
+        readContainer.setAttribute("class", "parentContainer")
+        readEval.setAttribute("class", "evalWord");
+                    //readBoxPoint
+        readboxNcomment.setAttribute("class", "BoxNComment");
+        readpointContainer.setAttribute("class", "PointContainer");
+        readpointNum.setAttribute("class", "PointNum");
+        readpointNum.setAttribute("id", "readPoint");
+        readpointBox.setAttribute("class", "PointBox");
+        readboxDiv1.setAttribute("class", "Nfill");
+        readboxDiv1.setAttribute("id", book + "readbox1");
+        readboxDiv2.setAttribute("class", "Nfill");
+        readboxDiv2.setAttribute("id", book + "readbox2");
+        readboxDiv3.setAttribute("class", "Nfill");
+        readboxDiv3.setAttribute("id", book + "readbox3");
+        readboxDiv4.setAttribute("class", "Nfill");
+        readboxDiv4.setAttribute("id", book + "readbox4");
+        readboxDiv5.setAttribute("class", "Nfill");
+        readboxDiv5.setAttribute("id", book + "readbox5");
+        readboxDiv6.setAttribute("class", "Nfill");
+        readboxDiv6.setAttribute("id", book + "readbox6");
+        readboxDiv7.setAttribute("class", "Nfill");
+        readboxDiv7.setAttribute("id", book + "readbox7");
+        readboxDiv8.setAttribute("class", "Nfill");
+        readboxDiv8.setAttribute("id", book + "readbox8");
+        readboxDiv9.setAttribute("class", "Nfill");
+        readboxDiv9.setAttribute("id", book + "readbox9");
+        readboxDiv10.setAttribute("class", "Nfill");
+        readboxDiv10.setAttribute("id", book + "readbox10");
+        readComment.setAttribute("class", "readComment");
+                //useful
+        usefContainer.setAttribute("class", "parentContainer")
+        usefEval.setAttribute("class", "evalWord");
+                    //usefBoxPoint
+        usefboxNcomment.setAttribute("class", "BoxNComment");
+        usefpointContainer.setAttribute("class", "PointContainer");
+        usefpointNum.setAttribute("class", "PointNum");
+        usefpointNum.setAttribute("id", "usefPoint");
+        usefpointBox.setAttribute("class", "PointBox");
+        usefboxDiv1.setAttribute("class", "Nfill");
+        usefboxDiv1.setAttribute("id", book + "usefbox1");
+        usefboxDiv2.setAttribute("class", "Nfill");
+        usefboxDiv2.setAttribute("id", book + "usefbox2");
+        usefboxDiv3.setAttribute("class", "Nfill");
+        usefboxDiv3.setAttribute("id", book + "usefbox3");
+        usefboxDiv4.setAttribute("class", "Nfill");
+        usefboxDiv4.setAttribute("id", book + "usefbox4");
+        usefboxDiv5.setAttribute("class", "Nfill");
+        usefboxDiv5.setAttribute("id", book + "usefbox5");
+        usefboxDiv6.setAttribute("class", "Nfill");
+        usefboxDiv6.setAttribute("id", book + "usefbox6");
+        usefboxDiv7.setAttribute("class", "Nfill");
+        usefboxDiv7.setAttribute("id", book + "usefbox7");
+        usefboxDiv8.setAttribute("class", "Nfill");
+        usefboxDiv8.setAttribute("id", book + "usefbox8");
+        usefboxDiv9.setAttribute("class", "Nfill");
+        usefboxDiv9.setAttribute("id", book + "usefbox9");
+        usefboxDiv10.setAttribute("class", "Nfill");
+        usefboxDiv10.setAttribute("id", book + "usefbox10");
+        usefComment.setAttribute("class", "usefComment");
+                //literacy
+        literContainer.setAttribute("class", "parentContainer")
+        literEval.setAttribute("class", "evalWord");
+                    //literBoxPoint
+        literboxNcomment.setAttribute("class", "BoxNComment");
+        literpointContainer.setAttribute("class", "PointContainer");
+        literpointNum.setAttribute("class", "PointNum");
+        literpointNum.setAttribute("id", "literPoint");
+        literpointBox.setAttribute("class", "PointBox");
+        literboxDiv1.setAttribute("class", "Nfill");
+        literboxDiv1.setAttribute("id", book + "literbox1");
+        literboxDiv2.setAttribute("class", "Nfill");
+        literboxDiv2.setAttribute("id", book + "literbox2");
+        literboxDiv3.setAttribute("class", "Nfill");
+        literboxDiv3.setAttribute("id", book + "literbox3");
+        literboxDiv4.setAttribute("class", "Nfill");
+        literboxDiv4.setAttribute("id", book + "literbox4");
+        literboxDiv5.setAttribute("class", "Nfill");
+        literboxDiv5.setAttribute("id", book + "literbox5");
+        literboxDiv6.setAttribute("class", "Nfill");
+        literboxDiv6.setAttribute("id", book + "literbox6");
+        literboxDiv7.setAttribute("class", "Nfill");
+        literboxDiv7.setAttribute("id", book + "literbox7");
+        literboxDiv8.setAttribute("class", "Nfill");
+        literboxDiv8.setAttribute("id", book + "literbox8");
+        literboxDiv9.setAttribute("class", "Nfill");
+        literboxDiv9.setAttribute("id", book + "literbox9");
+        literboxDiv10.setAttribute("class", "Nfill");
+        literboxDiv10.setAttribute("id", book + "literbox10");
+        literComment.setAttribute("class", "literComment");
+                //message
+        msgContainer.setAttribute("class", "parentContainer")
+        msgEval.setAttribute("class", "evalWord");
+                    //msgBoxPoint
+        msgboxNcomment.setAttribute("class", "BoxNComment");
+        msgpointContainer.setAttribute("class", "PointContainer");
+        msgpointNum.setAttribute("class", "PointNum");
+        msgpointNum.setAttribute("id", "msgPoint");
+        msgpointBox.setAttribute("class", "PointBox");
+        msgboxDiv1.setAttribute("class", "Nfill");
+        msgboxDiv1.setAttribute("id", book + "msgbox1");
+        msgboxDiv2.setAttribute("class", "Nfill");
+        msgboxDiv2.setAttribute("id", book + "msgbox2");
+        msgboxDiv3.setAttribute("class", "Nfill");
+        msgboxDiv3.setAttribute("id", book + "msgbox3");
+        msgboxDiv4.setAttribute("class", "Nfill");
+        msgboxDiv4.setAttribute("id", book + "msgbox4");
+        msgboxDiv5.setAttribute("class", "Nfill");
+        msgboxDiv5.setAttribute("id", book + "msgbox5");
+        msgboxDiv6.setAttribute("class", "Nfill");
+        msgboxDiv6.setAttribute("id", book + "msgbox6");
+        msgboxDiv7.setAttribute("class", "Nfill");
+        msgboxDiv7.setAttribute("id", book + "msgbox7");
+        msgboxDiv8.setAttribute("class", "Nfill");
+        msgboxDiv8.setAttribute("id", book + "msgbox8");
+        msgboxDiv9.setAttribute("class", "Nfill");
+        msgboxDiv9.setAttribute("id", book + "msgbox9");
+        msgboxDiv10.setAttribute("class", "Nfill");
+        msgboxDiv10.setAttribute("id", book + "msgbox10");
+        msgComment.setAttribute("class", "msgComment");
+
+            //introduce
+        introduce.setAttribute("class", "introduce");
+        introEx.setAttribute("class", "introEx");
+        introContent.setAttribute("class", "introDB");
+
+        reviewArea.appendChild(bookDetailContainer);
+        bookDetailContainer.appendChild(bookNameNlikeNEdit);
+        bookDetailContainer.appendChild(bookDetailInfo);
+
+        bookNameNlikeNEdit.appendChild(bookLikeContainer);
+        bookNameNlikeNEdit.appendChild(editReview);
+
+        bookLikeContainer.appendChild(bookLikeBtnContainer);
+        bookLikeContainer.appendChild(bookName);
+
+        bookLikeBtnContainer.appendChild(likeButton);
+        bookLikeBtnContainer.appendChild(likeNum);
+        likeButton.appendChild(likeIconImg);
+
+        bookDetailInfo.appendChild(motivate);
+        bookDetailInfo.appendChild(evaluation);
+        bookDetailInfo.appendChild(introduce);
+
+        motivate.appendChild(motiveEx);
+        motivate.appendChild(motiveContent);
+        
+        evaluation.appendChild(evalComment);
+        evaluation.appendChild(funContainer);
+        evaluation.appendChild(readContainer);
+        evaluation.appendChild(usefContainer);
+        evaluation.appendChild(literContainer);
+        evaluation.appendChild(msgContainer);
+
+        funContainer.appendChild(funEval);
+        funContainer.appendChild(funboxNcomment);
+        funboxNcomment.appendChild(funpointContainer);
+        funboxNcomment.appendChild(funComment);
+        funpointContainer.appendChild(funpointNum);
+        funpointContainer.appendChild(funpointBox);
+        funpointBox.appendChild(funboxDiv1);
+        funpointBox.appendChild(funboxDiv2);
+        funpointBox.appendChild(funboxDiv3);
+        funpointBox.appendChild(funboxDiv4);
+        funpointBox.appendChild(funboxDiv5);
+        funpointBox.appendChild(funboxDiv6);
+        funpointBox.appendChild(funboxDiv7);
+        funpointBox.appendChild(funboxDiv8);
+        funpointBox.appendChild(funboxDiv9);
+        funpointBox.appendChild(funboxDiv10);
+
+        readContainer.appendChild(readEval);
+        readContainer.appendChild(readboxNcomment);
+        readboxNcomment.appendChild(readpointContainer);
+        readboxNcomment.appendChild(readComment);
+        readpointContainer.appendChild(readpointNum);
+        readpointContainer.appendChild(readpointBox);
+        readpointBox.appendChild(readboxDiv1);
+        readpointBox.appendChild(readboxDiv2);
+        readpointBox.appendChild(readboxDiv3);
+        readpointBox.appendChild(readboxDiv4);
+        readpointBox.appendChild(readboxDiv5);
+        readpointBox.appendChild(readboxDiv6);
+        readpointBox.appendChild(readboxDiv7);
+        readpointBox.appendChild(readboxDiv8);
+        readpointBox.appendChild(readboxDiv9);
+        readpointBox.appendChild(readboxDiv10);
+
+        usefContainer.appendChild(usefEval);
+        usefContainer.appendChild(usefboxNcomment);
+        usefboxNcomment.appendChild(usefpointContainer);
+        usefboxNcomment.appendChild(usefComment);
+        usefpointContainer.appendChild(usefpointNum);
+        usefpointContainer.appendChild(usefpointBox);
+        usefpointBox.appendChild(usefboxDiv1);
+        usefpointBox.appendChild(usefboxDiv2);
+        usefpointBox.appendChild(usefboxDiv3);
+        usefpointBox.appendChild(usefboxDiv4);
+        usefpointBox.appendChild(usefboxDiv5);
+        usefpointBox.appendChild(usefboxDiv6);
+        usefpointBox.appendChild(usefboxDiv7);
+        usefpointBox.appendChild(usefboxDiv8);
+        usefpointBox.appendChild(usefboxDiv9);
+        usefpointBox.appendChild(usefboxDiv10);
+
+        literContainer.appendChild(literEval);
+        literContainer.appendChild(literboxNcomment);
+        literboxNcomment.appendChild(literpointContainer);
+        literboxNcomment.appendChild(literComment);
+        literpointContainer.appendChild(literpointNum);
+        literpointContainer.appendChild(literpointBox);
+        literpointBox.appendChild(literboxDiv1);
+        literpointBox.appendChild(literboxDiv2);
+        literpointBox.appendChild(literboxDiv3);
+        literpointBox.appendChild(literboxDiv4);
+        literpointBox.appendChild(literboxDiv5);
+        literpointBox.appendChild(literboxDiv6);
+        literpointBox.appendChild(literboxDiv7);
+        literpointBox.appendChild(literboxDiv8);
+        literpointBox.appendChild(literboxDiv9);
+        literpointBox.appendChild(literboxDiv10);
+
+        msgContainer.appendChild(msgEval);
+        msgContainer.appendChild(msgboxNcomment);
+        msgboxNcomment.appendChild(msgpointContainer);
+        msgboxNcomment.appendChild(msgComment);
+        msgpointContainer.appendChild(msgpointNum);
+        msgpointContainer.appendChild(msgpointBox);
+        msgpointBox.appendChild(msgboxDiv1);
+        msgpointBox.appendChild(msgboxDiv2);
+        msgpointBox.appendChild(msgboxDiv3);
+        msgpointBox.appendChild(msgboxDiv4);
+        msgpointBox.appendChild(msgboxDiv5);
+        msgpointBox.appendChild(msgboxDiv6);
+        msgpointBox.appendChild(msgboxDiv7);
+        msgpointBox.appendChild(msgboxDiv8);
+        msgpointBox.appendChild(msgboxDiv9);
+        msgpointBox.appendChild(msgboxDiv10);
+
+        introduce.appendChild(introEx);
+        introduce.appendChild(introContent);
+
+        likeIconImg.setAttribute('src', "images/LikeIconFull.png");
+
+        likeNum.innerHTML = bookList[book].like + "명이 읽어보고 싶어요.";
+        bookName.innerHTML = bookList[book].title;
+
+        motiveEx.innerHTML = "#이 책을 읽게 된 계기를 알려주세요.";
+        motiveContent.innerHTML = bookList[book].motiv;
+        evalComment.innerHTML = "#이 책에 대한 간단한 평가를 해주세요.";
+        funEval.innerHTML = "재미";
+        funpointNum.innerHTML = bookList[book].funPoint + '/10';
+        fillBox(book, 'fun', bookList[book].funPoint);
+        funComment.innerHTML = bookList[book].funComment;
+        readEval.innerHTML = "가독성";
+        readpointNum.innerHTML = bookList[book].readPoint + '/10';
+        fillBox(book, 'read', bookList[book].readPoint);
+        readComment.innerHTML = bookList[book].readComment;
+        usefEval.innerHTML = "유용성";
+        usefpointNum.innerHTML = bookList[book].usefPoint + '/10';
+        fillBox(book, 'usef', bookList[book].usefPoint);
+        usefComment.innerHTML = bookList[book].usefComment;
+        literEval.innerHTML = "문장력";
+        literpointNum.innerHTML = bookList[book].literacyPoint + '/10';
+        fillBox(book, 'liter', bookList[book].literacyPoint);
+        literComment.innerHTML = bookList[book].literacyComment;
+        msgEval.innerHTML = "메시지";
+        msgpointNum.innerHTML = bookList[book].msgPoint + '/10';
+        fillBox(book, 'msg', bookList[book].msgPoint);
+        msgComment.innerHTML = bookList[book].msgComment;
+        introEx.innerHTML = "# 당신의 책을 한 줄로 소개해 주세요.";
+        introContent.innerHTML = bookList[book].introComment;
+
+    }
+}
+
+function moveLibrary(nick, boo){
+        location.href = "/personalLibrary?nick=" + nick + "&boo=" + boo;
+    }
 
 </script>
