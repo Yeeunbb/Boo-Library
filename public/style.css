@@ -114,12 +114,16 @@ a {
 
 .introInputBox{
   width: 90%;
-  height:1rem;
+    /*height:1rem;*/
   font-size:7px;
   background: #F9F9F9;
   box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   padding: 1em;
+}
+
+.majorDropBox{
+  width: 97%;
 }
 
 .introInput{
@@ -158,6 +162,10 @@ a {
   cursor: pointer;
 }
 
+/*test page*/
+.QuestionBox{
+}
+
 .test-container {
   max-width: 250px;
   height: auto;
@@ -166,6 +174,7 @@ a {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .question-slide {
@@ -336,8 +345,8 @@ a {
 }
 
 .boo-icon{
-  margin-top: 45%;
-  width: 45%;
+  margin-top: 33%;
+  width: 30%;
 }
 .boo-img{
   width: 100%;
@@ -381,6 +390,7 @@ a {
   align-items: center;
   flex-direction: column;
   margin-top: 50px;
+  overflow: hidden;
 }
 .trophyDiv{
   margin-bottom: 5px;
@@ -412,19 +422,23 @@ a {
   z-index: 2;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
 }
 
 .navName{
-  margin-left: 3px;
+  margin-left: 5%;
   font-weight: bold;
 }
 
 .booBtns{
   display: flex;  
   width: 40%;
+  justify-content: end;
+  margin-right: 5%;
 }
 .stringBtn{
-  margin-right: 9px;
+  margin-left: 9px;
 }
 
 .recommendBook{
@@ -452,6 +466,7 @@ a {
   flex-direction: column;
 }
 .bookTitle{
+  width: 100%;
   float: left;
   margin-right: 5px;
   font-size: 12px;
@@ -462,10 +477,13 @@ a {
 }
 .boxNnumberContainer{
   float: left;
-  width: 65%;
+  width: 70%;
   margin-left: 10px;
   font-size: 10px;
   font-weight: bold;
+}
+.bookNameNlikeContainer{
+  float:left;
 }
 .likeButton{
   float:left;
@@ -778,15 +796,24 @@ a {
   margin-left: 5%;
 }
 
+.coverNevaluation{
+  width: 100%;
+  display: flex;
+}
+
+.coverDiv{
+  display: flex;
+  width: 20%;
+  align-items: center;
+
+}
+.evaluationDiv{
+  width: 80%;
+}
+
 .test{
   background-color: white;
   
-}
-.Parenttest{
-  position: relative;
-}
-.Childtest{
-  position:absolute;
 }
 
 
@@ -802,6 +829,7 @@ a {
 .booType{
   font-size: 13px;
 }
+
 
 @media screen and (min-device-width: 768px){
   .img_container{

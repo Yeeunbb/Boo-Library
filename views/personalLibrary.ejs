@@ -85,8 +85,6 @@ var url = location.href;
         var LikeNumIdx = div + "likeNum";
         var ButtonContainer = document.getElementById(ButtoncontainerIdx);
         var LikeContainer = document.getElementById(LikeNumIdx);
-        //ButtonContainer.setAttribute('src', "");
-
 
         var likeOrNot = likeCheck[div]; //true면 이미 좋아요 된 것.
         likeCheck[div] = !likeCheck[div]; 
@@ -107,8 +105,15 @@ var url = location.href;
                 dataType: 'json'
             })
             .success(function (result){
-                console.log("success fill heart", result.msg);
-                readLikeInfo();
+                if(result.msg == "like"){
+                    console.log("fill heart", result.msg);
+                    ButtonContainer.setAttribute('src', "images/LikeIconFull.png");
+                    LikeContainer.innerHTML = ++bookList[div].like + "명이 읽어보고 싶어요.";
+                }else if(result.msg == "unlike"){
+                    console.log("dislike heart", result.msg);
+                    ButtonContainer.setAttribute('src', "images/LikeIconNfull.png");
+                    LikeContainer.innerHTML = --bookList[div].like + "명이 읽어보고 싶어요.";
+                }
             });
     }
 

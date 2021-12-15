@@ -140,7 +140,6 @@
     direction: 'horizontal',
     slidesPerView: 4,
     spaceBetween: 60,
-    touchRatio: 0,
     autoplay: {
         disableOnInteraction: false,
         delay: 3000,
@@ -696,8 +695,20 @@
     }
     
     function moveLibrary(nick, boo){
+        logincheck();
         location.href = "/personalLibrary?nick=" + nick + "&boo=" + boo;
     }
     
+    function logincheck(){
+        $.ajax({
+                type: 'post',
+                url: '/LoginCheck',
+            })
+            .success(function (result){
+                if(result.msg == "fail"){
+                    alert("로그인 해주세요.");
+                }
+            });
+    }
     
-    </script>
+</script>

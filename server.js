@@ -33,15 +33,18 @@ app.use(session({
 
 //mainPage
 app.get('/', (req, res) => {
-  if(req.session.isLogined == true) //로그인 한 사용자의 경우
-    return res.render('mainPage', {
+  if(req.session.isLogined == true && req.session.nickName){ //로그인 한 사용자의 경우
+    return res.render('mainPage', { //첫 방문이 아님.
       boo : req.session.booType
     });
-  else
+  }else
     return res.render('index'); //첫 방문인 경우
 });
 app.get('/startTest', (req, res) => {
-  res.render('startTest');
+  if(req.session.isLogined == true && req.session.nickName){ //로그인 한 사용자의 경우
+    return res.render('startTest');
+  }else
+  res.render('index');
 });
 app.get('/test', (req, res) => {
   res.render('test');
@@ -50,28 +53,48 @@ app.get('/afterTest', (req, res) => {
   res.render('afterTest');
 });
 app.get('/myBoo', (req, res) => {
-  res.render('myBoo', {
-    boo : req.session.booType,
-    nick : req.session.nickName
-  });
+  if(req.session.isLogined == true && req.session.nickName){ //로그인 한 사용자의 경우
+    return res.render('myBoo', {
+      boo : req.session.booType,
+      nick : req.session.nickName
+    });
+  }else
+    return res.render('index');
 });
 app.get('/Main', (req, res) => {
   res.render('mainPage');
 });
 app.get('/Search', (req, res) => {
-  res.render('bookSearch');
+  if(req.session.isLogined == true && req.session.nickName){ //로그인 한 사용자의 경우
+    return res.render('bookSearch', {
+      boo : req.session.booType,
+      nick : req.session.nickName
+    });
+  }else
+    return res.render('index');
 });
 app.get('/writeDetail', (req, res) => {
   res.render('writeBookDetail');
 });
 app.get('/MyPage', (req, res) =>{
-  res.render('myLibrary', {
-    boo : req.session.booType,
-    nick : req.session.nickName
-  });
+  if(req.session.isLogined == true && req.session.nickName){ //로그인 한 사용자의 경우
+    return res.render('myLibrary', {
+      boo : req.session.booType,
+      nick : req.session.nickName
+    });
+  }else
+    return res.render('index');
 });
 app.get('/personalLibrary', (req, res) => {
   res.render('personalLibrary');
+});
+
+app.post('/LoginCheck', async function(req, res){
+  if(req.session.isLogined == true && req.session.nickName){ //로그인 한 사용자의 경우
+    return res.json({msg: "login"}); 
+  }else{
+    return res.json({msg: "fail"});
+  }
 });
 
 //userInfo form 제출 (POST)
@@ -84,24 +107,26 @@ app.post('/Intro', async function(req, res) {
   console.log("pw: ", pw);
 
   var check = false;
-  var nickCheck = false;
-  var emailCheck = false;
 
   const nickRef = db.collection('userInfo').doc(nick);
   const doc = await nickRef.get();
   if(!doc.exists){
     //없는 닉네임. 가입 진행
     check = true;
-  } else{
-    //가입자
+  } else{ //이미 존재하는 닉네임을 친 경우
+    //가입자 확인
     console.log("email: ", doc.data().email, "major: ", doc.data().major);
-    if(doc.data().email == id && doc.data().major == major){
+    if(doc.data().email == id && doc.data().major == major){ //전공, 이멜도 정확히 쓴 경우
       req.session.isLogined = true;
       req.session.nickName = nick;
-      req.session.booType = doc.data().booType;
-      res.json({msg: "login"});
+      if(doc.data().booType == "none"){ //booTest 아직 안한 경우
+        return res.json({msg: "success"});
+      }else{ //booTest 까지 마친 경우
+        req.session.booType = doc.data().booType;
+        return res.json({msg: "login"}); 
+      }
     }else{ //이미 존재하는 닉네임
-      res.json({msg: "nick-error"});
+      return res.json({msg: "nick-error"});
     }
   }
 
@@ -112,7 +137,7 @@ app.post('/Intro', async function(req, res) {
     .then((userRecord)=>{
       //이미 가입된 이메일
       check = false;
-      res.json({msg: "email-error"});
+      return res.json({msg: "email-error"});
     })
     .catch((error)=>{
       //미가입자. 가입 진행
@@ -129,15 +154,15 @@ app.post('/Intro', async function(req, res) {
         displayName: nick,
       })
       .then((userRecord)=>{
-        console.log('Success', userRecord);
+        console.log('Success Login', userRecord);
         req.session.isLogined = true;
         req.session.nickName = nick;
         updateData(nick, major, id);
-        res.json({msg: "success"});
+        return res.json({msg: "success"});
       })
       .catch((error)=>{
         console.log('Error', error);
-        res.json({msg: "error"});
+        return res.json({msg: "error"});
       });
   }
 });
@@ -397,14 +422,13 @@ app.post('/updateLike', async function(req, res) {
         updateLikeNum(false, pageOw, bookTitle);
       }
     });
-    return res.json({msg: "success"});
+    return res.json({msg: "unlike"});
   }else{ //좋아요 반영시작.
     console.log("PUSH LIke BUTTON");
     updateLikeBook(true, user, pageOw, owBoo, bookTitle, bookCover, date, 'none');
     updateLikeNum(true, pageOw, bookTitle);
-    return res.json({msg: "success"});
+    return res.json({msg: "like"});
   }
-  //return res.json({msg: "success"});
 });
 
 
