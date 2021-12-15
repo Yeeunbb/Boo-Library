@@ -24,12 +24,14 @@
             추천하려는 책을 검색해 보세요.
         </div>
         <div class="searchBox">
+            <form id="test">
                 <div class="searchInput">
                     <input class="searchInputBox" type="search" id="bookName" required>
-                    <button type="button" class="BtnSearch" id="infoSubmit" onclick="bookSearch()">
+                    <button type="submit" class="BtnSearch" id="infoSubmit" onclick="bookSearch()">
                         <img class="searchBtnImg" src="images/BtnSearch.png">
-                    </button>                
+                    </button>      
                 </div>
+            </form>
         </div>
     </div>
 
@@ -44,6 +46,17 @@
 </html>
 
 <script type="text/javascript">
+
+$('#test').submit(function (e) {
+    e.preventDefault();
+    bookSearch();
+
+}); 
+
+
+
+
+
   var bookList = new Array();
   var bookArea = document.getElementById("bookArea");
   var data = false;

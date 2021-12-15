@@ -525,7 +525,6 @@ a {
 }
 .searchInput{
   width: 100%;
-  display: flex;
   align-items: center;
 }
 .searchInputBox{
@@ -542,10 +541,8 @@ a {
 }
 
 .BtnSearch{
-  position:absolute;
   float: right;
   border: none;
-  width: 8%;
   cursor: pointer;
   background-color: white;
   right: 7%;

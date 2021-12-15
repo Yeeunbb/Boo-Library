@@ -236,7 +236,8 @@ function testResult() {
     })
     .done(function (result){
         console.log("SUCCESS!!!!!");
-        location.href = "/afterTest";
+        window.location.replace("/afterTest");
+
     })
     .fail(function (xhr, status, error){
         alert("error");

@@ -172,6 +172,10 @@ var url = location.href;
                 //evaluation
             var evaluation = document.createElement("div");
             var evalComment = document.createElement("div");
+            var coverNevaluation = document.createElement("div");
+            var coverDiv = document.createElement("div");
+            var coverImg = document.createElement("img");
+            var evaluationDiv = document.createElement("div");
                     //fun
             var funContainer = document.createElement("div");
             var funEval = document.createElement("div");
@@ -296,6 +300,10 @@ var url = location.href;
                 //evaluation
             evaluation.setAttribute("class", "evaluation");
             evalComment.setAttribute("class", "evalComment");
+            coverNevaluation.setAttribute("class", "coverNevaluation");
+            coverDiv.setAttribute("class", "coverDiv");
+            coverImg.setAttribute("width", "100%");
+            evaluationDiv.setAttribute("class", "evaluationDiv");
                     //fun
             funContainer.setAttribute("class", "parentContainer")
             funEval.setAttribute("class", "evalWord");
@@ -469,13 +477,21 @@ var url = location.href;
 
             motivate.appendChild(motiveEx);
             motivate.appendChild(motiveContent);
-            
+
             evaluation.appendChild(evalComment);
-            evaluation.appendChild(funContainer);
-            evaluation.appendChild(readContainer);
-            evaluation.appendChild(usefContainer);
-            evaluation.appendChild(literContainer);
-            evaluation.appendChild(msgContainer);
+            evaluation.appendChild(coverNevaluation);
+
+            coverNevaluation.appendChild(coverDiv);
+            coverNevaluation.appendChild(evaluationDiv);
+
+            coverDiv.appendChild(coverImg);
+
+            evaluationDiv.appendChild(funContainer);
+            evaluationDiv.appendChild(readContainer);
+            evaluationDiv.appendChild(usefContainer);
+            evaluationDiv.appendChild(literContainer);
+            evaluationDiv.appendChild(msgContainer);
+
 
             funContainer.appendChild(funEval);
             funContainer.appendChild(funboxNcomment);
@@ -575,7 +591,10 @@ var url = location.href;
 
             motiveEx.innerHTML = "#이 책을 읽게 된 계기를 알려주세요.";
             motiveContent.innerHTML = bookList[book].motiv;
+            
             evalComment.innerHTML = "#이 책에 대한 간단한 평가를 해주세요.";
+            coverImg.setAttribute("src", bookList[book].cover);
+
             funEval.innerHTML = "재미";
             funpointNum.innerHTML = bookList[book].funPoint + '/10';
             fillBox(book, 'fun', bookList[book].funPoint);

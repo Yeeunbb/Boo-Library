@@ -398,7 +398,7 @@ var bookCover;
                     alert("Error!");
                 }else if(result.msg == "success"){
                     console.log("SUCCESS!!!!!");
-                    location.href = "/MyPage";
+                    window.location.replace("/MyPage");
                 }
             })
             .fail(function (xhr, status, error){
