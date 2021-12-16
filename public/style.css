@@ -1178,8 +1178,8 @@ html, body {
   .keywords{
     font-size: 18px;
   }
-  .recomBtn{
-    width: 80%;
+  .recomBtn, .retestBtn{
+    width: 50%;
   }
   .wishReadBookContainer{
     margin-top: 170px;
@@ -1278,11 +1278,17 @@ html, body {
     font-size: 15px;
   }
   .searchInputBox{
-    height: 3rem;
+    height: 4rem;
     font-size: 15px;
+  }
+  .BtnSearch{
+    width: 6%;
   }
   .bookDetailContainer{
     top: 180px;
+  }
+  .deleteContainer{
+    font-size: 20px;
   }
   .bookContent{
     margin-left: 20px;
