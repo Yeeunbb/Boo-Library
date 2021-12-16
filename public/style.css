@@ -1,17 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700;800;900&display=swap');
 
-body {
+html, body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   font-family: 'Noto Serif KR', serif;
-}
-
-a {
-  /*color: #00B7FF; */
+  /*height: 100%;*/
 }
 
 .wrapper {
   width: 100%;
-  height: 650px;
+  height: 640px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,11 +16,12 @@ a {
 }
 .wrapperTest{
   width: 100%;
-  height: 650px;
+  height: 640px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .boo-wrapper{
   width: 100%;
   height: 100%;
@@ -52,6 +50,7 @@ a {
 
 .intro{
   width: 100%;
+  margin-top: 10%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -156,10 +155,24 @@ a {
 .BtnSubmit{
   background-color: white;
   border: none;
-  width: 10rem;
+  width: 7rem;
   cursor: pointer;
 }
+.warning{
+  width: 50%;
+}
+.warning img{
+  width: 100%;
+}
 
+.infomation{
+  margin-top: 20px;
+  width: 100%;
+}
+
+.infomation img{
+  width: 30%;
+}
 /*test page*/
 .QuestionBox{
 }
@@ -344,10 +357,6 @@ a {
   z-index: 1;
 }
 
-.recommendBtncontainer{
-  margin-bottom: 40px;
-}
-
 .boo-icon{
   margin-top: 33%;
   width: 30%;
@@ -372,7 +381,6 @@ a {
   width: 90%;
   margin-top: 5%;
   margin-bottom: 30px;
-
 }
 
 .keywords-box{
@@ -382,9 +390,31 @@ a {
   font-weight: bold;
 }
 
-.recomBtn{
+.keywords-first-left{
   width: 50%;
+  display: flex;
+  justify-content: center;
+}
+.keywords-second-right{
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.recommendBtncontainer{
+  width: 100%;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.recomBtn, .retestBtn{
+  height: auto;
   border: none;
+  display: flex;
+  justify-content: center;
 }
 
 /*MainPage*/
@@ -438,19 +468,20 @@ a {
 }
 
 .navName{
-  margin-left: 5%;
+  margin-left: 1%;
   font-weight: 600;
 }
 
 .booBtns{
   display: flex;  
-  width: 40%;
+  width: 55%;
   justify-content: end;
-  margin-right: 3%;
+  margin-right: 1%;
   font-weight: 500;
 }
 .stringBtn{
-  margin-left: 5px;
+  
+  margin-left: 3px;
 }
 
 .recommendBook{
@@ -459,7 +490,7 @@ a {
   flex-direction: column;
   overflow: auto;
   top: 310px;
-  bottom: 100px;
+  bottom: 80px;
   z-index: 1;
 }
 .bookDIV{
@@ -549,7 +580,7 @@ a {
   margin-top: 42px;
   padding-top: 10px;
   background-color: white;
-  z-index: 2;
+  z-index: 3;
 }
 .comment{
   width: 100%;
@@ -565,30 +596,39 @@ a {
 .searchInput{
   width: 100%;
   align-items: center;
+  display: flex;
 }
 .searchInputBox{
   position: relative;
   width: 90%;
   left: 5%;
-  height:2rem;
+  height:2.5rem;
   font-size:7px;
   background: white;
   border: 0.5px solid #727272;
   border-radius: 5px;
   padding: 1em;
   padding-right: 3rem;
+  z-index: 2;
 }
 
 .BtnSearch{
+  width: 8%;
+  height: 90%;
+  position: absolute;
   float: right;
   border: none;
   cursor: pointer;
   background-color: white;
   right: 7%;
+  align-items: center;
+  z-index: 3;
 }
 .searchBtnImg{
   width: 100%;
-  z-index: 2;
+  z-index: 3;
+  display: flex;
+  align-items: center;
 }
 .searchResult{
   width:100%;
@@ -618,17 +658,18 @@ a {
 }
 
 .title{
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 700;
 }
 .bookCover{
-  width:74px;
+  width:68px;
   height:87px;
   background: white;
   border-radius: 5px;
 }
 
 .bookCover img{
+  width: 100%;
   height: 100%;
   border-radius: 5px;
 }
@@ -637,18 +678,25 @@ a {
 
 .bookInfoContainer{
   width: 100%;
-  height:100px;
+  height: auto;
   position: fixed;
   margin-top: 40px;
-  margin-left: 10px;
+  padding-left: 10px;
   padding-top: 10px;
+  padding-bottom: 10px;
   display: flex;
   justify-content: start;
+  border-bottom: 0.5px solid #727272;
+
 }
 
 .bookContent{
   width:80%;
+  padding-left: 2%;
   font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .bookCoverimg{
@@ -656,7 +704,7 @@ a {
 }
 
 #titleContainer{
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
 }
 
@@ -672,9 +720,8 @@ a {
   position:absolute;
   flex-direction: column;
   overflow: auto;
-  top: 140px;
+  top: 160px;
   bottom: 80px;
-  border-top: 0.5px solid #727272;
 }
 
 .detailContainer{
@@ -853,12 +900,27 @@ a {
   position:absolute;
   flex-direction: column;
   overflow: auto;
-  top: 130px;
+  top: 140px;
   bottom: 100px;
   z-index: 1;
 }
 
 .likeContainer{
+  width: 80%;
+}
+.editContainer{
+  display: flex;
+  align-items:flex-end;
+  width: 8%;
+  margin-right: 2%;
+}
+.editContainer img{
+  width: 100%;
+}
+.deleteContainer{
+  width: 10%;
+  display: flex;
+  align-items:flex-end;
 }
 
 .myreview{
@@ -872,17 +934,18 @@ a {
 .mybookDetailContainer{
   position: relative;
   width: 90%;
-  height: 400px;
+  height: 420px;
   margin-left: 5%;
   justify-content: space-between;
   margin-bottom: 5%;
 }
 .bookNameNLikeNEdit{
   position: relative;
-  width: 90%;
+  width: 93%;
   margin-left: 3%;
   margin-bottom: 6px;
-
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .coverNevaluation{
@@ -937,12 +1000,19 @@ a {
   font-size: 13px;
   font-weight: 400;
 }
+.personalBookLikeContainer{
+  display: block;
+}
 .personalLike{
   width: 23px;
   float: left;
 }
 .personalLikeContainer{
+  width: 100%;
   display: flex;
+}
+.longName{
+  font-size: 13px;
 }
 
 

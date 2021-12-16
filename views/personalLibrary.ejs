@@ -282,7 +282,7 @@ var url = location.href;
             bookDetailContainer.setAttribute("class", "mybookDetailContainer");
 
             //likeNtitle div class 지정
-            bookNameNlike.setAttribute("class", "bookNameNLikeNEdit");
+            bookNameNlike.setAttribute("class", "bookNameNLikeNEdit personalBookLikeContainer");
             bookName.setAttribute("class", "bookName");
             bookLikeContainer.setAttribute("class", "likeContainer personalLikeContainer");
             likeButton.setAttribute("class", "likeButton personalLike");
@@ -592,12 +592,17 @@ var url = location.href;
             likeIconImg.setAttribute('src', "images/LikeIconNfull.png");
             likeNum.innerHTML = bookList[book].like + "명이 읽어보고 싶어요.";
             bookName.innerHTML = bookList[book].title;
+            if(bookList[book].title.length > 40){
+            bookName.setAttribute("class", "bookName longName");
+        }
 
             motiveEx.innerHTML = "#이 책을 읽게 된 계기를 알려주세요.";
             motiveContent.innerHTML = bookList[book].motiv;
             
             evalComment.innerHTML = "#이 책에 대한 간단한 평가를 해주세요.";
             coverImg.setAttribute("src", bookList[book].cover);
+            coverImg.setAttribute('onerror', "this.src='images/BookCoverDefault.png'")
+
 
             funEval.innerHTML = "재미";
             funpointNum.innerHTML = (bookList[book].funPoint == 10) 

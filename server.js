@@ -53,11 +53,16 @@ app.get('/afterTest', (req, res) => {
   res.render('afterTest');
 });
 app.get('/myBoo', (req, res) => {
-  if(req.session.isLogined == true && req.session.nickName){ //로그인 한 사용자의 경우
+  if(req.session.isLogined == true && req.session.nickName
+    && req.session.booType != "none"){ //로그인 한 사용자의 경우
+      console.log("req.session.booType:", req.session.booType);
     return res.render('myBoo', {
       boo : req.session.booType,
       nick : req.session.nickName
     });
+  }else if(req.session.isLogined == true && req.session.nickName
+    && req.session.booType == "none"){
+    return res.render('startTest');
   }else
     return res.render('index');
 });
@@ -87,6 +92,9 @@ app.get('/MyPage', (req, res) =>{
 });
 app.get('/personalLibrary', (req, res) => {
   res.render('personalLibrary');
+});
+app.get('/editReview', (req, res) => {
+  res.render('editReview');
 });
 
 app.post('/LoginCheck', async function(req, res){
@@ -120,6 +128,7 @@ app.post('/Intro', async function(req, res) {
       req.session.isLogined = true;
       req.session.nickName = nick;
       if(doc.data().booType == "none"){ //booTest 아직 안한 경우
+        req.session.booType = doc.data().booType;
         return res.json({msg: "success"});
       }else{ //booTest 까지 마친 경우
         req.session.booType = doc.data().booType;
@@ -157,6 +166,7 @@ app.post('/Intro', async function(req, res) {
         console.log('Success Login', userRecord);
         req.session.isLogined = true;
         req.session.nickName = nick;
+        req.session.booType = "none";
         updateData(nick, major, id);
         return res.json({msg: "success"});
       })
@@ -278,8 +288,40 @@ app.post('/review', async function(req, res) {
     literNum, literCom, msgNum, msgCom, intro, like, date);
   
   res.json({msg: "success"});
-
 });
+
+//수정한 리뷰 저장하기 -edit에서 사용
+app.post('/editreviewsave', async function(req, res) {
+  console.log(req.body);
+  var nickname = req.session.nickName;
+  var boo = req.session.booType;
+  var title = req.body.title;
+  var author = req.body.author;
+  var publish = req.body.publish;
+  var date = req.body.date;
+  var cover = req.body.cover;
+  var motiv = req.body.motiv;
+  var funNum = req.body.funPoint;
+  var funCom = req.body.funComment;
+  var readNum = req.body.readPoint;
+  var readCom = req.body.readComment;
+  var usefNum = req.body.usefPoint;
+  var usefCom = req.body.usefComment;
+  var literNum = req.body.literacyPoint;
+  var literCom = req.body.literacyComment;
+  var msgNum = req.body.msgPoint;
+  var msgCom = req.body.msgComment;
+  var intro = req.body.introComment;
+  var like = Number(req.body.like);
+  var date = new Date().getTime().toString();
+
+  updateEditReview(nickname, boo, title, author, publish, date, cover,
+    motiv, funNum, funCom, readNum, readCom, usefNum, usefCom,
+    literNum, literCom, msgNum, msgCom, intro, like, date);
+  
+  res.json({msg: "success"});
+});
+
 
 //review한 책 목록 불러오기(MY)
 app.post('/loadReview', async function(req, res) {
@@ -294,6 +336,34 @@ app.post('/loadReview', async function(req, res) {
     console.log(doc.id, '=>', doc.data().title);
   });
   res.json(dataList);
+});
+
+//review한 책 불러오기(MY) - Edit 용
+app.post('/editBookforLoad', async function(req, res) {
+  var dataList = new Array();
+  var user = req.session.nickName;
+  var bookTitle = req.body.bookTitle;
+  // console.log("bookTitle: ", bookTitle);
+  // console.log("ROADING REVIEWS");
+  const bookRef = db.collection('userBookData').doc(user).collection('bookDB');
+  const snapshot = await bookRef.get();
+  snapshot.forEach(doc => {
+    if(doc.data().title == bookTitle){
+      dataList.push(doc.data());
+      console.log(doc.id, '=>', doc.data().title);
+    }
+  });
+  res.json(dataList);
+});
+
+//review한 책 삭제하기 -delete
+app.post('/deleteReview', async function(req, res) {
+  var user = req.session.nickName;
+  var bookTitle = req.body.bookTitle;
+
+  if(deleteReview(user, bookTitle)){
+    res.json({msg: "success"});
+  }
 });
 
 //review한 책 목록 불러오기(Other)
@@ -366,6 +436,39 @@ app.post('/loadWishBooks', async function(req, res) {
   res.json(dataList);
 });
 
+//like한 책이 delete됐는지 확인하는 용
+app.post('/checkdeletebook', async function(req, res) {
+  var user = req.session.nickName;
+  var bookTitle = req.body.bookTitle;
+  var pageOw = req.body.pageOw;
+  var check = true;
+  // console.log("bookTitle: ", bookTitle);
+  // console.log("ROADING REVIEWS");
+  const bookRef = db.collection('userBookData').doc(pageOw).collection('bookDB');
+  const snapshot = await bookRef.get();
+  snapshot.forEach(doc => {
+    if(doc.data().title == bookTitle){
+      console.log(doc.id, '=>', doc.data().title);
+      check = false;
+      return res.json({msg : "have"}); //리뷰 존재
+    }
+  });
+  if(check){ //리뷰 없으면 내 like에서도 삭제
+    const myRef = db.collection('userBookData').doc(user).collection('likeBookDB');
+    const snpshot2 = await myRef.get();
+    var docId;
+    snpshot2.forEach(doc => {
+      if(doc.data().title == bookTitle){
+        docId = doc.id;
+      }
+    });
+    const ownerReview = db.collection('userBookData').doc(user)
+    .collection('likeBookDB').doc(docId).delete();
+    return res.json({msg : "deleted"});
+  }
+});
+
+
 
 //모든 리뷰 불러오기
 app.post('/loadAllReview', async function(req, res) {
@@ -436,7 +539,7 @@ async function getBookData(bookName){
   return new Promise(function(resolve, reject) {
     const option = {
       query : bookName, //검색어
-      display : 10, //가져올 검색 결과 수
+      display : 15, //가져올 검색 결과 수
       start : 1,
     }
     request.get({
@@ -515,6 +618,61 @@ async function updateReview(
     });
 }
 
+async function updateEditReview(
+  nickname, boo, title, author, publish, date, cover, motiv,
+  funNum, funCom, readNum, readCom, usefNum, usefCom, literNum, literCom,
+  msgNum, msgCom, intro, like, date
+){
+  const reviewRef = await db
+    .collection('userBookData')
+    .doc(nickname)
+    .collection('bookDB')
+    .doc(title)
+    .set({
+      title : title,
+      author : author,
+      publish : publish,
+      date : date,
+      cover : cover,
+      motiv : motiv,
+      funPoint : funNum,
+      funComment : funCom,
+      readPoint : readNum,
+      readComment : readCom,
+      usefPoint : usefNum,
+      usefComment : usefCom,
+      literacyPoint : literNum,
+      literacyComment : literCom,
+      msgPoint : msgNum,
+      msgComment : msgCom,
+      introComment : intro,
+      like : like
+    });
+
+    const allreviewRef = db.collection('allReviewData');
+    const snpashot = await allreviewRef.get();
+    snpashot.forEach(doc => {
+      if(doc.data().nick == nickname && doc.data().title == title){
+        allreviewdocs = doc.id;
+        console.log("doc.id:" , allreviewdocs);
+      }
+    });
+    const ownerReview = db.collection('allReviewData').doc(allreviewdocs)
+    .set({
+      nick : nickname,
+      booType : boo,
+      title : title,
+      cover : cover,
+      date : date,
+      funPoint : funNum,
+      readPoint : readNum,
+      usefPoint : usefNum,
+      literacyPoint : literNum,
+      msgPoint : msgNum,
+      like : like
+    });
+}
+
 async function updateLikeBook(plus, user, nickname, boo, title, cover, time, docs){
   if(plus){ // 데이터 추가 (좋아요 누름)
     const likeRef = await db
@@ -565,8 +723,33 @@ async function updateLikeNum(plus, nick, title){
       like: FieldValue.increment(-1)
     });    
   }
-
 }
+
+async function deleteReview(user, title){
+  var allreviewdocs;
+  const likeRef = db.collection('userBookData').doc(user).collection('bookDB').doc(title).delete();
+  const reviewRef = db.collection('allReviewData');
+  const snpashot = await reviewRef.get();
+
+  snpashot.forEach(doc => {
+    if(doc.data().nick == user && doc.data().title == title){
+      allreviewdocs = doc.id;
+      console.log("doc.id:" , allreviewdocs);
+    }
+  });
+  const ownerReview = db.collection('allReviewData').doc(allreviewdocs).delete();
+
+  // const allLikeRef = db.collection('userBookData');
+  // const snapshot2 = await allLikeRef.get();
+  // snapshot2.forEach(doc => {
+  //   var bookRef = doc.collection('likeBookDB').doc(title);
+  //   var snapshot3 = await bookRef.get();
+  //   if(!snapshot3.exists) continue;
+  //   else bookRef.delete();
+  // });
+}
+
+
 
 async function setBooType(nickname, btype){
   const userRef = db.collection('userInfo').doc(nickname);

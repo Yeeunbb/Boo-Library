@@ -106,6 +106,9 @@
                 <div class="winterBtn stringBtn" onclick="loadSeasonReviews('winter')">
                     겨울
                 </div>
+                <div class="winterBtn stringBtn" onclick="loadSeasonReviews('all')">
+                    전체
+                </div>
             </div>
         </div>
     </div>
@@ -114,12 +117,11 @@
         <div class="recommendBookContainer" id="bookArea">
         </div>
     </div>
-
+    <footer class="footer">
+        <%-include('navigation')%>
+    </footer>
 </body>
-    
-<footer class="footer">
-    <%-include('navigation')%>
-</footer>
+
 
 </html>
 
@@ -192,6 +194,7 @@
             var bookCoverArea = document.getElementById(div);
             var bookCoverImgArea = document.getElementById(imgNum);
             bookCoverImgArea.setAttribute("src", bestBooks[book].cover);
+            bookCoverImgArea.setAttribute('onerror', "this.src='images/BookCoverDefault.png'")
             bookCoverImgArea.setAttribute('onclick', "moveLibrary('" + bestBooks[book].nick + "', '" 
             + bestBooks[book].booType + "')");
         }
@@ -219,9 +222,11 @@
     }
 
     function loadSeasonReviews(season){
+        var postURL = '/loadSeasonsReview';
+        if(season == "all") postURL = '/loadAllReview';
         $.ajax({
                 type: 'post',
-                url: '/loadSeasonsReview',
+                url: postURL,
                 data: {
                     "booType" : season
                 },
@@ -240,6 +245,8 @@
                     nav.innerHTML = "가을 부의 추천도서";
                 }else if(season == "winter"){
                     nav.innerHTML = "겨울 부의 추천도서";
+                }else if(season == "all"){
+                    nav.innerHTML = "모든 부의 추천도서";
                 }
                 makeReviewDiv()
             })
@@ -379,6 +386,7 @@
             bookCover.setAttribute("class", "bookCover");
             bookCoverImg.setAttribute("class", "bookCoverimg");
             bookCoverImg.setAttribute('src', bookList[book].cover);
+            bookCoverImg.setAttribute('onerror', "this.src='images/BookCoverDefault.png'")
 
             //information container 지정
             bookInfomationContainer.setAttribute("class", "bookInfomationContainer");
@@ -722,5 +730,5 @@
                 }
             });
     }
-    
+
 </script>

@@ -5,14 +5,15 @@
         <img class="boo-img" src="images/SummerBooICON.gif">
     </div>
     <div class="boo-contents">
-        <h5>[<%= nick %>]은 여름의 부 입니다.</h5>
+        <h5>[<%= nick %>]님은 여름의 부 입니다.</h5>
+        <br>
         열쩡! 열쩡! 열쩡!<br>
         뜨그븐 여름 부다 아이가!<br><br>
 
         당신은 여기에서나 저기에서나<br>
         인싸미를 뿜뿜 내뿜고 다니는군요!<br><br>
 
-        이것 저것 관심도 많고 활발한 당신,<br><br>
+        이것저것 관심도 많고 활발한 당신,<br><br>
 
         뭐라구요?<br>
         지금 읽고 있는 책도 흥미가 떨어져 간다구요?<br><br>
@@ -20,7 +21,7 @@
         괜찮아요.<br><br>
 
         부의 서재에는 끊임없이 [<%= nick %>]의 흥미를<br>
-        자극시켜줄 책 추천이 있거든요.
+        자극시켜줄 책 추천이 있거든요.<br>
     </div>
     <div class="boo-contents boo-keywords">
         <div class="keywordsTitle">
@@ -29,18 +30,26 @@
         <div class="keywords">
             <div class="keywords-box">
                 <div class="keywords-first-left">
-                    #시간나면 펼쳐볼
+                    #시간나면펼쳐볼
                 </div>
-                <div class="keywords-first-right">
-                    #스몰톡에유리한
+                <div class="keywords-second-right">
+                    #옴니버스
                 </div>
             </div>
             <div class="keywords-box">
-                <div class="keywords-second-left">
+                <div class="keywords-first-left">
                     #꿀잼보장킬링타임
                 </div>
                 <div class="keywords-second-right">
                     #책표지도중요해
+                </div>
+            </div>
+            <div class="keywords-box">
+                <div class="keywords-first-left">
+                    #스몰토크
+                </div>
+                <div class="keywords-second-right">
+                    #화이트노이즈
                 </div>
             </div>
         </div>
@@ -50,8 +59,11 @@
         <img src="images/EventImg.png" width="100%" />
     </div>
     <div class="recommendBtncontainer">
-        <button class="recomBtn summer" onClick="location.href='/Search'">
-            <img src="images/BtnRecom.png" width="100%" />
+        <button class="retestBtn summer" onclick="location.href='/startTest'">
+            <img src="images/BtnReTest.png" width="50%" />
+        </button>
+        <button class="recomBtn summer" onclick="location.href='/Search'">
+            <img src="images/BtnRecom.png" width="50%" />
         </button>
     </div>
 </div>

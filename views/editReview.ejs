@@ -203,7 +203,7 @@
                         </div>
                         <div class="literComment">
                             <input class="CommentInput" type="text" id="literCommentInput" 
-                            placeholder="ex) 사느냐 죽느냐, 그것이 문제로다." maxlength="25">
+                            placeholder="ex) 사느냐 죽느냐, 그것이 문제로다" maxlength="25">
                         </div>
                     </div>
                 </div>
@@ -254,7 +254,7 @@
         </div>
         <div class= "finishBtn">
             <button type="button" id="btnFinishDetail" class="BtnStr" onclick="saveReview()">
-                작성 완료</button>
+                수정 완료</button>
         </div>
     </div>
 
@@ -266,6 +266,7 @@
 </html>
 
 <script type="text/javascript">
+var bookInfo;
 var returnValue;
 var url = location.href;
 var bookTitle;
@@ -313,6 +314,7 @@ var bookCover;
         bookCoverImg.setAttribute('src', decodeURIComponent(returnValue));
         bookCoverImg.setAttribute('onerror', "this.src='images/BookCoverDefault.png'")
         bookCover = decodeURIComponent(returnValue);
+        loadReview();
       }
   }
 
@@ -321,7 +323,6 @@ var bookCover;
   var usefPointNum = 0;
   var literPointNum = 0;
   var msgPointNum = 0;
-
 
   //별점 박스 채우는 함수
     function boxClick(kind, num){
@@ -345,6 +346,55 @@ var bookCover;
         if(kind=='usef') usefPointNum = num;
         if(kind=='liter') literPointNum = num;
         if(kind=='msg') msgPointNum = num;
+    }
+
+    function loadReview(){
+        $.ajax({
+                type: 'post',
+                url: '/editBookforLoad',
+                data: {
+                    "bookTitle" : bookTitle
+                },
+                dataType: 'JSON',
+            })
+            .done(function (result){
+                var jsonData = JSON.stringify(result); 
+                bookInfo = result[0];
+                console.log("bookInfo: ", bookInfo);
+                fillBlank();
+            })
+    }
+
+    //별점 박스 채우는 함수
+    function fillBox(kind, num){
+        for(i=1; i<=num; i++){
+            var box = kind + 'box' + i;
+            var PointBox = document.getElementById(box);
+            PointBox.setAttribute("class", "fill");
+        }
+    }
+
+    function fillBlank(){
+        var motivComment = document.getElementById('motivCommentInput');
+        var funComment = document.getElementById('funCommentInput');
+        var readComment = document.getElementById('readCommentInput');
+        var usefComment = document.getElementById('usefCommentInput');
+        var literComment = document.getElementById('literCommentInput');
+        var msgComment = document.getElementById('msgCommentInput');
+        var introComment = document.getElementById('introCommentInput');
+        motivComment.value = bookInfo.motiv;
+        funComment.value = bookInfo.funComment;
+        readComment.value = bookInfo.readComment;
+        usefComment.value = bookInfo.usefComment;
+        literComment.value = bookInfo.literacyComment;
+        msgComment.value = bookInfo.msgComment;
+        introComment.value = bookInfo.introComment;
+
+        fillBox('fun', bookInfo.funPoint);
+        fillBox('read', bookInfo.funPoint);
+        fillBox('usef', bookInfo.funPoint);
+        fillBox('liter', bookInfo.funPoint);
+        fillBox('msg', bookInfo.funPoint);
     }
 
     //리뷰내용 DB로 보내기
@@ -386,7 +436,7 @@ var bookCover;
         if(motivComment && introComment){
             $.ajax({
                 type: 'post',
-                url: '/review',
+                url: '/editreviewsave',
                 data: reviewData,
                 dataType: 'JSON',
             })

@@ -27,7 +27,7 @@
             <form id="test">
                 <div class="searchInput">
                     <input class="searchInputBox" type="search" id="bookName" required>
-                    <button type="submit" class="BtnSearch" id="infoSubmit" onclick="bookSearch()">
+                    <button type="submit" class="BtnSearch" id="infoSubmit">
                         <img class="searchBtnImg" src="images/BtnSearch.png">
                     </button>      
                 </div>
@@ -47,19 +47,14 @@
 
 <script type="text/javascript">
 
-$('#test').submit(function (e) {
-    e.preventDefault();
-    bookSearch();
+    $('#test').submit(function (e) {
+        e.preventDefault();
+        bookSearch();
+    }); 
 
-}); 
-
-
-
-
-
-  var bookList = new Array();
-  var bookArea = document.getElementById("bookArea");
-  var data = false;
+    var bookList = new Array();
+    var bookArea = document.getElementById("bookArea");
+    var data = false;
 
 
     function bookSearch() {
@@ -75,8 +70,14 @@ $('#test').submit(function (e) {
             })
             .success(function (result){
                // var jsonData = JSON.stringify(result); 
+               
                 bookList = result;
-                makeBookDiv();
+                console.log("bookSearchList: ", bookList);
+                if(bookList.length)
+                    makeBookDiv();
+                else{
+                    alert("검색 결과가 없습니다");
+                }
                 //console.log(result);
             })
             .fail(function (xhr, status, error){
@@ -111,10 +112,6 @@ $('#test').submit(function (e) {
             bookCover.setAttribute("class", "bookCover");
             bookCoverImg.setAttribute("class", "bookCoverimg");
 
-
-            console.log(bookList);
-            console.log("book: ", bookList[book].title);
-
             bookArea.appendChild(bookContainer);
             bookContainer.appendChild(bookInfos);
             bookContainer.appendChild(bookCover);
@@ -131,6 +128,7 @@ $('#test').submit(function (e) {
             publish.innerHTML = bookList[book].publisher;
             date.innerHTML = bookList[book].pubdate;
             bookCoverImg.setAttribute('src', bookList[book].image);
+            bookCoverImg.setAttribute('onerror', "this.src='images/BookCoverDefault.png'")
             bookCover.setAttribute('type', "button");
             bookCover.setAttribute('onclick', "writeDetail('" + bookList[book].title + "', '" 
             + bookList[book].author + "', '" + bookList[book].publisher + "', '" 
