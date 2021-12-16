@@ -22,7 +22,7 @@
     <div class="mainPagetop">
     </div>
 
-    <div class="myInfoContainer">
+    <div class="myInfoContainer myLibrarymyInfo">
         <div class="myBooImgContainer">
         </div>
         <div class="myinfo">
@@ -322,7 +322,6 @@ const swiper1 = new Swiper('#wishBookArea', {
     slidesPerView: 4,
     centeredSlides : true,
     spaceBetween: 100,
-    touchRatio: 0,
     autoplay: {
         disableOnInteraction: false,
         delay: 2000,
@@ -449,6 +448,7 @@ function makeReviewDiv() {
         var coverNevaluation = document.createElement("div");
         var coverDiv = document.createElement("div");
         var coverImg = document.createElement("img");
+        var evaluationDivParent = document.createElement("div");
         var evaluationDiv = document.createElement("div");
                 //fun
         var funContainer = document.createElement("div");
@@ -580,6 +580,7 @@ function makeReviewDiv() {
         coverNevaluation.setAttribute("class", "coverNevaluation");
         coverDiv.setAttribute("class", "coverDiv");
         coverImg.setAttribute("width", "100%");
+        evaluationDivParent.setAttribute("class", "evaluationDivParent");
         evaluationDiv.setAttribute("class", "evaluationDiv");
 
                 //fun
@@ -763,7 +764,8 @@ function makeReviewDiv() {
         evaluation.appendChild(coverNevaluation);
 
         coverNevaluation.appendChild(coverDiv);
-        coverNevaluation.appendChild(evaluationDiv);
+        coverNevaluation.appendChild(evaluationDivParent);
+        evaluationDivParent.appendChild(evaluationDiv);
 
         coverDiv.appendChild(coverImg);
 
@@ -899,6 +901,7 @@ function makeReviewDiv() {
         msgpointNum.innerHTML = (bookList[book].msgPoint == 10)
         ? bookList[book].msgPoint + '/10' : '0' + bookList[book].msgPoint + '/10';
         fillBox(book, 'msg', bookList[book].msgPoint);
+
         msgComment.innerHTML = bookList[book].msgComment;
         introEx.innerHTML = "# 당신의 책을 한 줄로 소개해 주세요.";
         introContent.innerHTML = bookList[book].introComment;

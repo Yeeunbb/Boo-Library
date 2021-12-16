@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MyPage</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Library</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <link rel="stylesheet" href="style.css">
 
 
 </head>
@@ -175,6 +175,7 @@ var url = location.href;
             var coverNevaluation = document.createElement("div");
             var coverDiv = document.createElement("div");
             var coverImg = document.createElement("img");
+            var evaluationDivParent = document.createElement("div");
             var evaluationDiv = document.createElement("div");
                     //fun
             var funContainer = document.createElement("div");
@@ -283,8 +284,8 @@ var url = location.href;
             //likeNtitle div class 지정
             bookNameNlike.setAttribute("class", "bookNameNLikeNEdit");
             bookName.setAttribute("class", "bookName");
-            bookLikeContainer.setAttribute("class", "likeContainer");
-            likeButton.setAttribute("class", "likeButton");
+            bookLikeContainer.setAttribute("class", "likeContainer personalLikeContainer");
+            likeButton.setAttribute("class", "likeButton personalLike");
             likeButton.setAttribute("id", book + "likeButton");
             likeIconImg.setAttribute("class", "likeButtonImg");
             likeIconImg.setAttribute("id", book + "likeButtonImg");
@@ -303,6 +304,8 @@ var url = location.href;
             coverNevaluation.setAttribute("class", "coverNevaluation");
             coverDiv.setAttribute("class", "coverDiv");
             coverImg.setAttribute("width", "100%");
+
+            evaluationDivParent.setAttribute("class", "evaluationDivParent");
             evaluationDiv.setAttribute("class", "evaluationDiv");
                     //fun
             funContainer.setAttribute("class", "parentContainer")
@@ -482,7 +485,8 @@ var url = location.href;
             evaluation.appendChild(coverNevaluation);
 
             coverNevaluation.appendChild(coverDiv);
-            coverNevaluation.appendChild(evaluationDiv);
+            coverNevaluation.appendChild(evaluationDivParent);
+            evaluationDivParent.appendChild(evaluationDiv);
 
             coverDiv.appendChild(coverImg);
 
@@ -596,24 +600,35 @@ var url = location.href;
             coverImg.setAttribute("src", bookList[book].cover);
 
             funEval.innerHTML = "재미";
-            funpointNum.innerHTML = bookList[book].funPoint + '/10';
+            funpointNum.innerHTML = (bookList[book].funPoint == 10) 
+            ? bookList[book].funPoint + '/10' : '0' + bookList[book].funPoint + '/10';
             fillBox(book, 'fun', bookList[book].funPoint);
             funComment.innerHTML = bookList[book].funComment;
+
             readEval.innerHTML = "가독성";
-            readpointNum.innerHTML = bookList[book].readPoint + '/10';
+            readpointNum.innerHTML = (bookList[book].readPoint == 10)
+            ? bookList[book].readPoint + '/10' : '0' + bookList[book].readPoint + '/10';
             fillBox(book, 'read', bookList[book].readPoint);
             readComment.innerHTML = bookList[book].readComment;
+
             usefEval.innerHTML = "유용성";
-            usefpointNum.innerHTML = bookList[book].usefPoint + '/10';
+            usefpointNum.innerHTML = (bookList[book].usefPoint == 10)
+            ? bookList[book].usefPoint + '/10' : '0' + bookList[book].usefPoint + '/10';
             fillBox(book, 'usef', bookList[book].usefPoint);
             usefComment.innerHTML = bookList[book].usefComment;
+
             literEval.innerHTML = "문장력";
-            literpointNum.innerHTML = bookList[book].literacyPoint + '/10';
+            literpointNum.innerHTML = (bookList[book].literacyPoint == 10)
+            ? bookList[book].literacyPoint + '/10' : '0' + bookList[book].literacyPoint + '/10';
             fillBox(book, 'liter', bookList[book].literacyPoint);
             literComment.innerHTML = bookList[book].literacyComment;
+
             msgEval.innerHTML = "메시지";
-            msgpointNum.innerHTML = bookList[book].msgPoint + '/10';
+            msgpointNum.innerHTML = (bookList[book].msgPoint == 10)
+            ? bookList[book].msgPoint + '/10' : '0' + bookList[book].msgPoint + '/10';
             fillBox(book, 'msg', bookList[book].msgPoint);
+        
+
             msgComment.innerHTML = bookList[book].msgComment;
             introEx.innerHTML = "# 당신의 책을 한 줄로 소개해 주세요.";
             introContent.innerHTML = bookList[book].introComment;

@@ -1,14 +1,12 @@
-html, body {
-  height: 100%;
-  min-height: -webkit-fill-available;
-  overflow: auto;
-}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700;800;900&display=swap');
+
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 'Noto Serif KR', serif;
 }
 
 a {
-  color: #00B7FF;
+  /*color: #00B7FF; */
 }
 
 .wrapper {
@@ -187,7 +185,8 @@ a {
 
 
 .swiper-slide img {
-  width: 100%;
+  /*width: 100%;*/
+  height: 100%;
 }
 
 .swiper-pagination-progressbar-fill {
@@ -340,8 +339,11 @@ a {
   overflow: auto;
   text-align: center;
   top: 1px;
-  bottom: 100px;
   z-index: 1;
+}
+
+.recommendBtncontainer{
+  margin-bottom: 40px;
 }
 
 .boo-icon{
@@ -362,6 +364,13 @@ a {
   border-radius: 10px;
   margin-bottom: 30px;
   font-size: 14px;
+}
+
+.event-page{
+  width: 90%;
+  margin-top: 5%;
+  margin-bottom: 30px;
+
 }
 
 .keywords-box{
@@ -423,12 +432,12 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 12px;
+  font-size: 16px;
 }
 
 .navName{
   margin-left: 5%;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .booBtns{
@@ -436,6 +445,7 @@ a {
   width: 40%;
   justify-content: end;
   margin-right: 5%;
+  font-weight: 500;
 }
 .stringBtn{
   margin-left: 9px;
@@ -454,11 +464,15 @@ a {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 5%;
+  padding-top: 3%;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 3%;
   border-bottom: 0.5px solid #727272;
 }
 .bookCoverContainer{
   width: 30%;
+  margin-top: 3%;
 }
 .bookInfomationContainer{
   width: 90%;
@@ -468,8 +482,10 @@ a {
 .bookTitle{
   width: 100%;
   float: left;
-  margin-right: 5px;
-  font-size: 12px;
+  margin-left: 10px;
+  margin-bottom: 2px;
+  font-size: 14px;
+  font-weight: 500;
 }
 .bookLike{
   float: left;
@@ -477,28 +493,49 @@ a {
 }
 .boxNnumberContainer{
   float: left;
+  display: flex;
+  align-items: center;
   width: 70%;
   margin-left: 10px;
   font-size: 10px;
-  font-weight: bold;
+  font-weight: 500;
 }
 .bookNameNlikeContainer{
   float:left;
 }
 .likeButton{
-  float:left;
+  display: flex;
+  align-items: center;
+  width: 15px;
+}
+.likeButtonImg{
+  width: 100%;
 }
 .likeNum{
   margin-left: 3px;
+  font-size: 10px;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
 }
 .pointNum{
   float:left;
+  margin-right: 3px;
 }
 .moveToLibraryContainer{
-  float:right;
   text-align: right;
+  font-weight: 600;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-top: 2%;
 }
-
+.booBtnContainer{
+  width: 9%;
+}
+.booBtnContainer img{
+  width: 100%;
+}
 
 
 
@@ -516,7 +553,7 @@ a {
   width: 100%;
   text-align: center;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 5px;
 }
 .searchBox{
@@ -571,18 +608,27 @@ a {
 
 }
 .bookInfo{
+  width: 85%;
   height: 87px;
-  font-weight: bold;
-  font-size:11px;
+  padding-right: 20px;
+  font-weight: 500;
+  font-size: 11px;
 }
 
 .title{
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 700;
 }
 .bookCover{
   width:74px;
   height:87px;
   background: white;
+  border-radius: 5px;
+}
+
+.bookCover img{
+  height: 100%;
+  border-radius: 5px;
 }
 
 /*writeBookDetail Page*/
@@ -615,8 +661,8 @@ a {
 .firstComment{
   margin-left: 10px;
  margin-top: 10px;
- font-size: 14px; 
- font-weight: bold;
+ font-size: 15px; 
+ font-weight: 700;
 }
 
 .bookDetailContainer{
@@ -639,20 +685,44 @@ a {
   position:absolute;
 }
 
+.writepage{
+  position: relative;
+}
+
 .motivate{
   border-bottom: 0.5px solid #727272;
   font-size: 9px;
   color: #727272;
+  padding: 2%;
 }
+
+.motiveDB{
+  color: black;
+  margin: 2px;
+  margin-left: 7px;
+}
+
 .evaluation{
   border-bottom: 0.5px solid #727272;
   font-size: 9px;
   color: #727272;
+  padding: 2%;
+}
+
+.evalComment{
+  margin-bottom: 10px;
 }
 
 .introduce{
   font-size: 9px;
   color: #727272;
+  padding: 2%;
+}
+
+.introDB{
+  color: black;
+  margin: 2px;
+  margin-left: 7px;
 }
 .parentContainer{
   width: 100%;
@@ -666,7 +736,8 @@ a {
   float: left;
   margin-left: 10px;
   font-size: 10px;
-  font-weight: bold;
+  font-weight: 500;
+  color: black;
 }
 .BoxNComment{
   width: 85%;
@@ -680,6 +751,7 @@ a {
   text-align: center;
   display: flex;
   justify-content: start;
+  margin-left: 5px;
 
 }
 .PointNum{
@@ -716,26 +788,24 @@ a {
   height: 40px;
 }
 .finishBtn{
-  /* bottom: 100px; */
-  position:absolute;
-  /* top: 140px; */
-  left: 75%;
-  bottom: 5px;
+  margin-top: 10px;
+  display: flex;
+  float: right;
+  font-size: 20px;
 }
 .BtnStr{
   background-color: white;
   border:none;
-  font-size: 15px;
-  font-weight: bold;
+  font-weight: 800;
 }
 
 /* My Library Page */
 .myInfoContainer{
   width: 90%;
-  height: auto;
-  position: fixed;
+  margin-top: 15%;
   margin-left: 5%;
-  margin-top: 42px;
+  padding: 2%;
+  position: fixed;
   background-color: white;
   border: 0.5px solid #727272;
   border-radius: 5px;
@@ -746,14 +816,26 @@ a {
   float: left;
   display: flex;
   justify-content: start;
-
 }
 .bootypeIcon{
   width:30%;
 }
+.divbox{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.libraryComment{
+  font-size: 17px;
+  font-weight: 700;
+}
+.myNameContainer{
+  font-size: 12px;
+}
 .goFriendBook{
   width: 40%;
   float: right;
+  margin-right: 5px;
 }
 
 .wishReadBookContainer{
@@ -761,6 +843,7 @@ a {
   margin-top: 130px;
   background-color: white;
   z-index: 2;
+  overflow: hidden;
 }
 
 .myAllReviewContainer{
@@ -772,8 +855,12 @@ a {
   bottom: 100px;
   z-index: 1;
 }
+
+.likeContainer{
+}
+
 .myreview{
-  top: 260px;
+  top: 250px;
 }
 
 .book-slide{
@@ -783,14 +870,17 @@ a {
 .mybookDetailContainer{
   position: relative;
   width: 90%;
+  height: 400px;
   margin-left: 5%;
   justify-content: space-between;
-  margin-bottom: 75%;
+  margin-bottom: 5%;
 }
 .bookNameNLikeNEdit{
   position: relative;
   width: 90%;
-  margin-left: 5%;
+  margin-left: 3%;
+  margin-bottom: 6px;
+
 }
 
 .coverNevaluation{
@@ -801,16 +891,34 @@ a {
 .coverDiv{
   display: flex;
   width: 20%;
+  margin: 3%;
   align-items: center;
 
 }
-.evaluationDiv{
+.evaluationDivParent{
   width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.evaluationDiv{
+  width: 100%;
+}
+.btnContainer{
+  width: 100%;
+  display: flex;
+}
+.bookName{
+  font-weight: 700;
+  font-size: 17px;
 }
 
 .test{
   background-color: white;
-  
+}
+
+.myLibrarymyInfo{
+  margin-top: -82px;
 }
 
 
@@ -821,10 +929,19 @@ a {
   padding: 5px;
 }
 .libraryOwner{
-  font-weight: bold;
+  font-size: 15px;
+  font-weight: 700;
 }
 .booType{
   font-size: 13px;
+  font-weight: 400;
+}
+.personalLike{
+  width: 23px;
+  float: left;
+}
+.personalLikeContainer{
+  display: flex;
 }
 
 
@@ -936,26 +1053,216 @@ a {
   }
 
   .logo-img{
-  position: fixed;
-  background-color: white;
-  width: 20%;
-  top:0;
-  left:0;
+    position: fixed;
+    background-color: white;
+    width: 20%;
+    top:0;
+    left:0;
 }
 
-.boo-icon{
-  margin-top: 1rem;
-  width: 45%;
-}
+  .boo-icon{
+    margin-top: 1rem;
+    width: 45%;
+  }
 
-.boo-contents{
-  width: 100%;
-  height: 30%;
-  margin-top: 5%;
-}
+  .boo-contents{
+    width: 100%;
+    height: 30%;
+    margin-top: 5%;
+  }
+
+  .trophyDiv{
+    width: 5%;
+  }
+  .comment{
+    width: 35%;
+  }
+  .commentImg{
+    width: 50%;
+  }
+  .searchWord{
+    width: 100%;
+    font-size: 18px;
+    text-align: center;
+  }
+  .navbar-item{
+    width: 80px;
+  }
+  .middleNavigationContainer{
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 6%;
+  }
+  .boo-icon{
+    margin-top: 5rem;
+    width: 20%;
+  }
+  .boo-contents{
+    width: 90%;
+    font-size: 20px;
+  }
+  .keywordsTitle img{
+    width: 40%;
+  }
+  .keywords{
+    font-size: 18px;
+  }
+  .recomBtn{
+    width: 80%;
+  }
+  .wishReadBookContainer{
+    margin-top: 170px;
+  }
+  .myAllReviewContainer{
+    top: 170px;
+  }
+  .myreview{
+    top: 300px;
+  }
+  .mybookDetailContainer{
+    height: 500px;
+  }
+  .evaluationDivParent{
+    width: 80%;
+  }
+  .evaluationDiv{
+    width: 80%;
+  }
+  .bootypeIcon{
+    width: 20%;
+  }
+  .myLibrarymyInfo{
+    margin-top: -120px;
+  }
+
+  .bookCover{
+    width:84px;
+    height:107px;
+    background: white;
+    border-radius: 5px;
+  }
+
+  .bookTitle{
+    font-size: 20px;
+  }
+  .evalWord{
+    font-size: 15px;
+  }
+  .BoxNComment{
+    font-size: 15px;
+  }
+  .fill{
+    width: 15px;
+    height: 15px;
+  }
+  .Nfill{
+    width: 15px;
+    height: 15px;
+  }
+  .pointNum{
+    font-size: 13px;
+  }
+  .PointNum{
+    font-size: 13px;
+  }
+  .moveToLibraryContainer{
+    font-size: 17px;
+  }
+  .myInfoContainer{
+    margin-top: 7%;
+  }
+  .libraryOwner{
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .booType{
+    font-size: 16px;
+  }
+  .goFriendBook{
+    margin-top: 5px;
+    width: 30%;
+  }
+  .personalLike{
+    width: 30px;
+  }
+  .likeNum{
+    font-size: 15px;
+  }
+  .bookName{
+    font-size: 22px;
+  }
+  .motivate{
+    font-size: 15px;
+  }
+  .evaluation{
+    font-size: 15px;
+  }
+  .evalComment{
+    font-size: 15px;
+  }
+  .introduce{
+    font-size: 15px;
+  }
+  .bookInfo{
+    font-size: 15px;
+  }
+  .searchInputBox{
+    height: 3rem;
+    font-size: 15px;
+  }
+  .bookDetailContainer{
+    top: 180px;
+  }
+  .bookContent{
+    margin-left: 20px;
+    font-size: 15px;
+  }
+  .title{
+    font-size: 18px;
+  }
+  #titleContainer{
+    font-size: 19px;
+  }
+  .firstComment{
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  .CommentInput{
+    font-size: 15px;
+  }
+  .finishBtn{
+    font-size: 25px;
+    margin-right: 20px;
+  }
+  .myLibrarymyInfo{
+    margin-top: -110px;
+  }
+  .libraryComment{
+    font-size: 20px;
+  }
+  .myNameContainer{
+    font-size: 16px;
+  }
+  .wrapper{
+    height: 1024px;
+  }
+  .wrapperTest{
+    height: 1024px;
+  }
+  .question-slide img{
+    width: 100%;
+  }
+  .QuestionBox{
+    font-size: 20px;
+  }
+  .BtnSelectPrev{
+    float: left;
+    margin-top: 10%;
+  }
+
+
 
 }
-
 @media screen and (min-width: 1024px){
   .img_container{
     width : 100%;
@@ -972,5 +1279,53 @@ a {
     width: 30%;
     max-width: 200px;
   }
+  .trophyDiv{
+    width: 4%;
+  }
+  .comment{
+    width: 20%;
+  }
+  .middleNavigationContainer{
+    margin-top: 2%;
+  }
+  .booBtns{
+    margin-right: 2%;
+  }
+  .bookDIV{
+    padding-bottom: 1%;
+  }
+  .booBtnContainer{
+    width: 4%;
+  }
+  .searchWord{
+    width: 100%;
+    text-align: center;
+  }
+  .bootypeIcon{
+    width: 10%;
+  }
+  .goFriendBook{
+    width: 18%;
+  }
+  .myInfoContainer{
+    padding: 2px;
+  }
+  .myboo-contents{
+    width: 100%;
+  }
+  .boo-icon{
+    width: 15%;
+  }
+  .mybookDetailContainer{
+    height: 700px;
+  }
+  .evaluation{
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+  .coverDiv{
+
+  }
+
 
 }
