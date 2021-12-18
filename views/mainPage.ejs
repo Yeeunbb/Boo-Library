@@ -34,56 +34,7 @@
             <!--인기 책 swiper 들어갈 예정-->
             <div class="swiper-container" id="bestBookArea">
                 <div class= "swiper-wrapper" id ="bestBook">
-                    <div class="swiper-slide book-slide">
-                        <div class="bookCover test" id="bookCover0">
-                            <img src="" id="bookCoverImg0" class="Parenttest"/>
-                        </div>
-                    </div>
-                    <div class="swiper-slide book-slide">
-                        <div class="bookCover test1" id="bookCover1">
-                            <img src="" id="bookCoverImg1" />
-                        </div>
-                    </div>
-                    <div class="swiper-slide book-slide">
-                        <div class="bookCover test" id="bookCover2">
-                            <img src="" id="bookCoverImg2" />
-                        </div>
-                    </div>
-                    <div class="swiper-slide book-slide">
-                        <div class="bookCover test" id="bookCover3">
-                            <img src="" id="bookCoverImg3" />
-                        </div>
-                    </div>
-                    <div class="swiper-slide book-slide">
-                        <div class="bookCover test" id="bookCover4">
-                            <img src="" id="bookCoverImg4" />
-                        </div>
-                    </div>
-                    <div class="swiper-slide book-slide">
-                        <div class="bookCover test" id="bookCover5">
-                            <img src="" id="bookCoverImg5" />
-                        </div>
-                    </div>
-                    <div class="swiper-slide book-slide">
-                        <div class="bookCover test" id="bookCover6">
-                            <img src="" id="bookCoverImg6" />
-                        </div>
-                    </div>
-                    <div class="swiper-slide book-slide">
-                        <div class="bookCover test" id="bookCover7">
-                            <img src="" id="bookCoverImg7" />
-                        </div>
-                    </div>
-                    <div class="swiper-slide book-slide">
-                        <div class="bookCover test" id="bookCover8">
-                            <img src="" id="bookCoverImg8" />
-                        </div>
-                    </div>
-                    <div class="swiper-slide book-slide">
-                        <div class="bookCover test" id="bookCover9">
-                            <img src="" id="bookCoverImg9" />
-                        </div>
-                    </div>
+
                 </div>
     
                 <div class="swiper-pagination"></div>
@@ -134,8 +85,8 @@
     
     var data = false;
     var user;
-    loadReviews();
     loadBestBooks();
+    loadReviews();
 
     //best book Swiper
     const testSwiper = new Swiper('#bestBookArea', {
@@ -144,7 +95,7 @@
     spaceBetween: 60,
     autoplay: {
         disableOnInteraction: false,
-        delay: 3000,
+        delay: 2500,
     },
     on: {
         slideChange: function(){
@@ -204,16 +155,32 @@
     }
 
     function makeBestBookDiv(){
-        for(var book=0; book<10; book++){
-            var div = "bookCover" + book;
+        var length = (bestBooks.length < 10)
+        ? bestBooks.length : 10;
+        console.log("length: ", length);
+        var totalDIV = document.getElementById("bestBook");
 
+        for(var book=0; book<length; book++){
+            var div = "bookCover" + book;
             var imgNum = "bookCoverImg" + book;
-            var bookCoverArea = document.getElementById(div);
-            var bookCoverImgArea = document.getElementById(imgNum);
-            bookCoverImgArea.setAttribute("src", bestBooks[book].cover);
-            bookCoverImgArea.setAttribute('onerror', "this.src='images/BookCoverDefault.png'")
-            bookCoverImgArea.setAttribute('onclick', "moveLibrary('" + bestBooks[book].nick + "', '" 
+
+            var parentContainer = document.createElement("div");
+            parentContainer.setAttribute("class", "swiper-slide book-slide");
+            totalDIV.appendChild(parentContainer);
+        
+            var childContainer = document.createElement("div");
+            childContainer.setAttribute("class", "bookCover test");
+            childContainer.setAttribute("id", div);
+            parentContainer.appendChild(childContainer);
+
+            var imgContainer = document.createElement("img");
+            imgContainer.setAttribute("id", imgNum);
+            imgContainer.setAttribute("src", bestBooks[book].cover);
+            imgContainer.setAttribute('onerror', "this.src='images/BookCoverDefault.png'")
+            imgContainer.setAttribute('onclick', "moveLibrary('" + bestBooks[book].nick + "', '" 
             + bestBooks[book].booType + "', '" + bestBooks[book].title + "')");
+            childContainer.appendChild(imgContainer);
+
         }
 
     }
