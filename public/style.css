@@ -541,8 +541,8 @@ html, body {
   align-items: center;
   width: 15px;
 }
-.likeButtonImg{
-  width: 100%;
+.likeButton img{
+  width: 90%;
 }
 .likeNum{
   margin-left: 3px;
@@ -613,8 +613,7 @@ html, body {
 }
 
 .BtnSearch{
-  width: 8%;
-  height: 90%;
+  width: 10%;
   position: absolute;
   float: right;
   border: none;
@@ -894,6 +893,9 @@ html, body {
   z-index: 2;
   overflow: hidden;
 }
+.likebookComment{
+  margin-left: 5%;
+}
 
 .myAllReviewContainer{
   width:100%;
@@ -941,8 +943,8 @@ html, body {
 }
 .bookNameNLikeNEdit{
   position: relative;
-  width: 93%;
-  margin-left: 3%;
+  width: 96%;
+  margin-left: 2.5%;
   margin-bottom: 6px;
   display: flex;
   justify-content: space-evenly;

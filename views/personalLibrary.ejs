@@ -693,7 +693,17 @@ var url = location.href;
         console.log("likecheci list: ", likeCheck);
     }
     
-
+    function logincheck(){
+        $.ajax({
+                type: 'post',
+                url: '/LoginCheck',
+            })
+            .success(function (result){
+                if(result.msg == "fail"){
+                    alert("로그인 해주세요.");
+                }
+            });
+    }
 
 
 </script>

@@ -91,7 +91,10 @@ app.get('/MyPage', (req, res) =>{
     return res.render('index');
 });
 app.get('/personalLibrary', (req, res) => {
-  res.render('personalLibrary');
+  if(req.session.isLogined == true && req.session.nickName){ //로그인 한 사용자의 경우
+    return res.render('personalLibrary');
+  }else
+    return res.render('index');
 });
 app.get('/editReview', (req, res) => {
   res.render('editReview');
