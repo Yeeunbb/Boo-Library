@@ -1338,6 +1338,9 @@ html, body {
     margin-top: 10%;
   }
 
+  .likebookComment img{
+    width: 2%;
+  }
 
 
 }
@@ -1404,6 +1407,22 @@ html, body {
   .coverDiv{
 
   }
+  .BtnSearch{
+    width: 3%;
+  }
 
+  .editContainer{
+    width: 2.5%;
+  }
+
+  .myreview{
+    top: 400px;
+  }
+  .likebookComment img{
+    width: 1%;
+  }
+  .recommendBook{
+    top: 310px;
+  }
 
 }
