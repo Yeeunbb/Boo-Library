@@ -144,10 +144,8 @@
     }
 
     function submitInfo() {
-        console.log("CLICK");
         if(checkInput()){
             var queryString = $("form[name=userInfo]").serializeArray();
-            console.log(queryString);
             $.ajax({
                 type: 'post',
                 url: '/Intro',

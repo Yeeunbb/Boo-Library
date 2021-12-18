@@ -59,7 +59,6 @@
 
     function bookSearch() {
         var bookName = document.getElementById('bookName').value;
-        console.log(bookName);
         $.ajax({
                 type: 'post',
                 url: '/searchBook',
@@ -72,13 +71,11 @@
                // var jsonData = JSON.stringify(result); 
                
                 bookList = result;
-                console.log("bookSearchList: ", bookList);
                 if(bookList.length)
                     makeBookDiv();
                 else{
                     alert("검색 결과가 없습니다");
                 }
-                //console.log(result);
             })
             .fail(function (xhr, status, error){
                 alert("error");
@@ -135,7 +132,6 @@
             + bookList[book].pubdate + "', '" + bookList[book].image + "')");
         }
     }
-    //console.log(bookList);
     function writeDetail(title, author, publisher, date, img){
         location.href = "/writeDetail?title=" + title + "&author=" + author 
         + "&publisher=" + publisher + "&date=" + date + "&img=" + img;

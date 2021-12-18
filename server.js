@@ -55,7 +55,6 @@ app.get('/afterTest', (req, res) => {
 app.get('/myBoo', (req, res) => {
   if(req.session.isLogined == true && req.session.nickName
     && req.session.booType != "none"){ //로그인 한 사용자의 경우
-      console.log("req.session.booType:", req.session.booType);
     return res.render('myBoo', {
       boo : req.session.booType,
       nick : req.session.nickName
@@ -110,12 +109,10 @@ app.post('/LoginCheck', async function(req, res){
 
 //userInfo form 제출 (POST)
 app.post('/Intro', async function(req, res) {
-  console.log(req.body);
   var nick = req.body.nick;
   var major = req.body.major;
   var id = req.body.email;
   var pw = Math.random().toString(36).slice(2); //랜덤 비번 생성
-  console.log("pw: ", pw);
 
   var check = false;
 
@@ -126,7 +123,6 @@ app.post('/Intro', async function(req, res) {
     check = true;
   } else{ //이미 존재하는 닉네임을 친 경우
     //가입자 확인
-    console.log("email: ", doc.data().email, "major: ", doc.data().major);
     if(doc.data().email == id && doc.data().major == major){ //전공, 이멜도 정확히 쓴 경우
       req.session.isLogined = true;
       req.session.nickName = nick;
@@ -166,7 +162,6 @@ app.post('/Intro', async function(req, res) {
         displayName: nick,
       })
       .then((userRecord)=>{
-        console.log('Success Login', userRecord);
         req.session.isLogined = true;
         req.session.nickName = nick;
         req.session.booType = "none";
@@ -174,7 +169,6 @@ app.post('/Intro', async function(req, res) {
         return res.json({msg: "success"});
       })
       .catch((error)=>{
-        console.log('Error', error);
         return res.json({msg: "error"});
       });
   }
@@ -187,7 +181,6 @@ app.post('/testRes', async function(req, res) {
   var summer = 0;
   var autumn = 0;
   var winter = 0;
-  console.log("res: ", testRes);
   for (var i=0; i<10; i++){
     if(i==6){
       if(testRes[i]=='1' || testRes[i]=='2'){
@@ -204,7 +197,6 @@ app.post('/testRes', async function(req, res) {
     if(testRes[i]=='3') autumn++;
     if(testRes[i]=='4') winter++;
   }
-  console.log(summer, spring, autumn, winter);
 
   //우선순위 여름 > 가을 > 봄 > 겨울
   var max = winter;
@@ -231,11 +223,9 @@ app.post('/testRes', async function(req, res) {
 app.post('/searchBook', async function(req, res) {
   var bookName = req.body.book;
   var dataList = new Array();
-  console.log("book Title: ", bookName);
 
   getBookData(bookName).then(function(bookData){
     for(var book in bookData.items){
-      //console.log(json.items[book].title);
       var data = new Object();
       //제목
       var title = bookData.items[book].title;
@@ -256,14 +246,12 @@ app.post('/searchBook', async function(req, res) {
       //데이터 푸시
       dataList.push(data);
     }
-    //console.log(dataList);
     res.json(dataList);
   });
 });
 
 //review 데이터 저장하기
 app.post('/review', async function(req, res) {
-  console.log(req.body);
   var nickname = req.session.nickName;
   var boo = req.session.booType;
   var title = req.body.title;
@@ -295,7 +283,6 @@ app.post('/review', async function(req, res) {
 
 //수정한 리뷰 저장하기 -edit에서 사용
 app.post('/editreviewsave', async function(req, res) {
-  console.log(req.body);
   var nickname = req.session.nickName;
   var boo = req.session.booType;
   var title = req.body.title;
@@ -331,12 +318,10 @@ app.post('/loadReview', async function(req, res) {
   var dataList = new Array();
   var user = req.session.nickName;
   dataList.push(user);
-  console.log("ROADING REVIEWS");
   const bookRef = db.collection('userBookData').doc(user).collection('bookDB');
   const snapshot = await bookRef.get();
   snapshot.forEach(doc => {
     dataList.push(doc.data());
-    console.log(doc.id, '=>', doc.data().title);
   });
   res.json(dataList);
 });
@@ -346,14 +331,12 @@ app.post('/editBookforLoad', async function(req, res) {
   var dataList = new Array();
   var user = req.session.nickName;
   var bookTitle = req.body.bookTitle;
-  // console.log("bookTitle: ", bookTitle);
-  // console.log("ROADING REVIEWS");
+
   const bookRef = db.collection('userBookData').doc(user).collection('bookDB');
   const snapshot = await bookRef.get();
   snapshot.forEach(doc => {
     if(doc.data().title == bookTitle){
       dataList.push(doc.data());
-      console.log(doc.id, '=>', doc.data().title);
     }
   });
   res.json(dataList);
@@ -374,7 +357,6 @@ app.post('/loadPersonalReview', async function(req, res) {
   var dataList = new Array();
   var loginUser = req.session.nickName;
   var user = req.body.pageOwner;
-  console.log("pageow: ", user);
   const bookRef = db.collection('userBookData').doc(user).collection('bookDB');
   const snapshot = await bookRef.get();
   snapshot.forEach(doc => {
@@ -413,7 +395,6 @@ app.post('/loadlikeInfo', async function(req, res) {
 app.post('/loadBestBooks', async function(req, res) {
   var dataList = new Array();
 
-  console.log("ROADING REVIEWS");
   const bookRef = db.collection('allReviewData').orderBy("like", "desc");
   const snapshot = await bookRef.get();
   snapshot.forEach(doc => {
@@ -445,13 +426,11 @@ app.post('/checkdeletebook', async function(req, res) {
   var bookTitle = req.body.bookTitle;
   var pageOw = req.body.pageOw;
   var check = true;
-  // console.log("bookTitle: ", bookTitle);
-  // console.log("ROADING REVIEWS");
+
   const bookRef = db.collection('userBookData').doc(pageOw).collection('bookDB');
   const snapshot = await bookRef.get();
   snapshot.forEach(doc => {
     if(doc.data().title == bookTitle){
-      console.log(doc.id, '=>', doc.data().title);
       check = false;
       return res.json({msg : "have"}); //리뷰 존재
     }
@@ -459,14 +438,43 @@ app.post('/checkdeletebook', async function(req, res) {
   if(check){ //리뷰 없으면 내 like에서도 삭제
     const myRef = db.collection('userBookData').doc(user).collection('likeBookDB');
     const snpshot2 = await myRef.get();
-    var docId;
+    var docIdinU;
+    var docIdinA;
     snpshot2.forEach(doc => {
       if(doc.data().title == bookTitle){
-        docId = doc.id;
+        docIdinU = doc.id;
       }
     });
     const ownerReview = db.collection('userBookData').doc(user)
-    .collection('likeBookDB').doc(docId).delete();
+    .collection('likeBookDB').doc(docIdinU).delete();
+    return res.json({msg : "deleted"});
+  }
+});
+
+//like한 책이 delete됐는지 확인하는 용 -all 데이터에서
+app.post('/checkdeletebookinAll', async function(req, res) {
+  var bookTitle = req.body.bookTitle;
+  var pageOw = req.body.pageOw;
+  var check = true;
+
+  const bookRef = db.collection('userBookData').doc(pageOw).collection('bookDB');
+  const snapshot = await bookRef.get();
+  snapshot.forEach(doc => {
+    if(doc.data().title == bookTitle){
+      check = false;
+      return res.json({msg : "have"}); //리뷰 존재
+    }
+  });
+
+  if(check){ //리뷰가 없으면 allReviewData에서도 삭제
+    const allRef = db.collection('allReviewData');
+    const snapshot3 = await allRef.get();
+    snapshot3.forEach(doc => {
+      if(doc.data().nick == pageOw && doc.data().title == bookTitle){
+        docIdinA = doc.id;
+      }
+    });
+    const allReview = db.collection('allReviewData').doc(docIdinA).delete();
     return res.json({msg : "deleted"});
   }
 });
@@ -477,7 +485,6 @@ app.post('/checkdeletebook', async function(req, res) {
 app.post('/loadAllReview', async function(req, res) {
   var dataList = new Array();
 
-  console.log("ROADING REVIEWS");
   const bookRef = db.collection('allReviewData').orderBy("date", "desc");
   const snapshot = await bookRef.get();
   snapshot.forEach(doc => {
@@ -492,11 +499,9 @@ app.post('/loadSeasonsReview', async function(req, res) {
   var dataList = new Array();
   var season = req.body.booType;
 
-  console.log("ROADING REVIEWS");
   const bookRef = db.collection('allReviewData');
   const snapshot = await bookRef.where('booType', '==', season).get();
   snapshot.forEach(doc => {
-    console.log("booTypeData", doc.data());
     dataList.push(doc.data());
   });
   res.json(dataList);
@@ -512,25 +517,20 @@ app.post('/updateLike', async function(req, res) {
   var bookCover = req.body.bookCover;
   var flag = req.body.like; //true면 이미 좋아요 된 것.
   var date = new Date().getTime().toString();
-  console.log("UpdateLike Function", pageOw, bookTitle, flag);
 
 
   if(flag=="true"){ //좋아요 취소를 진행함.
-    console.log("좋아요 취소");
     const bookRef = db.collection('userBookData').doc(user).collection('likeBookDB');
     const snapshot = await bookRef.get();
     snapshot.forEach(doc => {
       if(doc.data().pageOw == pageOw && doc.data().title == bookTitle){
-        console.log("Find LIKE DATA");
         //user의 likeBookDB에서 데이터 삭제
-        console.log("삭제할 doc id: ", doc.id);
         updateLikeBook(false, user, pageOw, owBoo, bookTitle, bookCover, date, doc.id);
         updateLikeNum(false, pageOw, bookTitle);
       }
     });
     return res.json({msg: "unlike"});
   }else{ //좋아요 반영시작.
-    console.log("PUSH LIke BUTTON");
     updateLikeBook(true, user, pageOw, owBoo, bookTitle, bookCover, date, 'none');
     updateLikeNum(true, pageOw, bookTitle);
     return res.json({msg: "like"});
@@ -567,7 +567,6 @@ async function updateData(nickname, major, email) {
     email : email,
     booType : 'none'
   });
-  // console.log("DB is:  ", userUD);
 }
 
 async function updateReview(
@@ -601,24 +600,33 @@ async function updateReview(
       like : like
     });
 
-    console.log("date:", date);
-
-    const allReviewRef = await db
-    .collection('allReviewData')
-    .doc(date)
-    .set({
-      nick : nickname,
-      booType : boo,
-      title : title,
-      cover : cover,
-      date : date,
-      funPoint : funNum,
-      readPoint : readNum,
-      usefPoint : usefNum,
-      literacyPoint : literNum,
-      msgPoint : msgNum,
-      like : like
+    var check = true;
+    const allreviewRef = db.collection('allReviewData');
+    const snpashot = await allreviewRef.get();
+    snpashot.forEach(doc => {
+      if(doc.data().nick == nickname && doc.data().title == title){
+        check = false; //이미 등록됐다.
+      }
     });
+
+    if(check){
+      const updateallReviewRef = await db
+      .collection('allReviewData')
+      .doc(date)
+      .set({
+        nick : nickname,
+        booType : boo,
+        title : title,
+        cover : cover,
+        date : date,
+        funPoint : funNum,
+        readPoint : readNum,
+        usefPoint : usefNum,
+        literacyPoint : literNum,
+        msgPoint : msgNum,
+        like : like
+      });
+    }
 }
 
 async function updateEditReview(
@@ -657,7 +665,6 @@ async function updateEditReview(
     snpashot.forEach(doc => {
       if(doc.data().nick == nickname && doc.data().title == title){
         allreviewdocs = doc.id;
-        console.log("doc.id:" , allreviewdocs);
       }
     });
     const ownerReview = db.collection('allReviewData').doc(allreviewdocs)
@@ -707,7 +714,6 @@ async function updateLikeNum(plus, nick, title){
   snpashot.forEach(doc => {
     if(doc.data().nick == nick && doc.data().title == title){
       allreviewdocs = doc.id;
-      console.log("doc.id:" , allreviewdocs);
     }
   });
   const ownerReview = db.collection('allReviewData').doc(allreviewdocs);
@@ -737,19 +743,9 @@ async function deleteReview(user, title){
   snpashot.forEach(doc => {
     if(doc.data().nick == user && doc.data().title == title){
       allreviewdocs = doc.id;
-      console.log("doc.id:" , allreviewdocs);
     }
   });
   const ownerReview = db.collection('allReviewData').doc(allreviewdocs).delete();
-
-  // const allLikeRef = db.collection('userBookData');
-  // const snapshot2 = await allLikeRef.get();
-  // snapshot2.forEach(doc => {
-  //   var bookRef = doc.collection('likeBookDB').doc(title);
-  //   var snapshot3 = await bookRef.get();
-  //   if(!snapshot3.exists) continue;
-  //   else bookRef.delete();
-  // });
 }
 
 

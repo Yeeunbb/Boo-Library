@@ -59,7 +59,6 @@ var url = location.href;
 
   //url 파싱
   var parameter = (url.slice(url.indexOf('?') + 1, url.length)).split('&');
-  console.log('parameter :', parameter);
   var nick = decodeURIComponent(parameter[0].split('=')[1]);
   var boo = decodeURIComponent(parameter[1].split('=')[1]);
   nickArea.innerHTML = "["+nick+"]의 서재";
@@ -89,8 +88,6 @@ var url = location.href;
         var likeOrNot = likeCheck[div]; //true면 이미 좋아요 된 것.
         likeCheck[div] = !likeCheck[div]; 
 
-        console.log("FILLING HEART: ", div, "By: ", nick, "Title: ", title,
-        "coverLink: ", cover);
         let Likedata = {
             "pageOw" : nick,
             "booType" : boo,
@@ -106,11 +103,9 @@ var url = location.href;
             })
             .success(function (result){
                 if(result.msg == "like"){
-                    console.log("fill heart", result.msg);
                     ButtonContainer.setAttribute('src', "images/LikeIconFull.png");
                     LikeContainer.innerHTML = ++bookList[div].like + "명이 읽어보고 싶어요.";
                 }else if(result.msg == "unlike"){
-                    console.log("dislike heart", result.msg);
                     ButtonContainer.setAttribute('src', "images/LikeIconNfull.png");
                     LikeContainer.innerHTML = --bookList[div].like + "명이 읽어보고 싶어요.";
                 }
@@ -120,7 +115,6 @@ var url = location.href;
 
     function loadReviews() {
         // var bookName = document.getElementById('bookName').value;
-        console.log('loading my reveiws');
         $.ajax({
                 type: 'post',
                 url: '/loadPersonalReview',
@@ -132,7 +126,6 @@ var url = location.href;
             .success(function (result){
                var jsonData = JSON.stringify(result); 
                 bookList = result;
-                console.log("BookList" , bookList);
                 makeReviewDiv();
                 readLikeInfo();
             })
@@ -149,7 +142,6 @@ var url = location.href;
         }
 
         for(book in bookList){
-            console.log("book num: " + book);
             data = true;
             //전체 div 생성
             var bookDetailContainer = document.createElement("div");
@@ -653,14 +645,12 @@ var url = location.href;
             })
             .success(function (result){
                 likeList = [];
-                console.log("result.msg: ", result.msg);
                 if(result.msg == "Nlike"){
                     makeHeartFill();
                     //좋아요한 리뷰 없음.
                 }else{
                     var jsonData = JSON.stringify(result); 
                     likeList = jsonData;
-                    console.log("LikeList" , likeList);
                     makeHeartFill();
                     
                 }
@@ -670,16 +660,12 @@ var url = location.href;
     //좋아요 한 리뷰 하트 칠하는 함수
     function makeHeartFill(){
         likeCheck = [];
-        console.log(bookList);
         for(book in bookList){
             var ButtoncontainerIdx = book + "likeButtonImg";
             var LikeNumIdx = book + "likeNum";
             var ButtonContainer = document.getElementById(ButtoncontainerIdx);
             var LikeContainer = document.getElementById(LikeNumIdx);
             if(likeList.includes(bookList[book].title)){
-                console.log("FIND!!", book);
-                console.log(ButtoncontainerIdx);
-                console.log(ButtonContainer);
                 ButtonContainer.setAttribute('src', "images/LikeIconFull.png");
                 LikeContainer.innerHTML = bookList[book].like + "명이 읽어보고 싶어요.";
                 likeCheck.push(true);
@@ -690,7 +676,6 @@ var url = location.href;
             }
             likeCheck.push(false);
         }
-        console.log("likecheci list: ", likeCheck);
     }
     
     function logincheck(){

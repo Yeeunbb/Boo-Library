@@ -190,7 +190,6 @@ btn1.addEventListener('click', e => {
         prevBtn.setAttribute('src', "");
         testResult();    
     }
-    console.log("page:", page-1, "arrayval:", testArray[page-1]);
 });
 btn2.addEventListener('click', e => {
     testArray[page-1] = 2;
@@ -201,7 +200,6 @@ btn2.addEventListener('click', e => {
         prevBtn.setAttribute('src', "");
         testResult();   
     }
-    console.log("page:", page-1, "arrayval:", testArray[page-1]);
 });
 btn3.addEventListener('click', e => {
     testArray[page-1] = 3;
@@ -212,7 +210,6 @@ btn3.addEventListener('click', e => {
         prevBtn.setAttribute('src', "");
         testResult();  
     }
-    console.log("page:", page-1, "arrayval:", testArray[page-1]);
 });
 btn4.addEventListener('click', e => {
     testArray[page-1] = 4;
@@ -223,7 +220,6 @@ btn4.addEventListener('click', e => {
         prevBtn.setAttribute('src', "");
         testResult();  
     }
-    console.log("page:", page-1, "arrayval:", testArray[page-1]);
 });
 
 function testResult() {
@@ -235,7 +231,6 @@ function testResult() {
         },
     })
     .done(function (result){
-        console.log("SUCCESS!!!!!");
         window.location.replace("/afterTest");
 
     })

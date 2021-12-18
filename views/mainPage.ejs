@@ -169,7 +169,6 @@
     }
     
     function loadBestBooks(){
-        console.log('loading bestbooks');
         $.ajax({
                 type: 'post',
                 url: '/loadBestBooks',
@@ -177,7 +176,7 @@
             .success(function (result){
                 var jsonData = JSON.stringify(result); 
                 bestBooks = result;
-                console.log('bestBooks:' ,bestBooks);
+                checkDelete()
                 makeBestBookDiv();
             })
             .fail(function (xhr, status, error){
@@ -185,12 +184,30 @@
             })
     }
 
+    function checkDelete(){
+        for(book in bestBooks){
+            $.ajax({
+                type: 'post',
+                url: '/checkdeletebookinAll',
+                data:{
+                    "bookTitle": bestBooks[book].title,
+                    "pageOw" : bestBooks[book].nick
+                }
+            })
+            .success(function (result){
+                if(result.msg == "deleted"){
+                    console.log("deleted", bestBooks[book].title);
+                    bestBooks.splice(book, 1);
+                }
+            });
+        }
+    }
+
     function makeBestBookDiv(){
         for(var book=0; book<10; book++){
             var div = "bookCover" + book;
 
             var imgNum = "bookCoverImg" + book;
-            console.log("div: " ,div);
             var bookCoverArea = document.getElementById(div);
             var bookCoverImgArea = document.getElementById(imgNum);
             bookCoverImgArea.setAttribute("src", bestBooks[book].cover);
@@ -204,7 +221,6 @@
     
     function loadReviews() {
         // var bookName = document.getElementById('bookName').value;
-        console.log('loading reveiws');
         $.ajax({
                 type: 'post',
                 url: '/loadAllReview',
@@ -212,7 +228,6 @@
             .success(function (result){
                 var jsonData = JSON.stringify(result); 
                 bookList = result;
-                console.log(bookList);
                 //nickArea.innerHTML = "닉네임: " + user;
                 makeReviewDiv()
             })
@@ -235,7 +250,6 @@
             .success(function (result){
                 var jsonData = JSON.stringify(result); 
                 bookList = result;
-                console.log(bookList);
                 var nav = document.getElementById("seasonNav");
                 if(season == "spring"){
                     nav.innerHTML = "봄 부의 추천도서";
@@ -260,7 +274,6 @@
         }
 
         for(book in bookList){
-            console.log("book num: " + book);
             data = true;
             //전체 div 생성
             var bookDIV = document.createElement("div")
@@ -543,9 +556,6 @@
             booBtnContainer.setAttribute("class", "booBtnContainer");
             //booTypeIcon.setAttribute()
             moveLibrary.setAttribute("class", "moveLibrary");
-
-            console.log(bookList);
-            console.log("book: ", bookList[book].title);
 
             bookArea.appendChild(bookDIV);
 

@@ -348,7 +348,6 @@ function loadWishBooks(){
             .success(function (result){
                 var jsonData = JSON.stringify(result); 
                 wishBooks = result;
-                console.log('wishBooks:' ,wishBooks);
                 checkDelete();
                 makeWishBookDiv();
             });
@@ -380,7 +379,6 @@ function makeWishBookDiv(){
 
             var div = "bookCover" + book;
             var imgNum = "bookCoverImg" + book;
-            console.log("div: " ,div);
 
             var parentContainer = document.createElement("div");
             parentContainer.setAttribute("class", "swiper-slide book-slide");
@@ -420,7 +418,6 @@ function fillBox(div, kind, num){
 
 function myReviews() {
     // var bookName = document.getElementById('bookName').value;
-    console.log('loading my reveiws');
     $.ajax({
             type: 'post',
             url: '/loadReview',
@@ -446,7 +443,6 @@ function makeReviewDiv() {
     }
 
     for(book in bookList){
-        console.log("book num: " + book);
         data = true;
         //전체 div 생성
         var bookDetailContainer = document.createElement("div");

@@ -277,15 +277,12 @@ var bookCover;
   //url 파싱
 //   https://bookthumb-phinf.pstatic.net/cover/156/206/15620654.jpg?type=m1&udate=20191018
   var parameter = (url.slice(url.indexOf('?') + 1, url.length)).split('&');
-  console.log('parameter :', parameter);
   for(var i=0; i< 5; i++){
       if(i<4){
         returnValue = parameter[i].split('=')[1];
-        console.log('val:', decodeURIComponent(returnValue));
       }else{
         returnValue = parameter[i].split('=')[1] + '=' + parameter[i].split('=')[2]
         + '&' + parameter[i+1];
-        console.log('val:', decodeURIComponent(returnValue));
       }
 
       if(i==0){
@@ -332,7 +329,6 @@ var bookCover;
         }
         for(i=1; i<=num; i++){
             var box = kind + 'box' + i;
-            console.log(box);
             var PointBox = document.getElementById(box);
             PointBox.setAttribute("class", "fill");
         }
@@ -357,10 +353,6 @@ var bookCover;
         var msgComment = document.getElementById('msgCommentInput').value;
         var introComment = document.getElementById('introCommentInput').value;
         var likeNum = 0;
-
-        console.log("save REVIEW");
-        // console.log(funPointNum, readPointNum, usefPointNum, literPointNum, msgPointNum);
-        // console.log(motivComment, introComment);
 
         let reviewData = {
             "title" : bookTitle,
@@ -398,7 +390,6 @@ var bookCover;
                 }else if(result.msg == 'error'){
                     alert("Error!");
                 }else if(result.msg == "success"){
-                    console.log("SUCCESS!!!!!");
                     window.location.replace("/MyPage");
                 }
             })
