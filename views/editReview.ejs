@@ -453,7 +453,7 @@ var bookCover;
             "like" : likeNum
         }
 
-        if(motivComment && introComment){
+        if(motivComment.length > 10 && introComment.length > 10){
             $.ajax({
                 type: 'post',
                 url: '/editreviewsave',
@@ -475,7 +475,7 @@ var bookCover;
                 alert("error");
             })
         }else{
-            alert("계기와 소개를 입력해주세요");
+            alert("계기와 소개를 10자 이상 입력해주세요");
         }
     }
 

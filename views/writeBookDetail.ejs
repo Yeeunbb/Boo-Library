@@ -48,7 +48,7 @@
             <div class="motivate">
                 ＃이 책을 읽게 된 계기를 알려주세요.
                 <input class="CommentInput ffCommentInput" type="text" id="motivCommentInput" 
-                 maxlength="25" required>
+                 maxlength = "100" required>
             </div>
             <div class="evaluation" id="evalCommentInput" >
                 # 이 책에 대한 간단한 평가를 해주세요.
@@ -249,7 +249,7 @@
             <div class="introduce">
                 # 당신의 책을 한 줄로 소개해 주세요.
                 <input class="CommentInput ffCommentInput" type="text" id="introCommentInput" 
-                 maxlength="25" required>            
+                 maxlength="100" required>            
             </div>
         </div>
         <div class= "finishBtn">
@@ -375,7 +375,7 @@ var bookCover;
             "like" : likeNum
         }
 
-        if(motivComment && introComment){
+        if(motivComment.length > 10 && introComment.length > 10){
             $.ajax({
                 type: 'post',
                 url: '/review',
@@ -397,7 +397,7 @@ var bookCover;
                 alert("error");
             })
         }else{
-            alert("계기와 소개를 입력해주세요");
+            alert("계기와 소개를 10자 이상 입력해주세요");
         }
     }
 
