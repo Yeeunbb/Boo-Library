@@ -559,7 +559,9 @@ html, body {
 .moveToLibraryContainer{
   text-align: right;
   font-weight: 600;
+  display: -webkit-flex;
   display: flex;
+  -webkit-justify-content: end;
   justify-content: end;
   align-items: center;
   margin-top: 2%;
@@ -576,7 +578,7 @@ html, body {
 /* SearchPage */
 .searchTop{
   width: 100%;
-  height:110px;
+  height:80px;
   position: fixed;
   margin-top: 42px;
   padding-top: 10px;
@@ -635,19 +637,18 @@ html, body {
   position:absolute;
   flex-direction: column;
   overflow: auto;
-  top: 160px;
+  top: 125px;
   bottom: 100px;
   z-index: 1;
 }
 .books{
   width: 90%;
   margin-left: 5%;
+  display: -webkit-flex;
   display: flex;
   justify-content: space-between;
+  -webkit-justify-content: space-between;
   margin-bottom: 30px;
-  /* background-color: white;
-  border: none; */
-
 }
 .bookInfo{
   width: 75%;

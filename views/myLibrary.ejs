@@ -323,7 +323,7 @@ const swiper1 = new Swiper('#wishBookArea', {
     direction: 'horizontal',
     slidesPerView: 4,
     centeredSlides : true,
-    spaceBetween: 100,
+    spaceBetween: 60,
     autoplay: {
         disableOnInteraction: false,
         delay: 2000,
@@ -394,7 +394,7 @@ function makeWishBookDiv(){
             imgContainer.setAttribute("src", wishBooks[book].cover);
             imgContainer.setAttribute('onerror', "this.src='images/BookCoverDefault.png'")
             imgContainer.setAttribute('onclick', "moveLibrary('" + wishBooks[book].pageOw + "', '" 
-            + wishBooks[book].booType + "')");
+            + wishBooks[book].booType + "', '" + wishBooks[book].title + "')");
             childContainer.appendChild(imgContainer);
 
 
@@ -951,8 +951,8 @@ function makeReviewDiv() {
     }
 }
 
-function moveLibrary(nick, boo){
-        location.href = "/personalLibrary?nick=" + nick + "&boo=" + boo;
+function moveLibrary(nick, boo, title){
+        location.href = "/personalLibrary?nick=" + nick + "&boo=" + boo + "&title=" + title;
     }
 
 

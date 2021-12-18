@@ -213,7 +213,7 @@
             bookCoverImgArea.setAttribute("src", bestBooks[book].cover);
             bookCoverImgArea.setAttribute('onerror', "this.src='images/BookCoverDefault.png'")
             bookCoverImgArea.setAttribute('onclick', "moveLibrary('" + bestBooks[book].nick + "', '" 
-            + bestBooks[book].booType + "')");
+            + bestBooks[book].booType + "', '" + bestBooks[book].title + "')");
         }
 
     }
@@ -720,13 +720,13 @@
             fillBox(book, 'msg', bookList[book].msgPoint);
             moveLibrary.innerHTML = bookList[book].nick + '의 서재 놀러가기';
             moveLibrary.setAttribute('onclick', "moveLibrary('" + bookList[book].nick + "', '" 
-            + bookList[book].booType + "')");
+            + bookList[book].booType + "', '" + bookList[book].title + "')");
         }
     }
     
-    function moveLibrary(nick, boo){
+    function moveLibrary(nick, boo, title){
         logincheck();
-        location.href = "/personalLibrary?nick=" + nick + "&boo=" + boo;
+        location.href = "/personalLibrary?nick=" + nick + "&boo=" + boo + "&title=" + title;
     }
     
     function logincheck(){
