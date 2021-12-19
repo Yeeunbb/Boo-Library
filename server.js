@@ -198,19 +198,19 @@ app.post('/testRes', async function(req, res) {
     if(testRes[i]=='4') winter++;
   }
 
-  //우선순위 여름 > 가을 > 봄 > 겨울
+  //우선순위 가을 > 봄 > 여름 > 겨울
   var max = winter;
   var booType = 'winter';
+  if(summer >= max){
+    max = summer;
+    booType = 'summer';
+  }
   if(spring >= max){
     max = spring;
     booType = 'spring';
   }
   if(autumn >= max){
-    max = autumn;
     booType = 'autumn';
-  }
-  if(summer >= max){
-    booType = 'summer';
   }
 
   setBooType(req.session.nickName, booType);
