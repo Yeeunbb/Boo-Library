@@ -48,6 +48,7 @@ Boo의 서재는 읽고, 기록하고, 공유하는 인문학 기반의 비교�
 
 # URL
 [BOO의 서재 바로가기](http://www.boo-library.space)
+(현재 BOO의 서재는 모바일 최적화상태입니다. 모바일에서 이용해주세요)
 
 
 ## Installation
